@@ -1,0 +1,12 @@
+# 管理员信息表
+create table conservator
+(
+	id int auto_increment comment 'ID',
+	imageURL varchar(200) null comment '头像',
+	name varchar(20) null comment '姓名',
+	password int null comment '密码',
+	phoneNumber varchar(20) null comment '联系方式',
+	constraint conservator_pk
+		primary key (id)
+);
+

@@ -43,11 +43,6 @@ public class ConservatorController {
         return lpr;
     }
 
-
-
-
-
-
     @ApiOperation(value = "管理员电话号码查重")
     @RequestMapping(path = "/selectPhoneNumber", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LPR selectPhoneNumber(@RequestBody Conservator conservator) {

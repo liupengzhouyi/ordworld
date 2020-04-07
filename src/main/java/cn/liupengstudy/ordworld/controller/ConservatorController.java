@@ -3,6 +3,7 @@ package cn.liupengstudy.ordworld.controller;
 import cn.liupengstudy.ordworld.pojo.Conservator;
 import cn.liupengstudy.ordworld.pojo.tools.LPR;
 import cn.liupengstudy.ordworld.pojo.tools.LpPassword;
+import cn.liupengstudy.ordworld.pojo.tools.ReConservator;
 import cn.liupengstudy.ordworld.service.ConservatorServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -79,7 +80,7 @@ public class ConservatorController {
                     lpr.setReturnObject(null);
                 } else {
                     lpr.setWhy("电话号码没有重复，可以注册");
-                    LpPassword lpPassword = new LpPassword(conservator.getPhonenumber(), conservator.getPassword());
+                    LpPassword lpPassword = new LpPassword(conservator.getPhonenumber(), conservator.getPassword() + "");
                     conservator.setPassword(lpPassword.getPasswordValue());
                     int registerKey = this.conservatorService.insert(conservator);
                     System.out.println(registerKey);
@@ -102,4 +103,57 @@ public class ConservatorController {
         return lpr;
     }
 
+    @ApiOperation(value = "管理员登陆")
+    @RequestMapping(path = "/landing", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR landing(@RequestBody Conservator conservator) {
+        LPR lpr = new LPR();
+        lpr.setWhat("管理员登陆");
+        boolean key = true;
+        LPR selectPhonrNumber = this.selectPhoneNumber(conservator);
+        if (selectPhonrNumber.isReturnKey()) {
+            lpr.setWhy("账号存在");
+            LpPassword lpPassword = new LpPassword(conservator.getPhonenumber(), conservator.getPassword() + "");
+            List<Conservator> list = (List<Conservator>) selectPhonrNumber.getReturnObject();
+            if (list.get(0).getPassword() == lpPassword.getPasswordValue()) {
+                lpr.setWhy("密码正确");
+            } else {
+                key = false;
+                lpr.setWhy("密码不正确");
+            }
+        } else {
+            key = false;
+            lpr.setWhy("账号不存在");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
+
+    @ApiOperation(value = "管理员修改密码")
+    @RequestMapping(path = "/rePassword", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR rePassword(@RequestBody ReConservator reConservator) {
+        LPR lpr = new LPR();
+        lpr.setWhat("管理员修改密码");
+        boolean key = true;
+        LPR landingLPR = this.landing(reConservator.getConservator());
+        if (landingLPR.isReturnKey()) {
+            LPR selectPhonrNumber = this.selectPhoneNumber(reConservator.getConservator());
+            List<Conservator> list = (List<Conservator>) selectPhonrNumber.getReturnObject();
+            LpPassword lpPassword = new LpPassword(reConservator.getConservator().getPhonenumber(), reConservator.getPassword());
+            list.get(0).setPassword(lpPassword.getPasswordValue());
+            int updateKey = this.conservatorService.updateByPrimaryKey(list.get(0));
+            if (updateKey == 1) {
+                lpr.setWhy("更新成功");
+            } else {
+                key = false;
+                lpr.setWhy("更新失败");
+            }
+        } else {
+            key = false;
+            lpr.setWhy(landingLPR.getWhy());
+        }
+
+
+        lpr.setReturnKey(key);
+        return lpr;
+    }
 }

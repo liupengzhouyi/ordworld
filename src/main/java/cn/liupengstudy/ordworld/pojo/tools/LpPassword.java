@@ -25,9 +25,9 @@ public class LpPassword {
     @ApiModelProperty(value = "秘文")
     private int passwordValue;
 
-    public LpPassword(String number, int password) {
+    public LpPassword(String number, String password) {
         this.number = number;
-        this.password = password + "";
+        this.password = password;
     }
 
     public LpPassword() {
@@ -75,13 +75,5 @@ public class LpPassword {
                 ", password='" + password + '\'' +
                 ", passwordValue=" + passwordValue +
                 '}';
-    }
-
-    public static void main(String[] args) {
-        LpPassword lpPassword;
-        lpPassword = new LpPassword("14747210876", 123456);
-        System.out.println(lpPassword.toString());
-        int password = lpPassword.getPasswordValue();
-        System.out.println(password);
     }
 }

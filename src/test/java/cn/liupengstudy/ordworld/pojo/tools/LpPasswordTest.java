@@ -17,7 +17,7 @@ public class LpPasswordTest {
     @Test
     public void getPasswordValue() {
         LpPassword lpPassword;
-        lpPassword = new LpPassword("14747210876", 123456);
+        lpPassword = new LpPassword("14747210876", "123456");
         System.out.println(lpPassword.toString());
         int password = lpPassword.getPasswordValue();
         System.out.println(password);

@@ -57,7 +57,7 @@ public class ConservatorServiceImpl implements ConservatorInterface {
 
     @Override
     public int updateByPrimaryKey(Conservator record) {
-        return 0;
+        return this.getConservatorMapper().updateByPrimaryKey(record);
     }
 
     @Override

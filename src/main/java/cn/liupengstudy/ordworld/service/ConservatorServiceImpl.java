@@ -37,7 +37,7 @@ public class ConservatorServiceImpl implements ConservatorInterface {
 
     @Override
     public int insert(Conservator record) {
-        return 0;
+        return this.getConservatorMapper().insert(record);
     }
 
     @Override

@@ -2,6 +2,7 @@ package cn.liupengstudy.ordworld.controller;
 
 import cn.liupengstudy.ordworld.pojo.Conservator;
 import cn.liupengstudy.ordworld.pojo.tools.LPR;
+import cn.liupengstudy.ordworld.pojo.tools.LpPassword;
 import cn.liupengstudy.ordworld.service.ConservatorServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -57,4 +58,48 @@ public class ConservatorController {
         lpr.setReturnObject(list);
         return lpr;
     }
+
+    @ApiOperation(value = "管理员注册")
+    @RequestMapping(path = "/register", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR register(@RequestBody Conservator conservator) {
+        LPR lpr = new LPR();
+        lpr.setWhat("管理员注册");
+        boolean key = true;
+        if (conservator.getPhonenumber().length() != 11) {
+            key = false;
+            lpr.setWhy("电话号码错误");
+            lpr.setReturnKey(key);
+            lpr.setReturnObject(null);
+        } else {
+            LPR selectPhoneNumber = this.selectPhoneNumber(conservator);
+            if (!selectPhoneNumber.isReturnKey()) {
+                if (conservator.getPassword() == 0) {
+                    lpr.setWhy("没有输入，不可以注册");
+                    lpr.setReturnKey(key);
+                    lpr.setReturnObject(null);
+                } else {
+                    lpr.setWhy("电话号码没有重复，可以注册");
+                    LpPassword lpPassword = new LpPassword(conservator.getPhonenumber(), conservator.getPassword());
+                    conservator.setPassword(lpPassword.getPasswordValue());
+                    int registerKey = this.conservatorService.insert(conservator);
+                    System.out.println(registerKey);
+                    if (registerKey == 1) {
+                        lpr.setWhy("注册成功");
+                    } else {
+                        key = false;
+                        lpr.setWhy("注册失败");
+                    }
+                    lpr.setReturnKey(key);
+                    lpr.setReturnObject(registerKey);
+                }
+
+            } else {
+                lpr.setWhy("电话号码重复，不可以注册");
+                lpr.setReturnKey(key);
+                lpr.setReturnObject(null);
+            }
+        }
+        return lpr;
+    }
+
 }

@@ -24,13 +24,17 @@ public class LPR {
     @ApiModelProperty(value = "返回对象")
     private Object returnObject;
 
+    @ApiModelProperty(value = "为什么错误")
+    private String why;
+
     public LPR() {
     }
 
-    public LPR(String what, boolean returnKey, Object returnObject) {
+    public LPR(String what, boolean returnKey, Object returnObject, String why) {
         this.what = what;
         this.returnKey = returnKey;
         this.returnObject = returnObject;
+        this.why = why;
     }
 
     public String getWhat() {
@@ -57,12 +61,21 @@ public class LPR {
         this.returnObject = returnObject;
     }
 
+    public String getWhy() {
+        return why;
+    }
+
+    public void setWhy(String why) {
+        this.why = why;
+    }
+
     @Override
     public String toString() {
         return "LPR{" +
                 "what='" + what + '\'' +
                 ", returnKey=" + returnKey +
                 ", returnObject=" + returnObject +
+                ", why='" + why + '\'' +
                 '}';
     }
 }

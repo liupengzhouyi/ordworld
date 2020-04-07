@@ -2,6 +2,8 @@ package cn.liupengstudy.ordworld.controller;
 
 
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/File")
+@Api(tags = "文件控制器")
 public class FileController {
 
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
@@ -40,6 +43,7 @@ public class FileController {
     private FileService fileService;
 
     //@PostMapping("/uploadFile")
+    @ApiOperation(value = "单文件上传")
     @RequestMapping(path = "/uploadFile", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file){
         String fileName = fileService.storeFile(file);
@@ -51,12 +55,14 @@ public class FileController {
 
 
     //@PostMapping("/uploadMultipleFiles")
+    @ApiOperation(value = "多文件上传")
     @RequestMapping(path = "/uploadMultipleFilese", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.stream(files).map(this::uploadFile).collect(Collectors.toList());
     }
 
     //@GetMapping("/downloadFile/{fileName:.+}")
+    @ApiOperation(value = "文件下载")
     @RequestMapping(path = "/downloadFile/{fileName:.+}", method = {RequestMethod.POST,RequestMethod.GET}, produces = "application/json;charset=UTF-8")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         // Load file as Resource

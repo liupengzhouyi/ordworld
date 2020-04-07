@@ -1,6 +1,7 @@
 package cn.liupengstudy.ordworld.controller;
 
 import cn.liupengstudy.ordworld.pojo.Conservator;
+import cn.liupengstudy.ordworld.pojo.tools.LPR;
 import cn.liupengstudy.ordworld.service.ConservatorServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,8 +30,15 @@ public class ConservatorController {
 
     @ApiOperation(value = "通过管理员ID获取管理员信息")
     @RequestMapping(path = "/selectByPrimaryKey", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public Conservator getConservatorInformationById(@RequestBody Conservator conservator) {
-        return this.conservatorService.selectByPrimaryKey(conservator.getId());
+    public LPR getConservatorInformationById(@RequestBody Conservator conservator) {
+        LPR lpr = new LPR();
+        lpr.setWhat("通过管理员ID获取管理员信息");
+        lpr.setReturnKey(true);
+        lpr.setReturnObject(this.conservatorService.selectByPrimaryKey(conservator.getId()));
+        return lpr;
     }
+
+
+
 
 }

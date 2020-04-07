@@ -1,7 +1,10 @@
 package cn.liupengstudy.ordworld.pojo;
 
+import io.swagger.annotations.ApiModel;
+
 import java.io.Serializable;
 
+@ApiModel(value = "管理员")
 public class Conservator implements Serializable {
     /**
      *

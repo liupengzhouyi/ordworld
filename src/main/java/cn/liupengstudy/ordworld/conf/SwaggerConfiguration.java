@@ -36,7 +36,7 @@ public class SwaggerConfiguration {
                 .groupName("2.X版本")
                 .select()
                 //这里指定Controller扫描包路径
-                .apis(RequestHandlerSelectors.basePackage("com.swagger.bootstrap.ui.demo.new2"))
+                .apis(RequestHandlerSelectors.basePackage("cn.liupengstudy.ordworld.controller"))
                 .paths(PathSelectors.any())
                 .build();
         return docket;
@@ -46,8 +46,8 @@ public class SwaggerConfiguration {
         return new ApiInfoBuilder()
                 .title("swagger-bootstrap-ui RESTful APIs")
                 .description("swagger-bootstrap-ui")
-                .termsOfServiceUrl("http://localhost:8999/")
-                .contact("developer@mail.com")
+                .termsOfServiceUrl("http://localhost:8080/")
+                .contact("liupeng.0@outlook.com")
                 .version("1.0")
                 .build();
     }

@@ -1,8 +1,13 @@
 package cn.liupengstudy.ordworld.controller;
 
+import cn.liupengstudy.ordworld.pojo.Conservator;
 import cn.liupengstudy.ordworld.service.ConservatorServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,16 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/Conservator")
+@Api(tags = "管理员控制器")
 public class ConservatorController {
 
     @Autowired
     private ConservatorServiceImpl conservatorService;
 
-    @RequestMapping("/selectByPrimaryKey")
-    String home() {
-        String s = this.conservatorService.selectByPrimaryKey(1).toString();
-        System.out.println(s);
-        return s;
+    @ApiOperation(value = "通过管理员ID获取管理员信息")
+    @RequestMapping(path = "/selectByPrimaryKey", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public Conservator getConservatorInformationById(@RequestBody Conservator conservator) {
+        return this.conservatorService.selectByPrimaryKey(conservator.getId());
     }
 
 }

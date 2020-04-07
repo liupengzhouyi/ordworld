@@ -1,12 +1,17 @@
 package cn.liupengstudy.ordworld.controller;
 
+import cn.liupengstudy.ordworld.pojo.Conservator;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.constant.Constable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @文件名 cn.liupengstudy.ordworld.controller
@@ -18,6 +23,7 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/indexCationPaper")
+@Api(tags = "开始测试控制器")
 public class IndexController {
 
     /**
@@ -29,10 +35,12 @@ public class IndexController {
      * @创建时间  2020/4/4 - 3:07 下午
      * @修改人和其它信息
      */
-    @RequestMapping("/")
-    String home(String name) {
-        return "Hello " + name + "!";
+    @ApiOperation(value = "say hello")
+    @RequestMapping(path = "/hello", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public Conservator home(@RequestBody Conservator conservator) {
+        return conservator;
     }
+
 
     /**
      * @描述
@@ -43,9 +51,11 @@ public class IndexController {
      * @创建时间  2020/4/4 - 3:06 下午
      * @修改人和其它信息
      */
-    @RequestMapping("/now")
-    String hehe() {
-        return "现在时间：" + (new Date()).toLocaleString();
+    @ApiOperation(value = "获取当前时间")
+    @RequestMapping(path = "/now", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public Date hehe() {
+        Date date = new Date();
+        return date;
     }
 
 }

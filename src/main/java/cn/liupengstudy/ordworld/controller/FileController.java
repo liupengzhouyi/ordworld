@@ -40,7 +40,7 @@ public class FileController {
     private FileService fileService;
 
     //@PostMapping("/uploadFile")
-    @RequestMapping("/uploadFile")
+    @RequestMapping(path = "/uploadFile", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file){
         String fileName = fileService.storeFile(file);
 
@@ -51,13 +51,13 @@ public class FileController {
 
 
     //@PostMapping("/uploadMultipleFiles")
-    @RequestMapping("/uploadMultipleFilese")
+    @RequestMapping(path = "/uploadMultipleFilese", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.stream(files).map(this::uploadFile).collect(Collectors.toList());
     }
 
     //@GetMapping("/downloadFile/{fileName:.+}")
-    @RequestMapping("/downloadFile/{fileName:.+}")
+    @RequestMapping(path = "/downloadFile/{fileName:.+}", method = {RequestMethod.POST,RequestMethod.GET}, produces = "application/json;charset=UTF-8")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         // Load file as Resource
         Resource resource = fileService.loadFileAsResource(fileName);

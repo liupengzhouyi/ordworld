@@ -2,6 +2,8 @@ package cn.liupengstudy.ordworld.serviceInterface;
 
 import cn.liupengstudy.ordworld.pojo.Conservator;
 
+import java.util.List;
+
 /**
  * @文件名 cn.liupengstudy.ordworld.serviceInterface
  * @描述
@@ -60,4 +62,5 @@ public interface ConservatorInterface {
      */
     int updateByPrimaryKey(Conservator record);
 
+    List<Conservator> selectByPhoneNumber(String phoneNumber);
 }

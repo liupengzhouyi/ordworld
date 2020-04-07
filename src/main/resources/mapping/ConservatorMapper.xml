@@ -32,6 +32,14 @@
     from conservator
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByPhoneNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from conservator
+    where phoneNumber = #{phoneNumber}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--
       WARNING - @mbg.generated

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @文件名 cn.liupengstudy.ordworld.controller
  * @描述
@@ -32,13 +34,32 @@ public class ConservatorController {
     @RequestMapping(path = "/selectByPrimaryKey", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LPR getConservatorInformationById(@RequestBody Conservator conservator) {
         LPR lpr = new LPR();
+        boolean key = true;
         lpr.setWhat("通过管理员ID获取管理员信息");
-        lpr.setReturnKey(true);
-        lpr.setReturnObject(this.conservatorService.selectByPrimaryKey(conservator.getId()));
+        Conservator conservator1 = this.conservatorService.selectByPrimaryKey(conservator.getId());
+        if (conservator1 == null) { key = false; }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(conservator1);
         return lpr;
     }
 
 
 
 
+
+
+    @ApiOperation(value = "管理员电话号码查重")
+    @RequestMapping(path = "/selectPhoneNumber", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR selectPhoneNumber(@RequestBody Conservator conservator) {
+        LPR lpr = new LPR();
+        boolean key = true;
+        List<Conservator> list = this.conservatorService.selectByPhoneNumber(conservator.getPhonenumber());
+        lpr.setWhat("管理员电话号码查重");
+        if (list.size() == 0) {
+            key = false;
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
+        return lpr;
+    }
 }

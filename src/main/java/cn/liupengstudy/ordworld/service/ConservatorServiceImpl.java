@@ -6,6 +6,8 @@ import cn.liupengstudy.ordworld.serviceInterface.ConservatorInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @文件名 cn.liupengstudy.ordworld.service
  * @描述
@@ -19,6 +21,14 @@ public class ConservatorServiceImpl implements ConservatorInterface {
 
     @Autowired
     private ConservatorMapper conservatorMapper;
+
+    public ConservatorMapper getConservatorMapper() {
+        return conservatorMapper;
+    }
+
+    public void setConservatorMapper(ConservatorMapper conservatorMapper) {
+        this.conservatorMapper = conservatorMapper;
+    }
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
@@ -37,7 +47,7 @@ public class ConservatorServiceImpl implements ConservatorInterface {
 
     @Override
     public Conservator selectByPrimaryKey(Integer id) {
-        return this.conservatorMapper.selectByPrimaryKey(id);
+        return this.getConservatorMapper().selectByPrimaryKey(id);
     }
 
     @Override
@@ -48,5 +58,10 @@ public class ConservatorServiceImpl implements ConservatorInterface {
     @Override
     public int updateByPrimaryKey(Conservator record) {
         return 0;
+    }
+
+    @Override
+    public List<Conservator> selectByPhoneNumber(String phoneNumber) {
+        return this.getConservatorMapper().selectByPhoneNumber(phoneNumber);
     }
 }

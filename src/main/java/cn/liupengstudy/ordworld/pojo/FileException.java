@@ -9,6 +9,7 @@ package cn.liupengstudy.ordworld.pojo;
  * @修改人和其它信息
  */
 public class FileException extends RuntimeException{
+
     public FileException(String message) {
         super(message);
     }

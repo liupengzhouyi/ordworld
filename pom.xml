@@ -54,7 +54,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.2</version>
+        </dependency>
         <!--使用durid连接池的依赖-->
         <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
         <dependency>
@@ -62,8 +67,6 @@
             <artifactId>druid</artifactId>
             <version>1.1.21</version>
         </dependency>
-
-
         <!-- 数据库连接 -->
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
@@ -88,6 +91,26 @@
                     <source>14</source>
                     <target>14</target>
                 </configuration>
+            </plugin>
+
+            <!--mybatis自动生成代码插件-->
+            <plugin>
+                <!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-maven-plugin -->
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <!-- 是否覆盖，true表示会替换生成的JAVA文件，false则不覆盖 -->
+                    <overwrite>true</overwrite>
+                </configuration>
+                <dependencies>
+                    <!--mysql驱动包-->
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.17</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

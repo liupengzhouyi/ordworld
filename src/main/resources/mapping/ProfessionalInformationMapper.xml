@@ -38,6 +38,9 @@
     from professionalInformation
     where number = #{number,jdbcType=INTEGER}
   </select>
+  <select id="getAll" resultMap="BaseResultMap">
+    select * from professionalInformation
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--
       WARNING - @mbg.generated

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @文件名 cn.liupengstudy.ordworld.controller
  * @描述
@@ -82,7 +84,23 @@ public class ProfessionallninformationController {
         return lpr;
     }
 
-
+    @ApiOperation(value = "查找所有专业信息")
+    @RequestMapping(path = "/getAll", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAll() {
+        LPR lpr = new LPR();
+        lpr.setWhat("查找所有专业信息");
+        boolean k = true;
+        List<ProfessionalInformation> list = this.professionallninformationService.getAll();
+        if (list.size() <= 0) {
+            lpr.setWhy("没有数据");
+            k = false;
+        } else {
+            lpr.setWhy("查找成功");
+        }
+        lpr.setReturnKey(k);
+        lpr.setReturnObject(list);
+        return lpr;
+    }
 
 
 

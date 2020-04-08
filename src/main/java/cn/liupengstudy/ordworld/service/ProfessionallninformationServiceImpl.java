@@ -6,6 +6,8 @@ import cn.liupengstudy.ordworld.serviceInterface.ProfessionallninformationInterf
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @文件名 cn.liupengstudy.ordworld.service
  * @描述
@@ -61,5 +63,10 @@ public class ProfessionallninformationServiceImpl implements Professionallninfor
     @Override
     public ProfessionalInformation selectByNumber(String number) {
         return this.getProfessionalInformationMapper().selectByNumber(number);
+    }
+
+    @Override
+    public List<ProfessionalInformation> getAll() {
+        return this.getProfessionalInformationMapper().getAll();
     }
 }

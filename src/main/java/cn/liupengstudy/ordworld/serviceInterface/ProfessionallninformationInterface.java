@@ -2,6 +2,8 @@ package cn.liupengstudy.ordworld.serviceInterface;
 
 import cn.liupengstudy.ordworld.pojo.ProfessionalInformation;
 
+import java.util.List;
+
 /**
  * @文件名 cn.liupengstudy.ordworld.serviceInterface
  * @描述
@@ -63,6 +65,6 @@ public interface ProfessionallninformationInterface {
 
     ProfessionalInformation selectByNumber(String number);
 
-
+    List<ProfessionalInformation> getAll();
 
 }

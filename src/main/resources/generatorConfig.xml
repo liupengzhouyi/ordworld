@@ -55,8 +55,20 @@
         </javaClientGenerator>
 
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名 -->
-        <table tableName="conservator"
+        <!--<table tableName="conservator"
                domainObjectName="Conservator"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false" >
+            <property name="useActualColumnNames" value="false"/>
+            &lt;!&ndash; 数据库表主键 &ndash;&gt;
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>-->
+
+        <table tableName="systemInformation"
+               domainObjectName="SystemInformation"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

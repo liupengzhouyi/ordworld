@@ -1,6 +1,7 @@
 package cn.liupengstudy.ordworld.pojo;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 
@@ -13,6 +14,7 @@ public class SystemInformation implements Serializable {
      *
      * @mbg.generated Wed Apr 08 14:01:03 CST 2020
      */
+    @ApiModelProperty(value = "ID")
     private Integer id;
 
     /**
@@ -22,6 +24,7 @@ public class SystemInformation implements Serializable {
      *
      * @mbg.generated Wed Apr 08 14:01:03 CST 2020
      */
+    @ApiModelProperty(value = "作者")
     private Integer authorid;
 
     /**
@@ -31,6 +34,7 @@ public class SystemInformation implements Serializable {
      *
      * @mbg.generated Wed Apr 08 14:01:03 CST 2020
      */
+    @ApiModelProperty(value = "标题")
     private String title;
 
     /**
@@ -40,6 +44,7 @@ public class SystemInformation implements Serializable {
      *
      * @mbg.generated Wed Apr 08 14:01:03 CST 2020
      */
+    @ApiModelProperty(value = "内容")
     private String lpcontent;
 
     /**
@@ -49,6 +54,7 @@ public class SystemInformation implements Serializable {
      *
      * @mbg.generated Wed Apr 08 14:01:03 CST 2020
      */
+    @ApiModelProperty(value = "年")
     private Integer lpyear;
 
     /**
@@ -58,6 +64,7 @@ public class SystemInformation implements Serializable {
      *
      * @mbg.generated Wed Apr 08 14:01:03 CST 2020
      */
+    @ApiModelProperty(value = "月")
     private Integer lpmonth;
 
     /**
@@ -67,6 +74,7 @@ public class SystemInformation implements Serializable {
      *
      * @mbg.generated Wed Apr 08 14:01:03 CST 2020
      */
+    @ApiModelProperty(value = "日")
     private Integer lpday;
 
     /**
@@ -75,6 +83,7 @@ public class SystemInformation implements Serializable {
      *
      * @mbg.generated Wed Apr 08 14:01:03 CST 2020
      */
+    @ApiModelProperty(value = "serialVersionUID")
     private static final long serialVersionUID = 1L;
 
     /**

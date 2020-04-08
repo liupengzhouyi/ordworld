@@ -1,6 +1,7 @@
 package cn.liupengstudy.ordworld.pojo;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 
@@ -13,6 +14,7 @@ public class Conservator implements Serializable {
      *
      * @mbg.generated Tue Apr 07 18:13:39 CST 2020
      */
+    @ApiModelProperty(value = "ID")
     private Integer id;
 
     /**
@@ -22,6 +24,7 @@ public class Conservator implements Serializable {
      *
      * @mbg.generated Tue Apr 07 18:13:39 CST 2020
      */
+    @ApiModelProperty(value = "头像URL")
     private String imageurl;
 
     /**
@@ -31,6 +34,7 @@ public class Conservator implements Serializable {
      *
      * @mbg.generated Tue Apr 07 18:13:39 CST 2020
      */
+    @ApiModelProperty(value = "名称")
     private String name;
 
     /**
@@ -40,6 +44,7 @@ public class Conservator implements Serializable {
      *
      * @mbg.generated Tue Apr 07 18:13:39 CST 2020
      */
+    @ApiModelProperty(value = "密码")
     private Integer password;
 
     /**
@@ -49,6 +54,7 @@ public class Conservator implements Serializable {
      *
      * @mbg.generated Tue Apr 07 18:13:39 CST 2020
      */
+    @ApiModelProperty(value = "联系方式")
     private String phonenumber;
 
     /**
@@ -57,6 +63,7 @@ public class Conservator implements Serializable {
      *
      * @mbg.generated Tue Apr 07 18:13:39 CST 2020
      */
+    @ApiModelProperty(value = "serialVersionUID")
     private static final long serialVersionUID = 1L;
 
     /**

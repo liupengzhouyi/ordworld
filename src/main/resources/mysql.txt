@@ -38,4 +38,6 @@ create table professionalInformation
 )
 comment '专业信息';
 
+create unique index professionalInformation_number_uindex
+	on professionalInformation (number);
 

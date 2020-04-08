@@ -1,7 +1,11 @@
 package cn.liupengstudy.ordworld.pojo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
+@ApiModel(value = "专业信息")
 public class ProfessionalInformation implements Serializable {
     /**
      *
@@ -10,6 +14,7 @@ public class ProfessionalInformation implements Serializable {
      *
      * @mbg.generated Wed Apr 08 21:03:38 CST 2020
      */
+    @ApiModelProperty(value = "ID")
     private Integer id;
 
     /**
@@ -19,6 +24,7 @@ public class ProfessionalInformation implements Serializable {
      *
      * @mbg.generated Wed Apr 08 21:03:38 CST 2020
      */
+    @ApiModelProperty(value = "编号")
     private String number;
 
     /**
@@ -28,6 +34,7 @@ public class ProfessionalInformation implements Serializable {
      *
      * @mbg.generated Wed Apr 08 21:03:38 CST 2020
      */
+    @ApiModelProperty(value = "学院")
     private String college;
 
     /**
@@ -37,6 +44,7 @@ public class ProfessionalInformation implements Serializable {
      *
      * @mbg.generated Wed Apr 08 21:03:38 CST 2020
      */
+    @ApiModelProperty(value = "系")
     private String department;
 
     /**
@@ -46,6 +54,7 @@ public class ProfessionalInformation implements Serializable {
      *
      * @mbg.generated Wed Apr 08 21:03:38 CST 2020
      */
+    @ApiModelProperty(value = "专业")
     private String professional;
 
     /**
@@ -54,6 +63,7 @@ public class ProfessionalInformation implements Serializable {
      *
      * @mbg.generated Wed Apr 08 21:03:38 CST 2020
      */
+    @ApiModelProperty(value = "serialVersionUID")
     private static final long serialVersionUID = 1L;
 
     /**

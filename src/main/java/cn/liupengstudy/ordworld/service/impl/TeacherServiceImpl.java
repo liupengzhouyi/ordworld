@@ -58,8 +58,12 @@ public class TeacherServiceImpl implements TeacherService {
      */
     @Override
     public Teacher insert(Teacher teacher) {
-        this.teacherDao.insert(teacher);
-        return teacher;
+        Teacher teacher1 = null;
+        int key = this.teacherDao.insert(teacher);
+        if (key == 1) {
+            teacher1 = this.selectByNumber(teacher.getTeachernumber());
+        }
+        return teacher1;
     }
 
     /**

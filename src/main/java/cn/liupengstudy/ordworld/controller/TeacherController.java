@@ -48,13 +48,30 @@ public class TeacherController {
     @ApiOperation(value = "添加教师信息")
     @RequestMapping(path = "/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LPR add(@RequestBody Teacher teacher) {
-        // update password
-        LpPassword lpPassword = new LpPassword(teacher.getTeachernumber(), teacher.getPassword()+"");
-        teacher.setPassword(lpPassword.getPasswordValue());
         LPR lpr = new LPR();
         lpr.setWhat("添加教师信息");
         boolean key = true;
-
+        Teacher teacher1 = null;
+        // find different
+        LPR selectByNumberLpr = this.selectByNumber(teacher);
+        if (selectByNumberLpr.isReturnKey()) {
+            key = false;
+            lpr.setWhy("教师编号重复");
+        } else {
+            // update password
+            LpPassword lpPassword = new LpPassword(teacher.getTeachernumber(), teacher.getPassword()+"");
+            teacher.setPassword(lpPassword.getPasswordValue());
+            // add
+            teacher1 = this.teacherService.insert(teacher);
+            if (teacher1 == null) {
+                key = false;
+                lpr.setWhy("注册失败");
+            } else {
+                lpr.setWhy("注册成功");
+            }
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(teacher1);
         return lpr;
     }
 

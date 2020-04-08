@@ -32,7 +32,7 @@ public class ProfessionallninformationServiceImpl implements Professionallninfor
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
-        return 0;
+        return this.getProfessionalInformationMapper().deleteByPrimaryKey(id);
     }
 
     @Override

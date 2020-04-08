@@ -102,7 +102,29 @@ public class ProfessionallninformationController {
         return lpr;
     }
 
-
-
+    @ApiOperation(value = "删除专业信息")
+    @RequestMapping(path = "/delete", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR delete(@RequestBody ProfessionalInformation professionalInformation) {
+        LPR lpr = new LPR();
+        lpr.setWhat("删除专业信息");
+        boolean k = true;
+        int key  = 0;
+        LPR selectByNumberLpr = this.selectByNumber(professionalInformation);
+        if (selectByNumberLpr.isReturnKey()) {
+            key = this.professionallninformationService.deleteByPrimaryKey(((ProfessionalInformation) selectByNumberLpr.getReturnObject()).getId());
+            if (key == 1) {
+                lpr.setWhy("删除成功");
+            } else {
+                k = false;
+                lpr.setWhy("删除失败");
+            }
+        } else {
+            k = false;
+            lpr.setWhy(selectByNumberLpr.getWhy());
+        }
+        lpr.setReturnKey(k);
+        lpr.setReturnObject(key);
+        return lpr;
+    }
 
 }

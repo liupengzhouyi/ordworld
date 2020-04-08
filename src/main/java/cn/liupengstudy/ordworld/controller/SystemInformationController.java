@@ -80,22 +80,39 @@ public class SystemInformationController {
         } else {
             lpr.setWhy("查询成功");
         }
+        lpr.setReturnKey(key);
         lpr.setReturnObject(systemInformation1);
         return lpr;
     }
 
-
-    /*@ApiOperation(value = "删除系统公告信息")
+    @ApiOperation(value = "删除系统公告信息")
     @RequestMapping(path = "/delete", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public LPR deleteSystemInformation(@RequestBody SystemInformation systemInformation) {
-
-
-
-    }*/
-
-
-
-
+    public LPR delete(@RequestBody SystemInformation systemInformation) {
+        LPR lpr = new LPR();
+        lpr.setWhat("删除系统公告信息");
+        boolean key = true;
+        LPR selectLpr = this.select(systemInformation);
+        if (selectLpr.isReturnKey()) {
+            SystemInformation temp = (SystemInformation) selectLpr.getReturnObject();
+            if (temp.getAuthorid() == systemInformation.getAuthorid()) {
+                int returnKey = this.systemInformationService.deleteByPrimaryKey(systemInformation.getId());
+                if (returnKey == 1) {
+                    lpr.setWhy("数据删除成功");
+                } else {
+                    lpr.setWhy("数据删除失败");
+                    key = false;
+                }
+            } else {
+                lpr.setWhy("你不是该公告的作者，没有权限删除数据");
+                key = false;
+            }
+        } else {
+            lpr.setWhy("数据不存在");
+            key = false;
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
 
 
 

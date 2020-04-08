@@ -32,7 +32,7 @@ public class SystemInformationServiceImpl implements SystemInformationInterface 
 
     @Override
     public int deleteByPrimaryKey(Integer id) {
-        return 0;
+        return this.getSystemInformationMapper().deleteByPrimaryKey(id);
     }
 
     @Override

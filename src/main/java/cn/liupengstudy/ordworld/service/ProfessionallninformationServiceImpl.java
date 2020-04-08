@@ -57,4 +57,9 @@ public class ProfessionallninformationServiceImpl implements Professionallninfor
     public int updateByPrimaryKey(ProfessionalInformation record) {
         return 0;
     }
+
+    @Override
+    public ProfessionalInformation selectByNumber(String number) {
+        return this.getProfessionalInformationMapper().selectByNumber(number);
+    }
 }

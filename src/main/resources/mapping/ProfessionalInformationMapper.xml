@@ -32,6 +32,12 @@
     from professionalInformation
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from professionalInformation
+    where number = #{number,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--
       WARNING - @mbg.generated

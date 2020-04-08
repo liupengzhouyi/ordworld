@@ -60,4 +60,9 @@ public interface ProfessionallninformationInterface {
      */
     int updateByPrimaryKey(ProfessionalInformation record);
 
+
+    ProfessionalInformation selectByNumber(String number);
+
+
+
 }

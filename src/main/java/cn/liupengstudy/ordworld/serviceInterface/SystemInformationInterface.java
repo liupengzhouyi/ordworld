@@ -63,4 +63,6 @@ public interface SystemInformationInterface {
     int updateByPrimaryKey(SystemInformation record);
 
     List<SystemInformation> getAll();
+
+    List<SystemInformation> selectByAuthor(Integer authorId);
 }

@@ -114,6 +114,23 @@ public class SystemInformationController {
         return lpr;
     }
 
+    @ApiOperation(value = "通过管理员ID查询系统公告信息")
+    @RequestMapping(path = "/selectByAuthor", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR selectByAuthor(@RequestBody SystemInformation systemInformation) {
+        LPR lpr = new LPR();
+        lpr.setWhat("通过管理员ID查询系统公告信息");
+        boolean key = true;
+        List<SystemInformation> list = this.systemInformationService.selectByAuthor(systemInformation.getAuthorid());
+        if (list.size() <= 0) {
+            lpr.setWhy("没有数据");
+        } else {
+            lpr.setWhy("查询到数据");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
+        return lpr;
+    }
+
 
 
 }

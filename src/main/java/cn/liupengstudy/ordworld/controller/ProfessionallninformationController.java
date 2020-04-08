@@ -46,6 +46,23 @@ public class ProfessionallninformationController {
         return lpr;
     }
 
+    @ApiOperation(value = "通过ID查找专业信息")
+    @RequestMapping(path = "/selectOne", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR selectOne(@RequestBody ProfessionalInformation professionalInformation) {
+        LPR lpr = new LPR();
+        lpr.setWhat("通过ID查找专业信息");
+        boolean k = true;
+        ProfessionalInformation professionalInformation1 = this.professionallninformationService.selectByPrimaryKey(professionalInformation.getId());
+        if (professionalInformation1 == null) {
+            lpr.setWhy("查找失败");
+            k = false;
+        } else {
+            lpr.setWhy("查找成功");
+        }
+        lpr.setReturnKey(k);
+        lpr.setReturnObject(professionalInformation1);
+        return lpr;
+    }
 
 
 }

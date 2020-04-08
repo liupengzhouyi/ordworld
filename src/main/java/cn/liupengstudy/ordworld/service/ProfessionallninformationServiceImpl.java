@@ -45,7 +45,7 @@ public class ProfessionallninformationServiceImpl implements Professionallninfor
 
     @Override
     public ProfessionalInformation selectByPrimaryKey(Integer id) {
-        return null;
+        return this.getProfessionalInformationMapper().selectByPrimaryKey(id);
     }
 
     @Override

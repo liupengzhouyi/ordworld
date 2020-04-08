@@ -1,4 +1,4 @@
-package cn.liupengstudy.ordworld.service;
+package cn.liupengstudy.ordworld.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import cn.liupengstudy.ordworld.pojo.FileProperties;
-import cn.liupengstudy.ordworld.pojo.FileException;
+import cn.liupengstudy.ordworld.entity.FileProperties;
+import cn.liupengstudy.ordworld.entity.FileException;
 
 
 import java.io.IOException;

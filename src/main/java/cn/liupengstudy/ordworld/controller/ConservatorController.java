@@ -1,10 +1,10 @@
 package cn.liupengstudy.ordworld.controller;
 
-import cn.liupengstudy.ordworld.pojo.Conservator;
-import cn.liupengstudy.ordworld.pojo.tools.LPR;
-import cn.liupengstudy.ordworld.pojo.tools.LpPassword;
-import cn.liupengstudy.ordworld.pojo.tools.ReConservator;
-import cn.liupengstudy.ordworld.service.ConservatorServiceImpl;
+import cn.liupengstudy.ordworld.entity.Conservator;
+import cn.liupengstudy.ordworld.entity.tools.LPR;
+import cn.liupengstudy.ordworld.entity.tools.LpPassword;
+import cn.liupengstudy.ordworld.entity.tools.ReConservator;
+import cn.liupengstudy.ordworld.service.impl.ConservatorServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

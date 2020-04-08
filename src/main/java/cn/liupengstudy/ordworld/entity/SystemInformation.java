@@ -1,4 +1,4 @@
-package cn.liupengstudy.ordworld.pojo;
+package cn.liupengstudy.ordworld.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

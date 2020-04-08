@@ -1,8 +1,8 @@
-package cn.liupengstudy.ordworld.service;
+package cn.liupengstudy.ordworld.service.impl;
 
-import cn.liupengstudy.ordworld.mapper.SystemInformationMapper;
-import cn.liupengstudy.ordworld.pojo.SystemInformation;
-import cn.liupengstudy.ordworld.serviceInterface.SystemInformationInterface;
+import cn.liupengstudy.ordworld.dao.SystemInformationMapper;
+import cn.liupengstudy.ordworld.entity.SystemInformation;
+import cn.liupengstudy.ordworld.service.SystemInformationInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

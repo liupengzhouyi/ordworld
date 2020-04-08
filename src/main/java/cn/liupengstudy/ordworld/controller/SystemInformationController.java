@@ -1,9 +1,8 @@
 package cn.liupengstudy.ordworld.controller;
 
-import cn.liupengstudy.ordworld.pojo.Conservator;
-import cn.liupengstudy.ordworld.pojo.SystemInformation;
-import cn.liupengstudy.ordworld.pojo.tools.LPR;
-import cn.liupengstudy.ordworld.service.SystemInformationServiceImpl;
+import cn.liupengstudy.ordworld.entity.SystemInformation;
+import cn.liupengstudy.ordworld.entity.tools.LPR;
+import cn.liupengstudy.ordworld.service.impl.SystemInformationServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

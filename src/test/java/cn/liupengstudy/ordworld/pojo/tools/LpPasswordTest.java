@@ -1,8 +1,7 @@
 package cn.liupengstudy.ordworld.pojo.tools;
 
+import cn.liupengstudy.ordworld.entity.tools.LpPassword;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * @文件名 cn.liupengstudy.ordworld.pojo.tools

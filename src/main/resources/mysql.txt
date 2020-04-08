@@ -59,4 +59,7 @@ comment '教师';
 create unique index teacher_teacherNumber_uindex
 	on teacher (teacherNumber);
 
+alter table teacher
+	add name varchar(20) null comment '教师名称';
+
 

@@ -1,6 +1,6 @@
-package cn.liupengstudy.ordworld.serviceInterface;
+package cn.liupengstudy.ordworld.service;
 
-import cn.liupengstudy.ordworld.pojo.SystemInformation;
+import cn.liupengstudy.ordworld.entity.SystemInformation;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package cn.liupengstudy.ordworld.service;
+package cn.liupengstudy.ordworld.service.impl;
 
-import cn.liupengstudy.ordworld.mapper.ProfessionalInformationMapper;
-import cn.liupengstudy.ordworld.pojo.ProfessionalInformation;
-import cn.liupengstudy.ordworld.serviceInterface.ProfessionallninformationInterface;
+import cn.liupengstudy.ordworld.dao.ProfessionalInformationMapper;
+import cn.liupengstudy.ordworld.entity.ProfessionalInformation;
+import cn.liupengstudy.ordworld.service.ProfessionallninformationInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

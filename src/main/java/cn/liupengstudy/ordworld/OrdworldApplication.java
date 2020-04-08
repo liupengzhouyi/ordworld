@@ -1,12 +1,9 @@
 package cn.liupengstudy.ordworld;
 
-import cn.liupengstudy.ordworld.pojo.FileProperties;
+import cn.liupengstudy.ordworld.entity.FileProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.Date;
 
 @SpringBootApplication
 @EnableConfigurationProperties({FileProperties.class})

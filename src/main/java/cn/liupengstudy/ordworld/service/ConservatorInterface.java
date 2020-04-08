@@ -1,6 +1,6 @@
-package cn.liupengstudy.ordworld.serviceInterface;
+package cn.liupengstudy.ordworld.service;
 
-import cn.liupengstudy.ordworld.pojo.Conservator;
+import cn.liupengstudy.ordworld.entity.Conservator;
 
 import java.util.List;
 

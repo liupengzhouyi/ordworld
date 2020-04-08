@@ -1,17 +1,14 @@
 package cn.liupengstudy.ordworld.controller;
 
-import cn.liupengstudy.ordworld.pojo.Conservator;
+import cn.liupengstudy.ordworld.entity.Conservator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.lang.constant.Constable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @文件名 cn.liupengstudy.ordworld.controller

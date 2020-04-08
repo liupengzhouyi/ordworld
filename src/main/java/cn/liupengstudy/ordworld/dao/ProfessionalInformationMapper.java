@@ -1,6 +1,6 @@
-package cn.liupengstudy.ordworld.mapper;
+package cn.liupengstudy.ordworld.dao;
 
-import cn.liupengstudy.ordworld.pojo.ProfessionalInformation;
+import cn.liupengstudy.ordworld.entity.ProfessionalInformation;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

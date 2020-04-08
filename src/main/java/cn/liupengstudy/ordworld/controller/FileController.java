@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import cn.liupengstudy.ordworld.service.FileService;
-import cn.liupengstudy.ordworld.pojo.UploadFileResponse;
+import cn.liupengstudy.ordworld.service.impl.FileService;
+import cn.liupengstudy.ordworld.entity.UploadFileResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;

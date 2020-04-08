@@ -1,6 +1,6 @@
-package cn.liupengstudy.ordworld.pojo.tools;
+package cn.liupengstudy.ordworld.entity.tools;
 
-import cn.liupengstudy.ordworld.pojo.Conservator;
+import cn.liupengstudy.ordworld.entity.Conservator;
 
 /**
  * @文件名 cn.liupengstudy.ordworld.pojo.tools

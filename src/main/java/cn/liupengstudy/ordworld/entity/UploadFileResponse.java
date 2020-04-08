@@ -1,4 +1,4 @@
-package cn.liupengstudy.ordworld.pojo;
+package cn.liupengstudy.ordworld.entity;
 
 /**
  * @文件名 cn.liupengstudy.ordworld.pojo

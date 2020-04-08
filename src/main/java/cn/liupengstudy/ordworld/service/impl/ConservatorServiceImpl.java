@@ -1,8 +1,8 @@
-package cn.liupengstudy.ordworld.service;
+package cn.liupengstudy.ordworld.service.impl;
 
-import cn.liupengstudy.ordworld.mapper.ConservatorMapper;
-import cn.liupengstudy.ordworld.pojo.Conservator;
-import cn.liupengstudy.ordworld.serviceInterface.ConservatorInterface;
+import cn.liupengstudy.ordworld.dao.ConservatorMapper;
+import cn.liupengstudy.ordworld.entity.Conservator;
+import cn.liupengstudy.ordworld.service.ConservatorInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

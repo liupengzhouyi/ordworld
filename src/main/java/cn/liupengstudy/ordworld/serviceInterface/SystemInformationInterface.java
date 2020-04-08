@@ -65,4 +65,6 @@ public interface SystemInformationInterface {
     List<SystemInformation> getAll();
 
     List<SystemInformation> selectByAuthor(Integer authorId);
+
+    List<SystemInformation> selectByYear(Integer lpyear);
 }

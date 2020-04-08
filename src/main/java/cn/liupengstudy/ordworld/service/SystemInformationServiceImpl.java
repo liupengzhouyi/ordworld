@@ -69,4 +69,9 @@ public class SystemInformationServiceImpl implements SystemInformationInterface 
     public List<SystemInformation> selectByAuthor(Integer authorId) {
         return this.getSystemInformationMapper().selectByAuthor(authorId);
     }
+
+    @Override
+    public List<SystemInformation> selectByYear(Integer lpyear) {
+        return this.getSystemInformationMapper().selectByYear(lpyear);
+    }
 }

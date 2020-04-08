@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @文件名 cn.liupengstudy.ordworld.controller
  * @描述
@@ -46,5 +48,28 @@ public class SystemInformationController {
         lpr.setReturnObject(key);
         return lpr;
     }
+
+    @ApiOperation(value = "查询所有系统公告信息")
+    @RequestMapping(path = "/getAll", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAll() {
+        LPR lpr = new LPR();
+        lpr.setWhat("查询所有系统公告信息");
+        boolean key = true;
+        List<SystemInformation> list = this.systemInformationService.getAll();
+        if (list.size() <= 0) {
+            lpr.setWhy("没有查询到数据");
+            key = false;
+        } else {
+            lpr.setWhy("查询到数据");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
+        return lpr;
+    }
+
+
+
+
+
 
 }

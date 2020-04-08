@@ -6,6 +6,8 @@ import cn.liupengstudy.ordworld.serviceInterface.SystemInformationInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @文件名 cn.liupengstudy.ordworld.service
  * @描述
@@ -56,5 +58,10 @@ public class SystemInformationServiceImpl implements SystemInformationInterface 
     @Override
     public int updateByPrimaryKey(SystemInformation record) {
         return 0;
+    }
+
+    @Override
+    public List<SystemInformation> getAll() {
+        return this.getSystemInformationMapper().getAll();
     }
 }

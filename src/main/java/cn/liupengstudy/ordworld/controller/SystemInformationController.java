@@ -67,6 +67,33 @@ public class SystemInformationController {
         return lpr;
     }
 
+    @ApiOperation(value = "通过ID查询系统公告信息")
+    @RequestMapping(path = "/select", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR select(@RequestBody SystemInformation systemInformation) {
+        LPR lpr = new LPR();
+        lpr.setWhat("通过ID查询系统公告信息");
+        boolean key = true;
+        SystemInformation systemInformation1 = this.systemInformationService.selectByPrimaryKey(systemInformation.getId());
+        if (systemInformation1 == null) {
+            key = false;
+            lpr.setWhy("查询失败");
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnObject(systemInformation1);
+        return lpr;
+    }
+
+
+    /*@ApiOperation(value = "删除系统公告信息")
+    @RequestMapping(path = "/delete", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR deleteSystemInformation(@RequestBody SystemInformation systemInformation) {
+
+
+
+    }*/
+
+
 
 
 

@@ -47,7 +47,7 @@ public class SystemInformationServiceImpl implements SystemInformationInterface 
 
     @Override
     public SystemInformation selectByPrimaryKey(Integer id) {
-        return null;
+        return this.getSystemInformationMapper().selectByPrimaryKey(id);
     }
 
     @Override

@@ -9,6 +9,7 @@ create table conservator
 	constraint conservator_pk
 		primary key (id)
 );
+
 # 系统公告表
 create table systemInformation
 (
@@ -23,4 +24,18 @@ create table systemInformation
 		primary key (id)
 )
 comment '系统公告表';
+
+# 专业信息
+create table professionalInformation
+(
+	id int auto_increment comment '自增ID',
+	number varchar(10) not null comment '编号',
+	college varchar(20) not null comment '学院',
+	department varchar(20) not null comment '系',
+	professional varchar(20) not null comment '专业',
+	constraint professionalInformation_pk
+		primary key (id)
+)
+comment '专业信息';
+
 

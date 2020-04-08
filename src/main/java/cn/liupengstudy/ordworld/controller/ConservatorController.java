@@ -109,11 +109,11 @@ public class ConservatorController {
         LPR lpr = new LPR();
         lpr.setWhat("管理员登陆");
         boolean key = true;
-        LPR selectPhonrNumber = this.selectPhoneNumber(conservator);
-        if (selectPhonrNumber.isReturnKey()) {
+        LPR selectPhoneNumber = this.selectPhoneNumber(conservator);
+        if (selectPhoneNumber.isReturnKey()) {
             lpr.setWhy("账号存在");
             LpPassword lpPassword = new LpPassword(conservator.getPhonenumber(), conservator.getPassword() + "");
-            List<Conservator> list = (List<Conservator>) selectPhonrNumber.getReturnObject();
+            List<Conservator> list = (List<Conservator>) selectPhoneNumber.getReturnObject();
             if (list.get(0).getPassword() == lpPassword.getPasswordValue()) {
                 lpr.setWhy("密码正确");
             } else {
@@ -136,8 +136,8 @@ public class ConservatorController {
         boolean key = true;
         LPR landingLPR = this.landing(reConservator.getConservator());
         if (landingLPR.isReturnKey()) {
-            LPR selectPhonrNumber = this.selectPhoneNumber(reConservator.getConservator());
-            List<Conservator> list = (List<Conservator>) selectPhonrNumber.getReturnObject();
+            LPR selectPhoneNumber = this.selectPhoneNumber(reConservator.getConservator());
+            List<Conservator> list = (List<Conservator>) selectPhoneNumber.getReturnObject();
             LpPassword lpPassword = new LpPassword(reConservator.getConservator().getPhonenumber(), reConservator.getPassword());
             list.get(0).setPassword(lpPassword.getPasswordValue());
             int updateKey = this.conservatorService.updateByPrimaryKey(list.get(0));
@@ -151,8 +151,6 @@ public class ConservatorController {
             key = false;
             lpr.setWhy(landingLPR.getWhy());
         }
-
-
         lpr.setReturnKey(key);
         return lpr;
     }

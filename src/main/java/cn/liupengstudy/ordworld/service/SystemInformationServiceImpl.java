@@ -35,7 +35,7 @@ public class SystemInformationServiceImpl implements SystemInformationInterface 
 
     @Override
     public int insert(SystemInformation record) {
-        return 0;
+        return this.getSystemInformationMapper().insert(record);
     }
 
     @Override

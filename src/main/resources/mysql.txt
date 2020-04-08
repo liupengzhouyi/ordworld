@@ -41,3 +41,22 @@ comment '专业信息';
 create unique index professionalInformation_number_uindex
 	on professionalInformation (number);
 
+# 教师
+create table teacher
+(
+	id int auto_increment comment '自增ID',
+	imageURL varchar(200) null comment '头像URL',
+	teacherNumber varchar(20) not null comment '教师编号',
+	password int not null comment '密码',
+	phoneNumber varchar(20) null comment '联系方式',
+	professionalId varchar(10) null comment '专业编号',
+	isDelete int default 0 null comment '是否注销',
+	constraint teacher_pk
+		primary key (id)
+)
+comment '教师';
+
+create unique index teacher_teacherNumber_uindex
+	on teacher (teacherNumber);
+
+

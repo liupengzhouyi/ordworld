@@ -9,4 +9,18 @@ create table conservator
 	constraint conservator_pk
 		primary key (id)
 );
+# 系统公告表
+create table systemInformation
+(
+	id int auto_increment comment '自增ID',
+	authorId int not null comment '作者ID',
+	title varchar(50) not null comment '标题',
+	lpcontent varchar(1024) not null comment '内容',
+	lpyear int not null comment '年',
+	lpmonth int not null comment '月',
+	lpday int not null comment '日',
+	constraint systemInformation_pk
+		primary key (id)
+)
+comment '系统公告表';
 

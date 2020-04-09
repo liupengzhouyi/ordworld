@@ -36,6 +36,13 @@
         limit #{offset}, #{limit}
     </select>
 
+    <select id="findByPhoneNimber" resultMap="TeacherMap">
+        select
+            id, imageURL, teacherNumber, password, phoneNumber, professionalId, isDelete, name
+        from ordworld.teacher
+        where phoneNumber = #{phoneNumber,jdbcType=VARCHAR};
+    </select>
+
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="TeacherMap">
         select

@@ -50,6 +50,11 @@ public class TeacherServiceImpl implements TeacherService {
         return this.teacherDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<Teacher> findByPhoneNimber(String phoneNumber) {
+        return this.teacherDao.findByPhoneNimber(phoneNumber);
+    }
+
     /**
      * 新增数据
      *

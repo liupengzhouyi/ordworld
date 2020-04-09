@@ -15,7 +15,7 @@ spring:
   datasource:
     url: jdbc:mysql://114.116.4.196:3306/ordworld?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
     username: root
-    password: ******
+    password: Lp184126
     # 连接池类型
     type: com.alibaba.druid.pool.DruidDataSource
     # 驱动
@@ -47,7 +47,7 @@ spring:
 # 配置mybatis
 #公共配置与profiles选择无关
 mybatis:
-  mapper-locations: classpath:mapping/*.xml
+  mapper-locations: classpath:mapper/*.xml
   # 全局的映射，不用在xml文件写实体类的全路径
   type-aliases-package: cn.liupengstudy.ordworld.pojo
   configuration:

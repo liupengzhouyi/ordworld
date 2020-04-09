@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 教师(Teacher)表控制层
@@ -116,6 +117,24 @@ public class TeacherController {
         }
         lpr.setReturnKey(key);
         lpr.setReturnObject(temp);
+        return lpr;
+    }
+
+    @ApiOperation(value = "电话号码查重")
+    @RequestMapping(path = "/findSamePhoneNumber", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR findSamePhoneNumber(@RequestBody Teacher teacher) {
+        LPR lpr = new LPR();
+        lpr.setWhat("教师电话号码查重");
+        boolean key = true;
+        List<Teacher> list = this.teacherService.findByPhoneNimber(teacher.getPhonenumber());
+        if (list.size() <= 0) {
+            key = false;
+            lpr.setWhat("没有该电话号码");
+        } else {
+            lpr.setWhat("该电话号码已注册");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
         return lpr;
     }
 

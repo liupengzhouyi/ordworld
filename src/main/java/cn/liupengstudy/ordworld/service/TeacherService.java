@@ -1,6 +1,8 @@
 package cn.liupengstudy.ordworld.service;
 
 import cn.liupengstudy.ordworld.entity.Teacher;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -30,6 +32,8 @@ public interface TeacherService {
      * @return 对象列表
      */
     List<Teacher> queryAllByLimit(int offset, int limit);
+
+    List<Teacher> findByPhoneNimber(String phoneNumber);
 
     /**
      * 新增数据

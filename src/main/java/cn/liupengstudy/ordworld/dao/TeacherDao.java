@@ -42,6 +42,8 @@ public interface TeacherDao {
      */
     List<Teacher> queryAll(Teacher teacher);
 
+    List<Teacher> findByPhoneNimber(String phoneNumber);
+
     /**
      * 新增数据
      *

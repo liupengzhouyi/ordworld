@@ -138,6 +138,44 @@ public class TeacherController {
         return lpr;
     }
 
+    @ApiOperation(value = "编辑信息")
+    @RequestMapping(path = "/edit", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR edit(@RequestBody Teacher teacher) {
+        LPR lpr = new LPR();
+        lpr.setWhat("编辑信息");
+        boolean key = true;
+        Teacher teacher1 = null;
+        // find different
+        LPR selectByNumberLpr = this.selectByNumber(teacher);
+        if (selectByNumberLpr.isReturnKey()) {
+            key = false;
+            lpr.setWhy("教师编号重复");
+        } else {
+            LPR phoneNumberLpr = this.findSamePhoneNumber(teacher);
+            if (phoneNumberLpr.isReturnKey()) {
+                key = false;
+                lpr.setWhy(phoneNumberLpr.getWhy());
+            } else {
+                // add
+                teacher1 = this.teacherService.update(teacher);
+                if (teacher1 == null) {
+                    key = false;
+                    lpr.setWhy("编辑失败");
+                } else {
+                    lpr.setWhy("编辑成功");
+                }
+            }
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(teacher1);
+        return lpr;
+    }
+
+    @ApiOperation(value = "编辑信息")
+    @RequestMapping(path = "/edit", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR rePassword(@RequestBody Teacher teacher)
+
+
 
 
 }

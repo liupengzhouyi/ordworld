@@ -45,7 +45,7 @@ public class TeacherController {
         return lpr;
     }
 
-    @ApiOperation(value = "添加教师信息")
+    @ApiOperation(value = "教师注册")
     @RequestMapping(path = "/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LPR add(@RequestBody Teacher teacher) {
         LPR lpr = new LPR();
@@ -90,6 +90,32 @@ public class TeacherController {
         }
         lpr.setReturnKey(key);
         lpr.setReturnObject(teacher1);
+        return lpr;
+    }
+
+    @ApiOperation(value = "教师登陆")
+    @RequestMapping(path = "/landing", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR landing(@RequestBody Teacher teacher) {
+        LPR lpr = new LPR();
+        lpr.setWhat("教师登陆");
+        boolean key = true;
+        LPR selectByNumberLpr = this.selectByNumber(teacher);
+        Teacher temp = null;
+        if (selectByNumberLpr.isReturnKey()) {
+            temp = (Teacher) selectByNumberLpr.getReturnObject();
+            LpPassword lpPassword = new LpPassword(teacher.getTeachernumber(), teacher.getPassword() + "");
+            if (temp.getPassword() == lpPassword.getPasswordValue()) {
+                lpr.setWhy("登陆成功");
+            } else {
+                key = false;
+                lpr.setWhy("密码错误");
+            }
+        } else {
+            key = false;
+            lpr.setWhy("没有该账号");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(temp);
         return lpr;
     }
 

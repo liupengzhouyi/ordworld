@@ -60,6 +60,7 @@ public interface TeacherDao {
      */
     int update(Teacher teacher);
 
+    int rePassword(Integer id, Integer password);
     /**
      * 通过主键删除数据
      *

@@ -3,6 +3,7 @@ package cn.liupengstudy.ordworld.controller;
 import cn.liupengstudy.ordworld.entity.Teacher;
 import cn.liupengstudy.ordworld.entity.tools.LPR;
 import cn.liupengstudy.ordworld.entity.tools.LpPassword;
+import cn.liupengstudy.ordworld.entity.tools.ReTeacher;
 import cn.liupengstudy.ordworld.service.TeacherService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -171,9 +172,46 @@ public class TeacherController {
         return lpr;
     }
 
-    @ApiOperation(value = "编辑信息")
-    @RequestMapping(path = "/edit", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public LPR rePassword(@RequestBody Teacher teacher)
+    @ApiOperation(value = "修改密码")
+    @RequestMapping(path = "/rePassword", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR rePassword(@RequestBody ReTeacher reTeacher) {
+        LPR lpr = new LPR();
+        lpr.setWhat("修改密码");
+        boolean key = true;
+        // 新密码去空格
+        reTeacher.setPassword1(reTeacher.getPassword1().replace(" ", ""));
+        reTeacher.setPassword2(reTeacher.getPassword2().replace(" ", ""));
+
+        if (reTeacher.getPassword1().length() <= 0) {
+            lpr.setWhy("新密码不能为空");
+            key = false;
+        } else {
+            if (reTeacher.getPassword1().equals(reTeacher.getPassword2())) {
+                LPR landingLpr = this.landing(reTeacher.getTeacher());
+                if (landingLpr.isReturnKey()) {
+                    Teacher temp = (Teacher) landingLpr.getReturnObject();
+                    LpPassword lpPassword = new LpPassword(temp.getTeachernumber(), reTeacher.getPassword1());
+                    temp.setPassword(lpPassword.getPasswordValue());
+                    int k = this.teacherService.rePassword(temp.getId(), temp.getPassword());
+                    if (k == 1) {
+                        lpr.setWhy("修改成功");
+                    } else {
+                        lpr.setWhy("修改失败");
+                        key = false;
+                    }
+                } else {
+                    lpr.setWhy("原密码错误");
+                    key = false;
+                }
+            } else {
+                lpr.setWhy("俩个新密码不一致");
+                key = false;
+            }
+        }
+
+        lpr.setReturnKey(key);
+        return lpr;
+    }
 
 
 

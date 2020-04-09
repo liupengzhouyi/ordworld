@@ -83,6 +83,11 @@ public class TeacherServiceImpl implements TeacherService {
         return this.queryById(teacher.getId());
     }
 
+    @Override
+    public int rePassword(Integer id, Integer password) {
+        return this.teacherDao.rePassword(id, password);
+    }
+
     /**
      * 通过主键删除数据
      *

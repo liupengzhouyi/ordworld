@@ -41,6 +41,20 @@
   <select id="getAll" resultMap="BaseResultMap">
     select * from professionalInformation
   </select>
+
+  <select id="getAllByCollege" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from professionalInformation where college = #{college,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getAllByDepartment" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from professionalInformation where department = #{department,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getAllByProfessional" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from professionalInformation where professional = #{professional,jdbcType=VARCHAR}
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--
       WARNING - @mbg.generated

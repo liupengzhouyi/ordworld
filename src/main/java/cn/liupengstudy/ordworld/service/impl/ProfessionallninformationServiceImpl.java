@@ -6,6 +6,7 @@ import cn.liupengstudy.ordworld.service.ProfessionallninformationInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,5 +69,35 @@ public class ProfessionallninformationServiceImpl implements Professionallninfor
     @Override
     public List<ProfessionalInformation> getAll() {
         return this.getProfessionalInformationMapper().getAll();
+    }
+
+    @Override
+    public List<Integer> getAllByCollege(String college) {
+        List<ProfessionalInformation> temp = this.professionalInformationMapper.getAllByCollege(college);
+        List<Integer> list = new ArrayList<Integer>();
+        for (ProfessionalInformation professionalInformation : temp) {
+            list.add(new Integer(professionalInformation.getNumber()));
+        }
+        return list;
+    }
+
+    @Override
+    public List<Integer> getAllByDepartment(String department) {
+        List<ProfessionalInformation> temp = this.professionalInformationMapper.getAllByDepartment(department);
+        List<Integer> list = new ArrayList<Integer>();
+        for (ProfessionalInformation professionalInformation : temp) {
+            list.add(new Integer(professionalInformation.getNumber()));
+        }
+        return list;
+    }
+
+    @Override
+    public List<Integer> getAllByProfessional(String professional) {
+        List<ProfessionalInformation> temp = this.professionalInformationMapper.getAllByProfessional(professional);
+        List<Integer> list = new ArrayList<Integer>();
+        for (ProfessionalInformation professionalInformation : temp) {
+            list.add(new Integer(professionalInformation.getNumber()));
+        }
+        return list;
     }
 }

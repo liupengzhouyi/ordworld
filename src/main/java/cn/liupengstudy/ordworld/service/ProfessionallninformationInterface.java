@@ -1,6 +1,7 @@
 package cn.liupengstudy.ordworld.service;
 
 import cn.liupengstudy.ordworld.entity.ProfessionalInformation;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -62,6 +63,11 @@ public interface ProfessionallninformationInterface {
      */
     int updateByPrimaryKey(ProfessionalInformation record);
 
+    List<Integer> getAllByCollege(String college);
+
+    List<Integer> getAllByDepartment(String department);
+
+    List<Integer> getAllByProfessional(String professional);
 
     ProfessionalInformation selectByNumber(String number);
 

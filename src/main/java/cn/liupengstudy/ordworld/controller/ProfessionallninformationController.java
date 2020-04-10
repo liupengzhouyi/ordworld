@@ -126,4 +126,62 @@ public class ProfessionallninformationController {
         return lpr;
     }
 
+    @ApiOperation(value = "查找某学院的专业的编号")
+    @RequestMapping(path = "/getAllNumberByCollege", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAllNumberByCollege(@RequestBody ProfessionalInformation professionalInformation) {
+        LPR lpr = new LPR();
+        lpr.setWhat("查找某学院专业的编号");
+        boolean key = true;
+        professionalInformation.setCollege(professionalInformation.getCollege().replace(" ", ""));
+        List<Integer> list = this.professionallninformationService.getAllByCollege(professionalInformation.getCollege());
+        if (list.size() <= 0) {
+            lpr.setWhy("没有数据，查询失败");
+            key = false;
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
+        return lpr;
+    }
+
+    @ApiOperation(value = "查找某系的专业的编号")
+    @RequestMapping(path = "/getAllNumberByDepartment", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAllNumberByDepartment(@RequestBody ProfessionalInformation professionalInformation) {
+        LPR lpr = new LPR();
+        lpr.setWhat("查找某学院专业的编号");
+        boolean key = true;
+        professionalInformation.setDepartment(professionalInformation.getDepartment().replace(" ", ""));
+        List<Integer> list = this.professionallninformationService.getAllByDepartment(professionalInformation.getDepartment());
+        if (list.size() <= 0) {
+            lpr.setWhy("没有数据，查询失败");
+            key = false;
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
+        return lpr;
+    }
+
+    @ApiOperation(value = "查找某专业的专业的编号")
+    @RequestMapping(path = "/getAllNumberByProfessional", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAllNumberByProfessional(@RequestBody ProfessionalInformation professionalInformation) {
+        LPR lpr = new LPR();
+        lpr.setWhat("查找某学院专业的编号");
+        boolean key = true;
+        professionalInformation.setProfessional(professionalInformation.getProfessional().replace(" ", ""));
+        List<Integer> list = this.professionallninformationService.getAllByProfessional(professionalInformation.getProfessional());
+        if (list.size() <= 0) {
+            lpr.setWhy("没有数据，查询失败");
+            key = false;
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
+        return lpr;
+    }
+
+
 }

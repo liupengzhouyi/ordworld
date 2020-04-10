@@ -51,7 +51,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project insert(Project project) {
         this.projectDao.insert(project);
-        return project;
+        List<Project> list = this.projectDao.queryAll(project);
+        Project project1 = list.get(list.size()-1);
+        return project1;
     }
 
     /**

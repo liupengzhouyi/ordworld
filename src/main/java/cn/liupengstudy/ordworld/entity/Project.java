@@ -1,6 +1,8 @@
 package cn.liupengstudy.ordworld.entity;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 
@@ -16,26 +18,32 @@ public class Project implements Serializable {
     /**
     * 自增ID
     */
+    @ApiModelProperty(value = "自增ID")
     private Integer id;
     /**
     * 教师ID
     */
+    @ApiModelProperty(value = "教师ID")
     private Integer teacherid;
     /**
     * 题目
     */
+    @ApiModelProperty(value = "题目")
     private String title;
     /**
     * 描述文件
     */
+    @ApiModelProperty(value = "描述文件")
     private String fileurl;
     /**
     * 是否被选
     */
+    @ApiModelProperty(value = "是否被选")
     private Integer isselect;
     /**
     * 学生学号
     */
+    @ApiModelProperty(value = "学生学号")
     private String studentnumber;
 
 
@@ -87,4 +95,16 @@ public class Project implements Serializable {
         this.studentnumber = studentnumber;
     }
 
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Project{");
+        sb.append("id=").append(id);
+        sb.append(", teacherid=").append(teacherid);
+        sb.append(", title='").append(title).append('\'');
+        sb.append(", fileurl='").append(fileurl).append('\'');
+        sb.append(", isselect=").append(isselect);
+        sb.append(", studentnumber='").append(studentnumber).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

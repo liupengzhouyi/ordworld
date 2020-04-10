@@ -216,6 +216,48 @@ public class ProjectController {
         return lpr;
     }
 
+    @ApiOperation(value = "教师重置学生申请")
+    @RequestMapping(path = "/reTasksToStudent", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR reTasksToStudent(@RequestBody Project project) {
+        LPR lpr = new LPR();
+        lpr.setWhat("重置批准学生申请");
+        boolean key = true;
+        LPR findStudentApplicationLpr = this.findStudentApplication(project);
+        if (findStudentApplicationLpr.isReturnKey()) {
+            LPR selectOneLpr = this.selectOne(project);
+            if (selectOneLpr.isReturnKey()) {
+                Project temp = (Project) selectOneLpr.getReturnObject();
+                if (temp.getTeacherid() - project.getTeacherid() == 0) {
+                    project.setStudentnumber(project.getStudentnumber().replace(" ", ""));
+                    if (temp.getStudentnumber().equals(project.getStudentnumber())) {
+                        Project project1 = this.projectService.reUpdateApplication(project.getId(), 0, project.getStudentnumber());
+                        if (project1 == null) {
+                            key = false;
+                            lpr.setWhy("重置失败");
+                        } else {
+                            lpr.setWhy("重置成功");
+                        }
+                        lpr.setReturnObject(project1);
+                    } else {
+                        key = false;
+                        lpr.setWhy("该学生没有申请该题目");
+                    }
+                } else {
+                    key = false;
+                    lpr.setWhy("没有权限");
+                }
+            } else {
+                key = false;
+                lpr.setWhy("没有数据");
+            }
+        } else {
+            key = false;
+            lpr.setWhy("该同学没有申请题目");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
+
 
 
 }

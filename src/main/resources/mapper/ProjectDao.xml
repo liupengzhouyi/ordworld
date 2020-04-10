@@ -66,6 +66,10 @@
         select * from ordworld.project where teacherId = #{teacherId}
     </select>
 
+    <select id="findStudentApplication" resultMap="ProjectMap">
+        select * from ordworld.project where studentNumber = #{studentnumber}
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into ordworld.project(teacherId, title, fileUrl, isSelect, studentNumber)

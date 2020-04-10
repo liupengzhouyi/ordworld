@@ -35,6 +35,8 @@ public interface ProjectService {
     List<Project> findSame(int teacherId, String title);
 
     List<Project> getAllByTeacherId(int teacherId);
+
+    List<Project> findStudentApplication(String studentnumber);
     /**
      * 新增数据
      *

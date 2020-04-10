@@ -45,6 +45,7 @@ public interface ProjectDao {
 
     List<Project> getAllByTeacherId(@Param("teacherId")int teacherId);
 
+    List<Project> findStudentApplication(@Param("studentnumber")String studentnumber);
     /**
      * 新增数据
      *

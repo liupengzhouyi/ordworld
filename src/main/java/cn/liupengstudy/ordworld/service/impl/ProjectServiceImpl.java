@@ -52,6 +52,11 @@ public class ProjectServiceImpl implements ProjectService {
         return this.projectDao.queryAllByConservator();
     }
 
+    @Override
+    public List<Project> findStudentApplication(String studentnumber) {
+        return this.projectDao.findStudentApplication(studentnumber);
+    }
+
     /**
      * 新增数据
      *

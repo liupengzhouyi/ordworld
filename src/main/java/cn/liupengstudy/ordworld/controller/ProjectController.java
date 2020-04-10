@@ -170,6 +170,7 @@ public class ProjectController {
         if (selectOneLpr.isReturnKey()) {
             Project temp = (Project) selectOneLpr.getReturnObject();
             if (temp.getTeacherid() - project.getTeacherid() == 0) {
+                project.setStudentnumber(project.getStudentnumber().replace(" ", ""));
                 Project project1 = this.projectService.updateApplication(project.getId(), 1, project.getStudentnumber());
                 if (project1 == null) {
                     key = false;
@@ -190,7 +191,24 @@ public class ProjectController {
         return lpr;
     }
 
-
+    @ApiOperation(value = "查询学生申请")
+    @RequestMapping(path = "/findStudentApplication", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR findStudentApplication(@RequestBody Project project) {
+        LPR lpr = new LPR();
+        lpr.setWhat("查询学生申请");
+        boolean key = true;
+        project.setStudentnumber(project.getStudentnumber().replace(" ", ""));
+        List<Project> list = this.projectService.findStudentApplication(project.getStudentnumber());
+        if (list.size() <= 0) {
+            lpr.setWhy("没有数据，查询失败");
+            key = false;
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
+        return lpr;
+    }
 
 
 

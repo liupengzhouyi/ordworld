@@ -32,9 +32,22 @@ public class ProjectController {
      * @param id 主键
      * @return 单条数据
      */
+    @ApiOperation(value = "通过ID查找毕设题目信息")
     @RequestMapping("/selectOne")
-    public Project selectOne(Integer id) {
-        return this.projectService.queryById(id);
+    public LPR selectOne(@RequestBody Project project) {
+        LPR lpr = new LPR();
+        lpr.setWhat("通过ID毕设题目信息");
+        boolean key = true;
+        Project project1 = this.projectService.queryById(project.getId());
+        if (project1 == null) {
+            lpr.setWhy("没有数据，查询失败");
+            key = false;
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(project1);
+        return lpr;
     }
 
 

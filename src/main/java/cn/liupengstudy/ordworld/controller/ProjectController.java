@@ -49,7 +49,6 @@ public class ProjectController {
         return lpr;
     }
 
-
     @ApiOperation(value = "添加毕设题目信息")
     @RequestMapping(path = "/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LPR add(@RequestBody Project project) {
@@ -122,6 +121,24 @@ public class ProjectController {
             lpr.setWhy("没有数据，无法执行删除指令");
         }
         lpr.setReturnKey(key);
+        return lpr;
+    }
+
+    @ApiOperation(value = "查询某个老师的所有题目")
+    @RequestMapping(path = "/getAllByTeacherId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAllByTeacherId(@RequestBody Project project) {
+        LPR lpr = new LPR();
+        lpr.setWhat("查询某个老师的所有题目");
+        boolean key = true;
+        List<Project> list = this.projectService.getAllByTeacherId(project.getTeacherid());
+        if (list.size() <= 0) {
+            lpr.setWhy("没有数据，查询失败");
+            key = false;
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
         return lpr;
     }
 

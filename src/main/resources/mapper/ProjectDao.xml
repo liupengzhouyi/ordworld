@@ -57,6 +57,11 @@
     <select id="findSame" resultMap="ProjectMap">
         select * from ordworld.project where teacherId = #{teacherId} and title = #{title,jdbcType=VARCHAR}
     </select>
+
+    <select id="getAllByTeacherId" resultMap="ProjectMap">
+        select * from ordworld.project where teacherId = #{teacherId}
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into ordworld.project(teacherId, title, fileUrl, isSelect, studentNumber)

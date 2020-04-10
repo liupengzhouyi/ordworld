@@ -31,6 +31,8 @@ public interface ProjectService {
     List<Project> queryAllByLimit(int offset, int limit);
 
     List<Project> findSame(int teacherId, String title);
+
+    List<Project> getAllByTeacherId(int teacherId);
     /**
      * 新增数据
      *

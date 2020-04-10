@@ -42,6 +42,11 @@ public class ProjectServiceImpl implements ProjectService {
         return this.projectDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<Project> getAllByTeacherId(int teacherId) {
+        return this.projectDao.getAllByTeacherId(teacherId);
+    }
+
     /**
      * 新增数据
      *

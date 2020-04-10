@@ -78,4 +78,9 @@ public class ProjectServiceImpl implements ProjectService {
     public boolean deleteById(Integer id) {
         return this.projectDao.deleteById(id) > 0;
     }
+
+    @Override
+    public List<Project> findSame(int teacherId, String title) {
+        return this.projectDao.findSame(teacherId, title);
+    }
 }

@@ -1,6 +1,8 @@
 package cn.liupengstudy.ordworld.service;
 
 import cn.liupengstudy.ordworld.entity.Project;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -28,6 +30,7 @@ public interface ProjectService {
      */
     List<Project> queryAllByLimit(int offset, int limit);
 
+    List<Project> findSame(int teacherId, String title);
     /**
      * 新增数据
      *

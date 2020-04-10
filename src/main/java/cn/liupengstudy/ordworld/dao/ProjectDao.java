@@ -40,6 +40,7 @@ public interface ProjectDao {
      */
     List<Project> queryAll(Project project);
 
+    List<Project> findSame(@Param("teacherId")int teacherId, @Param("title")String title);
     /**
      * 新增数据
      *

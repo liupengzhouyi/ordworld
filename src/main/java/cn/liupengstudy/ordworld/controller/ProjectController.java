@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 毕设题目(Project)表控制层
@@ -57,17 +58,46 @@ public class ProjectController {
         LPR lpr = new LPR();
         lpr.setWhat("添加毕设题目信息");
         boolean key = true;
-        Project project1 = this.projectService.insert(project);
-        if (project1 == null) {
+        LPR findSameLpr = this.findSame(project);
+        if (findSameLpr.isReturnKey()) {
+            lpr.setWhy("添加失败," + findSameLpr.getWhy());
             key = false;
-            lpr.setWhy("添加失败");
+            lpr.setReturnObject(findSameLpr.getReturnObject());
         } else {
-            lpr.setWhy("添加成功");
+            project.setTitle(project.getTitle().replace(" ", ""));
+            Project project1 = this.projectService.insert(project);
+            if (project1 == null) {
+                key = false;
+                lpr.setWhy("添加失败");
+            } else {
+                lpr.setWhy("添加成功");
+            }
+            lpr.setReturnObject(project1);
         }
         lpr.setReturnKey(key);
-        lpr.setReturnObject(project1);
         return lpr;
     }
+
+    @ApiOperation(value = "查询是否有重复毕设题目信息")
+    @RequestMapping(path = "/findSame", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR findSame(@RequestBody Project project) {
+        LPR lpr = new LPR();
+        lpr.setWhat("查询是否有重复毕设题目信息");
+        boolean key = true;
+        project.setTitle(project.getTitle().replace(" ", ""));
+        List<Project> list = this.projectService.findSame(project.getTeacherid(), project.getTitle());
+        if (list.size() == 0) {
+            key = false;
+            lpr.setWhy("没有相同数据");
+        } else {
+            lpr.setWhy("有相同数据");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
+        return lpr;
+    }
+
+
 
 
 }

@@ -47,6 +47,11 @@ public class ProjectServiceImpl implements ProjectService {
         return this.projectDao.getAllByTeacherId(teacherId);
     }
 
+    @Override
+    public List<Project> queryAllByConservator() {
+        return this.projectDao.queryAllByConservator();
+    }
+
     /**
      * 新增数据
      *

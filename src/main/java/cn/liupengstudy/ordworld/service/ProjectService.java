@@ -21,6 +21,8 @@ public interface ProjectService {
      */
     Project queryById(Integer id);
 
+    List<Project> queryAllByConservator();
+
     /**
      * 查询多条数据
      *

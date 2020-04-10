@@ -142,6 +142,24 @@ public class ProjectController {
         return lpr;
     }
 
+    @ApiOperation(value = "查询某所有题目")
+    @RequestMapping(path = "/getAll", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAll(@RequestBody Project project) {
+        LPR lpr = new LPR();
+        lpr.setWhat("查询所有题目");
+        boolean key = true;
+        List<Project> list = this.projectService.queryAllByConservator();
+        if (list.size() <= 0) {
+            lpr.setWhy("没有数据，查询失败");
+            key = false;
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
+        return lpr;
+    }
+
 
 
 

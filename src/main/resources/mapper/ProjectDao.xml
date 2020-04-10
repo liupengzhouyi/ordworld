@@ -18,6 +18,10 @@
         from ordworld.project
         where id = #{id}
     </select>
+    
+    <select id="queryAllByConservator" resultMap="ProjectMap">
+        select * from ordworld.project;
+    </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ProjectMap">

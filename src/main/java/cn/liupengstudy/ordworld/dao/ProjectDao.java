@@ -31,6 +31,7 @@ public interface ProjectDao {
      */
     List<Project> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
+    List<Project> queryAllByConservator();
 
     /**
      * 通过实体作为筛选条件查询

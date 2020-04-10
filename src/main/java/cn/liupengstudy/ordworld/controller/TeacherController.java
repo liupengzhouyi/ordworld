@@ -5,6 +5,7 @@ import cn.liupengstudy.ordworld.entity.tools.LPR;
 import cn.liupengstudy.ordworld.entity.tools.LpPassword;
 import cn.liupengstudy.ordworld.entity.tools.ReTeacher;
 import cn.liupengstudy.ordworld.service.TeacherService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("teacher")
+@Api(tags = "教师控制器")
 public class TeacherController {
 
     /**
@@ -146,26 +148,12 @@ public class TeacherController {
         lpr.setWhat("编辑信息");
         boolean key = true;
         Teacher teacher1 = null;
-        // find different
-        LPR selectByNumberLpr = this.selectByNumber(teacher);
-        if (selectByNumberLpr.isReturnKey()) {
+        teacher1 = this.teacherService.update(teacher);
+        if (teacher1 == null) {
             key = false;
-            lpr.setWhy("教师编号重复");
+            lpr.setWhy("编辑失败");
         } else {
-            LPR phoneNumberLpr = this.findSamePhoneNumber(teacher);
-            if (phoneNumberLpr.isReturnKey()) {
-                key = false;
-                lpr.setWhy(phoneNumberLpr.getWhy());
-            } else {
-                // add
-                teacher1 = this.teacherService.update(teacher);
-                if (teacher1 == null) {
-                    key = false;
-                    lpr.setWhy("编辑失败");
-                } else {
-                    lpr.setWhy("编辑成功");
-                }
-            }
+            lpr.setWhy("编辑成功");
         }
         lpr.setReturnKey(key);
         lpr.setReturnObject(teacher1);
@@ -212,8 +200,5 @@ public class TeacherController {
         lpr.setReturnKey(key);
         return lpr;
     }
-
-
-
 
 }

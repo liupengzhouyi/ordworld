@@ -61,6 +61,10 @@ public interface ProjectDao {
      */
     int update(Project project);
 
+    int updateApplication(@Param("id")int id, @Param("isselect")int isselect, @Param("studentnumber")String studentnumber);
+
+    int reUpdateApplication(@Param("id")int id,@Param("isselect")int isselect, @Param("studentnumber")String studentnumber);
+
     /**
      * 通过主键删除数据
      *

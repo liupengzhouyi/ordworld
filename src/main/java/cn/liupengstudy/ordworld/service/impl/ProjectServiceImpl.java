@@ -78,6 +78,19 @@ public class ProjectServiceImpl implements ProjectService {
         return this.queryById(project.getId());
     }
 
+    @Override
+    public Project updateApplication(int id, int isSelect, String studentNumber) {
+        this.projectDao.updateApplication(id, 1, studentNumber);
+        return this.queryById(id);
+    }
+
+    @Override
+    public Project reUpdateApplication(int id, int isSelect, String studentNumber) {
+        studentNumber = "...";
+        this.projectDao.reUpdateApplication(id, 0, studentNumber);
+        return this.queryById(id);
+    }
+
     /**
      * 通过主键删除数据
      *

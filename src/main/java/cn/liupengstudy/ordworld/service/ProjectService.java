@@ -51,6 +51,9 @@ public interface ProjectService {
      */
     Project update(Project project);
 
+    Project updateApplication(int id, int isSelect, String studentNumber);
+
+    Project reUpdateApplication(int id, int isSelect, String studentNumber);
     /**
      * 通过主键删除数据
      *

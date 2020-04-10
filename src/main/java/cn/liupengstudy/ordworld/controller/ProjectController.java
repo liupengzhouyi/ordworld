@@ -160,6 +160,35 @@ public class ProjectController {
         return lpr;
     }
 
+    @ApiOperation(value = "批准学生申请")
+    @RequestMapping(path = "/tasksToStudent", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR tasksToStudent(@RequestBody Project project) {
+        LPR lpr = new LPR();
+        lpr.setWhat("批准学生申请");
+        boolean key = true;
+        LPR selectOneLpr = this.selectOne(project);
+        if (selectOneLpr.isReturnKey()) {
+            Project temp = (Project) selectOneLpr.getReturnObject();
+            if (temp.getTeacherid() - project.getTeacherid() == 0) {
+                Project project1 = this.projectService.updateApplication(project.getId(), 1, project.getStudentnumber());
+                if (project1 == null) {
+                    key = false;
+                    lpr.setWhy("申请失败");
+                } else {
+                    lpr.setWhy("申请成功");
+                }
+                lpr.setReturnObject(project1);
+            } else {
+                key = false;
+                lpr.setWhy("没有权限");
+            }
+        } else {
+            key = false;
+            lpr.setWhy("没有数据");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
 
 
 

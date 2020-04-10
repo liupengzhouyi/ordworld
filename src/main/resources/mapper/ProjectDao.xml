@@ -95,6 +95,32 @@
         where id = #{id}
     </update>
 
+    <update id="updateApplication">
+        update ordworld.project
+        <set>
+            <if test="isselect != null">
+                isSelect = #{isselect},
+            </if>
+            <if test="studentnumber != null and studentnumber != ''">
+                studentNumber = #{studentnumber,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="reUpdateApplication">
+        update ordworld.project
+        <set>
+            <if test="isselect != null">
+                isSelect = #{isselect},
+            </if>
+            <if test="studentnumber != null and studentnumber != ''">
+                studentNumber = #{studentnumber,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
     <!--通过主键删除-->
     <delete id="deleteById">
         delete from ordworld.project where id = #{id}

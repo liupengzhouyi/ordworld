@@ -3,6 +3,7 @@ package cn.liupengstudy.ordworld.controller;
 import cn.liupengstudy.ordworld.entity.ProfessionalInformation;
 import cn.liupengstudy.ordworld.entity.Project;
 import cn.liupengstudy.ordworld.entity.tools.LPR;
+import cn.liupengstudy.ordworld.entity.tools.LpPassword;
 import cn.liupengstudy.ordworld.service.ProjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,9 +30,6 @@ public class ProjectController {
 
     /**
      * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
      */
     @ApiOperation(value = "通过ID查找毕设题目信息")
     @RequestMapping("/selectOne")
@@ -96,6 +94,38 @@ public class ProjectController {
         lpr.setReturnObject(list);
         return lpr;
     }
+
+    @ApiOperation(value = "删除毕设题目信息")
+    @RequestMapping(path = "/delete", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR delete(@RequestBody Project project) {
+        LPR lpr = new LPR();
+        lpr.setWhat("删除毕设题目信息");
+        boolean key = true;
+        LPR selectLpr = this.selectOne(project);
+        if (selectLpr.isReturnKey()) {
+            Project temp = (Project) selectLpr.getReturnObject();
+            if (temp.getTeacherid() - project.getTeacherid() == 0) {
+                boolean deleteKey = this.projectService.deleteById(project.getId());
+                if (deleteKey) {
+                    lpr.setWhy("删除成功");
+                } else {
+                    lpr.setWhy("删除失败");
+                    key = false;
+                }
+                lpr.setReturnObject(temp);
+            } else {
+                key = false;
+                lpr.setWhy("无权限删除指令");
+            }
+        } else {
+            key = false;
+            lpr.setWhy("没有数据，无法执行删除指令");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
+
+
 
 
 

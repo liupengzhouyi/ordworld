@@ -166,26 +166,32 @@ public class ProjectController {
         LPR lpr = new LPR();
         lpr.setWhat("批准学生申请");
         boolean key = true;
-        LPR selectOneLpr = this.selectOne(project);
-        if (selectOneLpr.isReturnKey()) {
-            Project temp = (Project) selectOneLpr.getReturnObject();
-            if (temp.getTeacherid() - project.getTeacherid() == 0) {
-                project.setStudentnumber(project.getStudentnumber().replace(" ", ""));
-                Project project1 = this.projectService.updateApplication(project.getId(), 1, project.getStudentnumber());
-                if (project1 == null) {
-                    key = false;
-                    lpr.setWhy("申请失败");
+        LPR findStudentApplicationLpr = this.findStudentApplication(project);
+        if (findStudentApplicationLpr.isReturnKey()) {
+            key = false;
+            lpr.setWhy("该同学已经申请题目");
+        } else {
+            LPR selectOneLpr = this.selectOne(project);
+            if (selectOneLpr.isReturnKey()) {
+                Project temp = (Project) selectOneLpr.getReturnObject();
+                if (temp.getTeacherid() - project.getTeacherid() == 0) {
+                    project.setStudentnumber(project.getStudentnumber().replace(" ", ""));
+                    Project project1 = this.projectService.updateApplication(project.getId(), 1, project.getStudentnumber());
+                    if (project1 == null) {
+                        key = false;
+                        lpr.setWhy("申请失败");
+                    } else {
+                        lpr.setWhy("申请成功");
+                    }
+                    lpr.setReturnObject(project1);
                 } else {
-                    lpr.setWhy("申请成功");
+                    key = false;
+                    lpr.setWhy("没有权限");
                 }
-                lpr.setReturnObject(project1);
             } else {
                 key = false;
-                lpr.setWhy("没有权限");
+                lpr.setWhy("没有数据");
             }
-        } else {
-            key = false;
-            lpr.setWhy("没有数据");
         }
         lpr.setReturnKey(key);
         return lpr;

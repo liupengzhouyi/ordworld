@@ -109,7 +109,7 @@ public class TeacherController {
         Teacher temp = null;
         if (selectByNumberLpr.isReturnKey()) {
             temp = (Teacher) selectByNumberLpr.getReturnObject();
-            LpPassword lpPassword = new LpPassword(teacher.getTeachernumber(), reTeacher.getPassword1());
+            LpPassword lpPassword = new LpPassword(teacher.getTeachernumber(), reTeacher.getPassword());
             if (temp.getPassword() == lpPassword.getPasswordValue()) {
                 lpr.setWhy("登陆成功");
             } else {
@@ -171,7 +171,6 @@ public class TeacherController {
         // 新密码去空格
         reTeacher.setPassword1(reTeacher.getPassword1().replace(" ", ""));
         reTeacher.setPassword2(reTeacher.getPassword2().replace(" ", ""));
-
         if (reTeacher.getPassword1().length() <= 0) {
             lpr.setWhy("新密码不能为空");
             key = false;
@@ -194,7 +193,7 @@ public class TeacherController {
                     key = false;
                 }
             } else {
-                lpr.setWhy("俩个新密码不一致");
+                lpr.setWhy("新密码不一致");
                 key = false;
             }
         }

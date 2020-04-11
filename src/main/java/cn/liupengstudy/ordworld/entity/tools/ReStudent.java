@@ -17,7 +17,7 @@ public class ReStudent {
 
     private Student student;
 
-    @ApiModelProperty(value = "密码")
+    @ApiModelProperty(value = "登陆密码")
     private String password;
 
     @ApiModelProperty(value = "密码")

@@ -17,19 +17,23 @@ public class ReConservator {
 
     private Conservator conservator;
 
-    @ApiModelProperty(value = "密码")
+    @ApiModelProperty(value = "登陆密码")
     private String password;
 
-    @ApiModelProperty(value = " 确认密码")
+    @ApiModelProperty(value = "密码")
+    private String password1;
+
+    @ApiModelProperty(value = "确认密码")
     private String password2;
 
-    public ReConservator(Conservator conservator, String password, String password2) {
-        this.conservator = conservator;
-        this.password = password;
-        this.password2 = password2;
+    public ReConservator() {
     }
 
-    public ReConservator() {
+    public ReConservator(Conservator conservator, String password, String password1, String password2) {
+        this.conservator = conservator;
+        this.password = password;
+        this.password1 = password1;
+        this.password2 = password2;
     }
 
     public Conservator getConservator() {
@@ -48,6 +52,14 @@ public class ReConservator {
         this.password = password;
     }
 
+    public String getPassword1() {
+        return password1;
+    }
+
+    public void setPassword1(String password1) {
+        this.password1 = password1;
+    }
+
     public String getPassword2() {
         return password2;
     }
@@ -58,9 +70,12 @@ public class ReConservator {
 
     @Override
     public String toString() {
-        return "ReConservator{" +
-                "conservator=" + conservator +
-                ", password='" + password + '\'' +
-                '}';
+        final StringBuffer sb = new StringBuffer("ReConservator{");
+        sb.append("conservator=").append(conservator);
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", password1='").append(password1).append('\'');
+        sb.append(", password2='").append(password2).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

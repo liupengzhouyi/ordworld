@@ -138,16 +138,21 @@ public class ConservatorController {
         boolean key = true;
         LPR landingLPR = this.landing(reConservator);
         if (landingLPR.isReturnKey()) {
-            LPR selectPhoneNumber = this.selectPhoneNumber(reConservator.getConservator());
-            List<Conservator> list = (List<Conservator>) selectPhoneNumber.getReturnObject();
-            LpPassword lpPassword = new LpPassword(reConservator.getConservator().getPhonenumber(), reConservator.getPassword());
-            list.get(0).setPassword(lpPassword.getPasswordValue());
-            int updateKey = this.conservatorService.updateByPrimaryKey(list.get(0));
-            if (updateKey == 1) {
-                lpr.setWhy("更新成功");
+            if (reConservator.getPassword1().equals(reConservator.getPassword2())) {
+                LPR selectPhoneNumber = this.selectPhoneNumber(reConservator.getConservator());
+                List<Conservator> list = (List<Conservator>) selectPhoneNumber.getReturnObject();
+                LpPassword lpPassword = new LpPassword(reConservator.getConservator().getPhonenumber(), reConservator.getPassword1());
+                list.get(0).setPassword(lpPassword.getPasswordValue());
+                int updateKey = this.conservatorService.updateByPrimaryKey(list.get(0));
+                if (updateKey == 1) {
+                    lpr.setWhy("更新成功");
+                } else {
+                    key = false;
+                    lpr.setWhy("更新失败");
+                }
             } else {
                 key = false;
-                lpr.setWhy("更新失败");
+                lpr.setWhy("新密码不一致");
             }
         } else {
             key = false;

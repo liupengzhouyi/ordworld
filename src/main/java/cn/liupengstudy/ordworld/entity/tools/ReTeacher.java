@@ -18,19 +18,23 @@ public class ReTeacher {
 
     private Teacher teacher;
 
+    @ApiModelProperty(value = "登陆密码")
+    private String password;
+
     @ApiModelProperty(value = "密码")
     private String password1;
 
-    @ApiModelProperty(value = " 确认密码")
+    @ApiModelProperty(value = "确认密码")
     private String password2;
 
-    public ReTeacher(Teacher teacher, String password1, String password2) {
-        this.teacher = teacher;
-        this.password1 = password1;
-        this.password2 = password2;
+    public ReTeacher() {
     }
 
-    public ReTeacher() {
+    public ReTeacher(Teacher teacher, String password, String password1, String password2) {
+        this.teacher = teacher;
+        this.password = password;
+        this.password1 = password1;
+        this.password2 = password2;
     }
 
     public Teacher getTeacher() {
@@ -39,6 +43,14 @@ public class ReTeacher {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPassword1() {
@@ -61,6 +73,7 @@ public class ReTeacher {
     public String toString() {
         final StringBuffer sb = new StringBuffer("ReTeacher{");
         sb.append("teacher=").append(teacher);
+        sb.append(", password='").append(password).append('\'');
         sb.append(", password1='").append(password1).append('\'');
         sb.append(", password2='").append(password2).append('\'');
         sb.append('}');

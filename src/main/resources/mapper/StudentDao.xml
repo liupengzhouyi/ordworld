@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.liupengstudy.ordworld.dao.StudentDao">
+
+    <resultMap type="cn.liupengstudy.ordworld.entity.Student" id="StudentMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="studentid" column="studentID" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="INTEGER"/>
+        <result property="imageurl" column="imageURL" jdbcType="VARCHAR"/>
+        <result property="prodessionalid" column="prodessionalId" jdbcType="INTEGER"/>
+        <result property="phonenumber" column="phoneNumber" jdbcType="VARCHAR"/>
+        <result property="isdelete" column="isDelete" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="StudentMap">
+        select
+          id, studentID, password, imageURL, prodessionalId, phoneNumber, isDelete
+        from ordworld.student
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="StudentMap">
+        select
+          id, studentID, password, imageURL, prodessionalId, phoneNumber, isDelete
+        from ordworld.student
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="StudentMap">
+        select
+          id, studentID, password, imageURL, prodessionalId, phoneNumber, isDelete
+        from ordworld.student
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="studentid != null and studentid != ''">
+                and studentID = #{studentid}
+            </if>
+            <if test="password != null">
+                and password = #{password}
+            </if>
+            <if test="imageurl != null and imageurl != ''">
+                and imageURL = #{imageurl}
+            </if>
+            <if test="prodessionalid != null">
+                and prodessionalId = #{prodessionalid}
+            </if>
+            <if test="phonenumber != null and phonenumber != ''">
+                and phoneNumber = #{phonenumber}
+            </if>
+            <if test="isdelete != null">
+                and isDelete = #{isdelete}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into ordworld.student(studentID, password, imageURL, prodessionalId, phoneNumber, isDelete)
+        values (#{studentid}, #{password}, #{imageurl}, #{prodessionalid}, #{phonenumber}, #{isdelete})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ordworld.student
+        <set>
+            <if test="studentid != null and studentid != ''">
+                studentID = #{studentid},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="imageurl != null and imageurl != ''">
+                imageURL = #{imageurl},
+            </if>
+            <if test="prodessionalid != null">
+                prodessionalId = #{prodessionalid},
+            </if>
+            <if test="phonenumber != null and phonenumber != ''">
+                phoneNumber = #{phonenumber},
+            </if>
+            <if test="isdelete != null">
+                isDelete = #{isdelete},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ordworld.student where id = #{id}
+    </delete>
+
+</mapper>

@@ -145,6 +145,31 @@ public class StudentController {
         return lpr;
     }
 
+    @ApiOperation(value = "学生修改密码")
+    @RequestMapping(path = "/rePassword", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR rePassword(@RequestBody ReStudent reStudent) {
+        LPR lpr = new LPR();
+        lpr.setWhat("学生修改密码");
+        boolean key = true;
+        LPR landingLpr = this.landing(reStudent);
+        if (landingLpr.isReturnKey()) {
+            Student temp = (Student) landingLpr.getReturnObject();
+            LpPassword lpPassword = new LpPassword(temp.getStudentid(), reStudent.getPassword1());
+            Student student = this.studentService.rePassword(temp.getId(), lpPassword.getPasswordValue());
+            if (student == null) {
+                key = false;
+                lpr.setWhy("修改失败");
+            } else {
+                lpr.setWhy("修改失败");
+            }
+            lpr.setReturnObject(student);
+        } else {
+            key = false;
+            lpr.setWhy("原密码错误");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
 
 
 

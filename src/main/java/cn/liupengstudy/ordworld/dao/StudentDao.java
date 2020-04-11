@@ -26,8 +26,6 @@ public interface StudentDao {
 
     Student queryByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
-
-
     /**
      * 查询指定行数据
      *
@@ -61,6 +59,8 @@ public interface StudentDao {
      * @return 影响行数
      */
     int update(Student student);
+
+    int rePassword(@Param("id") int id, @Param("password") int password);
 
     /**
      * 通过主键删除数据

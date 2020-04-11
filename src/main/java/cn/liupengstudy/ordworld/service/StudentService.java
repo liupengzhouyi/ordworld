@@ -50,6 +50,7 @@ public interface StudentService {
      */
     Student update(Student student);
 
+    Student rePassword(@Param("id") int id, @Param("password") int password);
     /**
      * 通过主键删除数据
      *

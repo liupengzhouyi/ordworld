@@ -83,6 +83,16 @@ public class StudentServiceImpl implements StudentService {
         return this.queryById(student.getId());
     }
 
+    @Override
+    public Student rePassword(int id, int password) {
+        int key = this.studentDao.rePassword(id, password);
+        Student student = null;
+        if(key == 1) {
+          student = this.studentDao.queryById(id);
+        }
+        return student;
+    }
+
     /**
      * 通过主键删除数据
      *

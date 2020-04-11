@@ -20,16 +20,20 @@ public class ReStudent {
     @ApiModelProperty(value = "密码")
     private String password;
 
+    @ApiModelProperty(value = "密码")
+    private String password1;
+
     @ApiModelProperty(value = "确认密码")
     private String password2;
 
-    public ReStudent(Student student, String password, String password2) {
-        this.student = student;
-        this.password = password;
-        this.password2 = password2;
+    public ReStudent() {
     }
 
-    public ReStudent() {
+    public ReStudent(Student student, String password, String password1, String password2) {
+        this.student = student;
+        this.password = password;
+        this.password1 = password1;
+        this.password2 = password2;
     }
 
     public Student getStudent() {
@@ -48,6 +52,14 @@ public class ReStudent {
         this.password = password;
     }
 
+    public String getPassword1() {
+        return password1;
+    }
+
+    public void setPassword1(String password1) {
+        this.password1 = password1;
+    }
+
     public String getPassword2() {
         return password2;
     }
@@ -61,6 +73,7 @@ public class ReStudent {
         final StringBuffer sb = new StringBuffer("ReStudent{");
         sb.append("student=").append(student);
         sb.append(", password='").append(password).append('\'');
+        sb.append(", password1='").append(password1).append('\'');
         sb.append(", password2='").append(password2).append('\'');
         sb.append('}');
         return sb.toString();

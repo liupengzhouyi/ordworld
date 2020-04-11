@@ -104,6 +104,16 @@
         where id = #{id}
     </update>
 
+    <update id="rePassword">
+        update ordworld.student
+        <set>
+            <if test="password != null">
+                password = #{password},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
     <!--通过主键删除-->
     <delete id="deleteById">
         delete from ordworld.student where id = #{id}

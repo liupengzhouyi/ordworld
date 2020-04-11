@@ -5,6 +5,7 @@ import cn.liupengstudy.ordworld.entity.Student;
 import cn.liupengstudy.ordworld.entity.tools.LPR;
 import cn.liupengstudy.ordworld.entity.tools.LpPassword;
 import cn.liupengstudy.ordworld.entity.tools.ReStudent;
+import cn.liupengstudy.ordworld.entity.tools.ReTeacher;
 import cn.liupengstudy.ordworld.service.StudentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -171,8 +172,23 @@ public class StudentController {
         return lpr;
     }
 
-
-
+    @ApiOperation(value = "学生编辑信息")
+    @RequestMapping(path = "/edit", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR edit(@RequestBody ReStudent reStudent) {
+        LPR lpr = new LPR();
+        lpr.setWhat("学生编辑信息");
+        boolean key = true;
+        Student student = this.studentService.update(reStudent.getStudent());
+        if (student == null) {
+            key = false;
+            lpr.setWhy("编辑失败");
+        } else {
+            lpr.setWhy("编辑成功");
+        }
+        lpr.setReturnObject(student);
+        lpr.setReturnKey(key);
+        return lpr;
+    }
 
 
 

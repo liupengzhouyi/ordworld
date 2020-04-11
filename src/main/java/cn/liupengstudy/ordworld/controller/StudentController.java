@@ -34,8 +34,20 @@ public class StudentController {
      */
     @ApiOperation(value = "通过学ID查询学生")
     @RequestMapping(path = "/selectOne", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public Student selectOne(Integer id) {
-        return this.studentService.queryById(id);
+    public LPR selectOne(@RequestBody Student student) {
+        LPR lpr = new LPR();
+        lpr.setWhat("通过学ID查询学生");
+        boolean key = true;
+        Student student1 = this.studentService.queryById(student.getId());
+        if (student1 == null) {
+            key = false;
+            lpr.setWhy("查询失败");
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(student1);
+        return lpr;
     }
 
     @ApiOperation(value = "学生注册")

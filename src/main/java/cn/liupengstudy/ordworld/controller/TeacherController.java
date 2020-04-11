@@ -51,7 +51,8 @@ public class TeacherController {
 
     @ApiOperation(value = "教师注册")
     @RequestMapping(path = "/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public LPR add(@RequestBody Teacher teacher) {
+    public LPR add(@RequestBody ReTeacher reTeacher) {
+        Teacher teacher = reTeacher.getTeacher();
         LPR lpr = new LPR();
         lpr.setWhat("添加教师信息");
         boolean key = true;
@@ -63,7 +64,7 @@ public class TeacherController {
             lpr.setWhy("教师编号重复");
         } else {
             // update password
-            LpPassword lpPassword = new LpPassword(teacher.getTeachernumber(), teacher.getPassword()+"");
+            LpPassword lpPassword = new LpPassword(teacher.getTeachernumber(), reTeacher.getPassword1());
             teacher.setPassword(lpPassword.getPasswordValue());
             // add
             teacher1 = this.teacherService.insert(teacher);
@@ -99,7 +100,8 @@ public class TeacherController {
 
     @ApiOperation(value = "教师登陆")
     @RequestMapping(path = "/landing", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public LPR landing(@RequestBody Teacher teacher) {
+    public LPR landing(@RequestBody ReTeacher reTeacher) {
+        Teacher teacher = reTeacher.getTeacher();
         LPR lpr = new LPR();
         lpr.setWhat("教师登陆");
         boolean key = true;
@@ -107,7 +109,7 @@ public class TeacherController {
         Teacher temp = null;
         if (selectByNumberLpr.isReturnKey()) {
             temp = (Teacher) selectByNumberLpr.getReturnObject();
-            LpPassword lpPassword = new LpPassword(teacher.getTeachernumber(), teacher.getPassword() + "");
+            LpPassword lpPassword = new LpPassword(teacher.getTeachernumber(), reTeacher.getPassword1());
             if (temp.getPassword() == lpPassword.getPasswordValue()) {
                 lpr.setWhy("登陆成功");
             } else {
@@ -175,7 +177,7 @@ public class TeacherController {
             key = false;
         } else {
             if (reTeacher.getPassword1().equals(reTeacher.getPassword2())) {
-                LPR landingLpr = this.landing(reTeacher.getTeacher());
+                LPR landingLpr = this.landing(reTeacher);
                 if (landingLpr.isReturnKey()) {
                     Teacher temp = (Teacher) landingLpr.getReturnObject();
                     LpPassword lpPassword = new LpPassword(temp.getTeachernumber(), reTeacher.getPassword1());

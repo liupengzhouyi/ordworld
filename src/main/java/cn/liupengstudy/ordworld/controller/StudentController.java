@@ -3,6 +3,8 @@ package cn.liupengstudy.ordworld.controller;
 import cn.liupengstudy.ordworld.entity.Project;
 import cn.liupengstudy.ordworld.entity.Student;
 import cn.liupengstudy.ordworld.entity.tools.LPR;
+import cn.liupengstudy.ordworld.entity.tools.LpPassword;
+import cn.liupengstudy.ordworld.entity.tools.ReStudent;
 import cn.liupengstudy.ordworld.service.StudentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -85,7 +87,8 @@ public class StudentController {
 
     @ApiOperation(value = "学生注册")
     @RequestMapping(path = "/addOne", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public LPR addOne(@RequestBody Student student) {
+    public LPR addOne(@RequestBody ReStudent reStudent) {
+        Student student = reStudent.getStudent();
         student.setPhonenumber(student.getPhonenumber().replace(" ", ""));
         student.setStudentid(student.getStudentid().replace(" ", ""));
         LPR lpr = new LPR();
@@ -101,6 +104,8 @@ public class StudentController {
                 key = false;
                 lpr.setWhy("注册失败, 联系方式重复");
             } else {
+                LpPassword lpPassword = new LpPassword(student.getStudentid(), reStudent.getPassword());
+                student.setPassword(lpPassword.getPasswordValue());
                 Student student1 = this.studentService.insert(student);
                 if (student1 == null) {
                     key = false;
@@ -115,6 +120,30 @@ public class StudentController {
         return lpr;
     }
 
+    @ApiOperation(value = "学生登陆")
+    @RequestMapping(path = "/landing", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR landing(@RequestBody ReStudent reStudent) {
+        LPR lpr = new LPR();
+        lpr.setWhat("学生登陆");
+        boolean key = true;
+        LPR selectLpr = this.selectByStudentID(reStudent.getStudent());
+        if (selectLpr.isReturnKey()) {
+            LpPassword lpPassword = new LpPassword(reStudent.getStudent().getStudentid(), reStudent.getPassword());
+            Student temp = (Student) selectLpr.getReturnObject();
+            if (lpPassword.getPasswordValue() - temp.getPassword() == 0) {
+                lpr.setWhy("登陆成功");
+                lpr.setReturnObject(temp);
+            } else {
+                key = false;
+                lpr.setWhy("密码错误");
+            }
+        } else {
+            key = false;
+            lpr.setWhy("账号错误");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
 
 
 

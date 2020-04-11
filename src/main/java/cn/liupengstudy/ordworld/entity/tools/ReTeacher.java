@@ -2,6 +2,7 @@ package cn.liupengstudy.ordworld.entity.tools;
 
 import cn.liupengstudy.ordworld.entity.Teacher;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
@@ -12,13 +13,15 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @创建时间 2020/4/9 - 6:42 下午
  * @修改人和其它信息
  */
-@ApiModel(value = "教师修改密码专用类")
+@ApiModel(value = "教师注册登陆修改密码类")
 public class ReTeacher {
 
     private Teacher teacher;
 
+    @ApiModelProperty(value = "密码")
     private String password1;
 
+    @ApiModelProperty(value = " 确认密码")
     private String password2;
 
     public ReTeacher(Teacher teacher, String password1, String password2) {

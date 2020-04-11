@@ -62,7 +62,8 @@ public class ConservatorController {
 
     @ApiOperation(value = "管理员注册")
     @RequestMapping(path = "/register", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public LPR register(@RequestBody Conservator conservator) {
+    public LPR register(@RequestBody ReConservator reConservator) {
+        Conservator conservator = reConservator.getConservator();
         LPR lpr = new LPR();
         lpr.setWhat("管理员注册");
         boolean key = true;
@@ -80,7 +81,7 @@ public class ConservatorController {
                     lpr.setReturnObject(null);
                 } else {
                     lpr.setWhy("电话号码没有重复，可以注册");
-                    LpPassword lpPassword = new LpPassword(conservator.getPhonenumber(), conservator.getPassword() + "");
+                    LpPassword lpPassword = new LpPassword(conservator.getPhonenumber(), reConservator.getPassword());
                     conservator.setPassword(lpPassword.getPasswordValue());
                     int registerKey = this.conservatorService.insert(conservator);
                     System.out.println(registerKey);
@@ -105,14 +106,15 @@ public class ConservatorController {
 
     @ApiOperation(value = "管理员登陆")
     @RequestMapping(path = "/landing", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public LPR landing(@RequestBody Conservator conservator) {
+    public LPR landing(@RequestBody ReConservator reConservator) {
+        Conservator conservator = reConservator.getConservator();
         LPR lpr = new LPR();
         lpr.setWhat("管理员登陆");
         boolean key = true;
         LPR selectPhoneNumber = this.selectPhoneNumber(conservator);
         if (selectPhoneNumber.isReturnKey()) {
             lpr.setWhy("账号存在");
-            LpPassword lpPassword = new LpPassword(conservator.getPhonenumber(), conservator.getPassword() + "");
+            LpPassword lpPassword = new LpPassword(conservator.getPhonenumber(), reConservator.getPassword());
             List<Conservator> list = (List<Conservator>) selectPhoneNumber.getReturnObject();
             if (list.get(0).getPassword() == lpPassword.getPasswordValue()) {
                 lpr.setWhy("密码正确");
@@ -134,7 +136,7 @@ public class ConservatorController {
         LPR lpr = new LPR();
         lpr.setWhat("管理员修改密码");
         boolean key = true;
-        LPR landingLPR = this.landing(reConservator.getConservator());
+        LPR landingLPR = this.landing(reConservator);
         if (landingLPR.isReturnKey()) {
             LPR selectPhoneNumber = this.selectPhoneNumber(reConservator.getConservator());
             List<Conservator> list = (List<Conservator>) selectPhoneNumber.getReturnObject();

@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 学生表(Student)表控制层
@@ -188,6 +189,25 @@ public class StudentController {
         lpr.setReturnObject(student);
         lpr.setReturnKey(key);
         return lpr;
+    }
+
+    @ApiOperation(value = "获取所有学生信息")
+    @RequestMapping(path = "/getAll", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAll(){
+        LPR lpr = new LPR();
+        lpr.setWhat("获取所有学生信息");
+        boolean key = true;
+        List<Student> list = this.studentService.getAll();
+        if (list.size() <= 0) {
+            key = false;
+            lpr.setWhy("没有信息");
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnObject(list);
+        lpr.setReturnKey(key);
+        return lpr;
+
     }
 
 

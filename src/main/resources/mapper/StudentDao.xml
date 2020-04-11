@@ -10,34 +10,21 @@
         <result property="prodessionalid" column="prodessionalId" jdbcType="INTEGER"/>
         <result property="phonenumber" column="phoneNumber" jdbcType="VARCHAR"/>
         <result property="isdelete" column="isDelete" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="StudentMap">
         select
-          id, studentID, password, imageURL, prodessionalId, phoneNumber, isDelete
+          id, studentID, password, imageURL, prodessionalId, phoneNumber, isDelete, name
         from ordworld.student
         where id = #{id}
-    </select>
-
-    <select id="queryByStudentNumber" resultMap="StudentMap">
-        select
-          id, studentID, password, imageURL, prodessionalId, phoneNumber, isDelete
-        from ordworld.student
-        where studentID = #{studentID}
-    </select>
-
-    <select id="queryByPhoneNumber" resultMap="StudentMap">
-        select
-          id, studentID, password, imageURL, prodessionalId, phoneNumber, isDelete
-        from ordworld.student
-        where phoneNumber = #{phoneNumber}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="StudentMap">
         select
-          id, studentID, password, imageURL, prodessionalId, phoneNumber, isDelete
+          id, studentID, password, imageURL, prodessionalId, phoneNumber, isDelete, name
         from ordworld.student
         limit #{offset}, #{limit}
     </select>
@@ -45,7 +32,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="StudentMap">
         select
-          id, studentID, password, imageURL, prodessionalId, phoneNumber, isDelete
+          id, studentID, password, imageURL, prodessionalId, phoneNumber, isDelete, name
         from ordworld.student
         <where>
             <if test="id != null">
@@ -69,13 +56,16 @@
             <if test="isdelete != null">
                 and isDelete = #{isdelete}
             </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into ordworld.student(studentID, password, imageURL, prodessionalId, phoneNumber, isDelete)
-        values (#{studentid}, #{password}, #{imageurl}, #{prodessionalid}, #{phonenumber}, #{isdelete})
+        insert into ordworld.student(studentID, password, imageURL, prodessionalId, phoneNumber, isDelete, name)
+        values (#{studentid}, #{password}, #{imageurl}, #{prodessionalid}, #{phonenumber}, #{isdelete}, #{name})
     </insert>
 
     <!--通过主键修改数据-->
@@ -100,9 +90,35 @@
             <if test="isdelete != null">
                 isDelete = #{isdelete},
             </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
         </set>
         where id = #{id}
     </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ordworld.student where id = #{id}
+    </delete>
+
+    <select id="queryByStudentNumber" resultMap="StudentMap">
+        select
+          id, studentID, password, imageURL, prodessionalId, phoneNumber, isDelete, name
+        from ordworld.student
+        where studentID = #{studentID}
+    </select>
+
+    <select id="queryByPhoneNumber" resultMap="StudentMap">
+        select
+          id, studentID, password, imageURL, prodessionalId, phoneNumber, isDelete, name
+        from ordworld.student
+        where phoneNumber = #{phoneNumber}
+    </select>
+
+    <select id="getAll" resultMap="StudentMap">
+        select * from ordworld.student;
+    </select>
 
     <update id="rePassword">
         update ordworld.student
@@ -113,10 +129,5 @@
         </set>
         where id = #{id}
     </update>
-
-    <!--通过主键删除-->
-    <delete id="deleteById">
-        delete from ordworld.student where id = #{id}
-    </delete>
 
 </mapper>

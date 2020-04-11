@@ -44,6 +44,8 @@ public interface StudentDao {
      */
     List<Student> queryAll(Student student);
 
+    List<Student> getAll();
+
     /**
      * 新增数据
      *

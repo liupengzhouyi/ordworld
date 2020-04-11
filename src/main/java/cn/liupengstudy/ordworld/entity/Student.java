@@ -50,6 +50,8 @@ public class Student implements Serializable {
     @ApiModelProperty(value = "删除标记")
     private Integer isdelete;
 
+    @ApiModelProperty(value = "姓名")
+    private String name;
 
     public Integer getId() {
         return id;
@@ -107,6 +109,14 @@ public class Student implements Serializable {
         this.isdelete = isdelete;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Student{");
@@ -117,6 +127,7 @@ public class Student implements Serializable {
         sb.append(", prodessionalid=").append(prodessionalid);
         sb.append(", phonenumber='").append(phonenumber).append('\'');
         sb.append(", isdelete=").append(isdelete);
+        sb.append(", name='").append(name).append('\'');
         sb.append('}');
         return sb.toString();
     }

@@ -103,4 +103,9 @@ public class StudentServiceImpl implements StudentService {
     public boolean deleteById(Integer id) {
         return this.studentDao.deleteById(id) > 0;
     }
+
+    @Override
+    public List<Student> getAll() {
+        return this.studentDao.getAll();
+    }
 }

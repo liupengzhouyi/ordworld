@@ -30,6 +30,11 @@ public class StudentServiceImpl implements StudentService {
         return this.studentDao.queryById(id);
     }
 
+    @Override
+    public Student queryByStudentNumber(String studentID) {
+        return this.studentDao.queryByStudentNumber(studentID);
+    }
+
     /**
      * 查询多条数据
      *
@@ -50,7 +55,12 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public Student insert(Student student) {
-        this.studentDao.insert(student);
+        int key = this.studentDao.insert(student);
+        if (key == 1) {
+            student = this.queryByStudentNumber(student.getStudentid());
+        } else {
+            student = null;
+        }
         return student;
     }
 

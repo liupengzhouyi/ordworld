@@ -22,6 +22,10 @@ public interface StudentDao {
      */
     Student queryById(Integer id);
 
+    Student queryByStudentNumber(@Param("studentID") String studentID);
+
+
+
     /**
      * 查询指定行数据
      *

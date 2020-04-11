@@ -1,6 +1,8 @@
 package cn.liupengstudy.ordworld.service;
 
 import cn.liupengstudy.ordworld.entity.Student;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -18,6 +20,8 @@ public interface StudentService {
      * @return 实例对象
      */
     Student queryById(Integer id);
+
+    Student queryByStudentNumber(@Param("studentID") String studentID);
 
     /**
      * 查询多条数据

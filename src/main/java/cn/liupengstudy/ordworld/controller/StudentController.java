@@ -50,6 +50,42 @@ public class StudentController {
         return lpr;
     }
 
+    @ApiOperation(value = "通过学号查询学生")
+    @RequestMapping(path = "/selectByStudentID", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR selectByStudentID(@RequestBody Student student) {
+        LPR lpr = new LPR();
+        lpr.setWhat("通过学号查询学生");
+        boolean key = true;
+        Student student1 = this.studentService.queryByStudentNumber(student.getStudentid());
+        if (student1 == null) {
+            key = false;
+            lpr.setWhy("查询失败");
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(student1);
+        return lpr;
+    }
+
+    @ApiOperation(value = "通过联系方式查询学生")
+    @RequestMapping(path = "/selectByPhoneNumber", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR selectByPhoneNumber(@RequestBody Student student) {
+        LPR lpr = new LPR();
+        lpr.setWhat("通过联系方式查询学生");
+        boolean key = true;
+        Student student1 = this.studentService.queryByPhoneNumber(student.getPhonenumber());
+        if (student1 == null) {
+            key = false;
+            lpr.setWhy("查询失败");
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(student1);
+        return lpr;
+    }
+
     @ApiOperation(value = "学生注册")
     @RequestMapping(path = "/addOne", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LPR addOne(@RequestBody Student student) {

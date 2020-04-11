@@ -27,6 +27,13 @@
         where studentID = #{studentID}
     </select>
 
+    <select id="queryByPhoneNumber" resultMap="StudentMap">
+        select
+          id, studentID, password, imageURL, prodessionalId, phoneNumber, isDelete
+        from ordworld.student
+        where phoneNumber = #{phoneNumber}
+    </select>
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="StudentMap">
         select

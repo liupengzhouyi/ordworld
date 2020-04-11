@@ -35,6 +35,11 @@ public class StudentServiceImpl implements StudentService {
         return this.studentDao.queryByStudentNumber(studentID);
     }
 
+    @Override
+    public Student queryByPhoneNumber(String phoneNumber) {
+        return this.studentDao.queryByPhoneNumber(phoneNumber);
+    }
+
     /**
      * 查询多条数据
      *
@@ -63,6 +68,8 @@ public class StudentServiceImpl implements StudentService {
         }
         return student;
     }
+
+
 
     /**
      * 修改数据

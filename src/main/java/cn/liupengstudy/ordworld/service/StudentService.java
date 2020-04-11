@@ -23,6 +23,8 @@ public interface StudentService {
 
     Student queryByStudentNumber(@Param("studentID") String studentID);
 
+    Student queryByPhoneNumber(@Param("phoneNumber") String phoneNumber);
+
     /**
      * 查询多条数据
      *

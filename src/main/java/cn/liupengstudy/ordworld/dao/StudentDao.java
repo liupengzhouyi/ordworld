@@ -24,6 +24,8 @@ public interface StudentDao {
 
     Student queryByStudentNumber(@Param("studentID") String studentID);
 
+    Student queryByPhoneNumber(@Param("phoneNumber") String phoneNumber);
+
 
 
     /**

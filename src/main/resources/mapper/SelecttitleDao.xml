@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.liupengstudy.ordworld.dao.SelecttitleDao">
+
+    <resultMap type="cn.liupengstudy.ordworld.entity.Selecttitle" id="SelecttitleMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="studentid" column="studentId" jdbcType="INTEGER"/>
+        <result property="titleid" column="titleId" jdbcType="INTEGER"/>
+        <result property="applicationdata" column="applicationData" jdbcType="VARCHAR"/>
+        <result property="passdata" column="passData" jdbcType="VARCHAR"/>
+        <result property="pass" column="pass" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SelecttitleMap">
+        select
+          id, studentId, titleId, applicationData, passData, pass
+        from ordworld.selectTitle
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SelecttitleMap">
+        select
+          id, studentId, titleId, applicationData, passData, pass
+        from ordworld.selectTitle
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SelecttitleMap">
+        select
+          id, studentId, titleId, applicationData, passData, pass
+        from ordworld.selectTitle
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="studentid != null">
+                and studentId = #{studentid}
+            </if>
+            <if test="titleid != null">
+                and titleId = #{titleid}
+            </if>
+            <if test="applicationdata != null and applicationdata != ''">
+                and applicationData = #{applicationdata}
+            </if>
+            <if test="passdata != null and passdata != ''">
+                and passData = #{passdata}
+            </if>
+            <if test="pass != null">
+                and pass = #{pass}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into ordworld.selectTitle(studentId, titleId, applicationData, passData, pass)
+        values (#{studentid}, #{titleid}, #{applicationdata}, #{passdata}, #{pass})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ordworld.selectTitle
+        <set>
+            <if test="studentid != null">
+                studentId = #{studentid},
+            </if>
+            <if test="titleid != null">
+                titleId = #{titleid},
+            </if>
+            <if test="applicationdata != null and applicationdata != ''">
+                applicationData = #{applicationdata},
+            </if>
+            <if test="passdata != null and passdata != ''">
+                passData = #{passdata},
+            </if>
+            <if test="pass != null">
+                pass = #{pass},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ordworld.selectTitle where id = #{id}
+    </delete>
+
+</mapper>

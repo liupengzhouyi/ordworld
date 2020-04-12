@@ -47,6 +47,11 @@ public class GroupServiceImpl implements GroupService {
         return this.groupDao.getAllByTeacherId(teacherid);
     }
 
+    @Override
+    public List<Group> getAll() {
+        return this.groupDao.getAll();
+    }
+
     /**
      * 新增数据
      *

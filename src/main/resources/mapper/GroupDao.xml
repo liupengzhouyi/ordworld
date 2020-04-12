@@ -57,6 +57,12 @@
         </where>
     </select>
 
+    <select id="getAll" resultMap="GroupMap">
+        select
+        id, teacherID, imageURL, name
+        from ordworld.group
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into ordworld.group(teacherID, imageURL, name)

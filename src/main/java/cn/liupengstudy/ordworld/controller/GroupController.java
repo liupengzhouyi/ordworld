@@ -76,6 +76,7 @@ public class GroupController {
                     key = false;
                 } else {
                     lpr.setWhy("添加成功");
+                    lpr.setReturnObject(group1);
                 }
             }
         } else {
@@ -85,6 +86,7 @@ public class GroupController {
                 key = false;
             } else {
                 lpr.setWhy("添加成功");
+                lpr.setReturnObject(group1);
             }
         }
         lpr.setReturnKey(key);
@@ -109,6 +111,24 @@ public class GroupController {
         return lpr;
     }
 
+    @ApiOperation(value = "获取所有讨论组")
+    @RequestMapping(path = "/getAll", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAll() {
+        LPR lpr = new LPR();
+        lpr.setWhat("获取所有讨论组");
+        boolean key = true;
+        List<Group> list = this.groupService.getAll();
+        if (list.size() <= 0) {
+            lpr.setWhy("没有数据");
+            key = false;
+        } else {
+            lpr.setWhy("查找成功");
+        }
+        lpr.setReturnObject(list);
+        lpr.setReturnKey(key);
+        return lpr;
+    }
+
     @ApiOperation(value = "讨论组修改名称")
     @RequestMapping(path = "/reName", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LPR reName(@RequestBody Group group) {
@@ -118,7 +138,7 @@ public class GroupController {
         LPR selectOneLpr = this.selectOne(group);
         if (selectOneLpr.isReturnKey()) {
             Group temp = (Group) selectOneLpr.getReturnObject();
-            if (temp.getName().equals(group.getName().replace(" ", ""))) {
+            if (temp.getTeacherid() - group.getTeacherid() == 0) {
                 Group temp1 = this.groupService.reName(group.getId(), group.getName());
                 if (temp1 == null) {
                     lpr.setWhy("修改失败");
@@ -148,7 +168,7 @@ public class GroupController {
         LPR selectOneLpr = this.selectOne(group);
         if (selectOneLpr.isReturnKey()) {
             Group temp = (Group) selectOneLpr.getReturnObject();
-            if (temp.getName().equals(group.getName().replace(" ", ""))) {
+            if (temp.getTeacherid() - group.getTeacherid() == 0) {
                 Group temp1 = this.groupService.reImage(group);
                 if (temp1 == null) {
                     lpr.setWhy("修改失败");

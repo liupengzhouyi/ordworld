@@ -32,6 +32,8 @@ public interface GroupService {
 
     List<Group> getAllByTeacherId(@Param("teacherid") int teacherid);
 
+    List<Group> getAll();
+
     /**
      * 新增数据
      *

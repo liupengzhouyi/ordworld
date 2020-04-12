@@ -101,4 +101,44 @@ public class SelecttitleController {
         return lpr;
     }
 
+    /**
+     * @描述  在学生ID的权限下，删除该申请
+     * @参数  [selecttitle]
+     * @返回值  cn.liupengstudy.ordworld.entity.tools.LPR
+     * @创建人  liupeng
+     * @作者联系方式 LIUPENG.0@outlook.com
+     * @创建时间  2020/4/12 - 3:00 下午
+     * @修改人和其它信息
+     */
+    @ApiOperation(value = "学生撤销选题申请信息")
+    @RequestMapping(path = "/reApplicationbyStudent", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR reApplicationbyStudent(@RequestBody Selecttitle selecttitle) {
+        LPR lpr = new LPR();
+        lpr.setWhat("学生撤销选题申请信息");
+        boolean key = true;
+        LPR selectOneLpr = this.selectOne(selecttitle);
+        if (selectOneLpr.isReturnKey()) {
+            Selecttitle temp = (Selecttitle) selectOneLpr.getReturnObject();
+            if (temp.getStudentid() - selecttitle.getStudentid() == 0) {
+                boolean deleteKey = this.selecttitleService.deleteById(temp.getId());
+                if (deleteKey) {
+                    lpr.setWhy("撤销申请信息成功");
+                    lpr.setReturnObject(temp);
+                } else {
+                    key = false;
+                    lpr.setWhy("撤销申请信息失败");
+                }
+            } else {
+                key = false;
+                lpr.setWhy("没有权限撤销申请信息");
+            }
+        } else {
+            key = false;
+            lpr.setWhy("没有该申请信息");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
+
+
 }

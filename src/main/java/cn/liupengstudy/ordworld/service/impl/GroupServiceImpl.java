@@ -42,6 +42,11 @@ public class GroupServiceImpl implements GroupService {
         return this.groupDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<Group> getAllByTeacherId(int teacherid) {
+        return this.groupDao.getAllByTeacherId(teacherid);
+    }
+
     /**
      * 新增数据
      *
@@ -50,7 +55,17 @@ public class GroupServiceImpl implements GroupService {
      */
     @Override
     public Group insert(Group group) {
-        this.groupDao.insert(group);
+        int key = this.groupDao.insert(group);
+        if (key == 1) {
+            List<Group> list = this.groupDao.queryAll(group);
+            if (list.size() <= 0) {
+                group = null;
+            } else {
+                group = list.get(0);
+            }
+        } else {
+            group = null;
+        }
         return group;
     }
 
@@ -62,6 +77,21 @@ public class GroupServiceImpl implements GroupService {
      */
     @Override
     public Group update(Group group) {
+        this.groupDao.update(group);
+        return this.queryById(group.getId());
+    }
+
+    @Override
+    public Group reName(int id, String name) {
+        Group group = new Group();
+        group.setId(id);
+        group.setName(name);
+        this.groupDao.reName(group);
+        return this.queryById(group.getId());
+    }
+
+    @Override
+    public Group reImage(Group group) {
         this.groupDao.update(group);
         return this.queryById(group.getId());
     }

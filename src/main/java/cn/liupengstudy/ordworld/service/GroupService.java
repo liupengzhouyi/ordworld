@@ -1,6 +1,8 @@
 package cn.liupengstudy.ordworld.service;
 
 import cn.liupengstudy.ordworld.entity.Group;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -28,6 +30,8 @@ public interface GroupService {
      */
     List<Group> queryAllByLimit(int offset, int limit);
 
+    List<Group> getAllByTeacherId(@Param("teacherid") int teacherid);
+
     /**
      * 新增数据
      *
@@ -43,6 +47,10 @@ public interface GroupService {
      * @return 实例对象
      */
     Group update(Group group);
+
+    Group reName(int id, String name);
+
+    Group reImage(Group group);
 
     /**
      * 通过主键删除数据

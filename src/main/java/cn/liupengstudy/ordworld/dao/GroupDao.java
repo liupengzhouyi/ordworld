@@ -40,6 +40,7 @@ public interface GroupDao {
      */
     List<Group> queryAll(Group group);
 
+    List<Group> getAllByTeacherId(@Param("teacherid") int teacherid);
     /**
      * 新增数据
      *
@@ -55,6 +56,10 @@ public interface GroupDao {
      * @return 影响行数
      */
     int update(Group group);
+
+    int reName(Group group);
+
+    int reImage(Group group);
 
     /**
      * 通过主键删除数据

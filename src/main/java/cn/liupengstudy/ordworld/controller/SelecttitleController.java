@@ -119,18 +119,23 @@ public class SelecttitleController {
         LPR selectOneLpr = this.selectOne(selecttitle);
         if (selectOneLpr.isReturnKey()) {
             Selecttitle temp = (Selecttitle) selectOneLpr.getReturnObject();
-            if (temp.getStudentid() - selecttitle.getStudentid() == 0) {
-                boolean deleteKey = this.selecttitleService.deleteById(temp.getId());
-                if (deleteKey) {
-                    lpr.setWhy("撤销申请信息成功");
-                    lpr.setReturnObject(temp);
+            if(temp.getPass() == 0) {
+                if (temp.getStudentid() - selecttitle.getStudentid() == 0) {
+                    boolean deleteKey = this.selecttitleService.deleteById(temp.getId());
+                    if (deleteKey) {
+                        lpr.setWhy("撤销申请信息成功");
+                        lpr.setReturnObject(temp);
+                    } else {
+                        key = false;
+                        lpr.setWhy("撤销申请信息失败");
+                    }
                 } else {
                     key = false;
-                    lpr.setWhy("撤销申请信息失败");
+                    lpr.setWhy("没有权限撤销申请信息");
                 }
             } else {
                 key = false;
-                lpr.setWhy("没有权限撤销申请信息");
+                lpr.setWhy("教师已处理，没有权限撤销申请信息");
             }
         } else {
             key = false;
@@ -139,6 +144,8 @@ public class SelecttitleController {
         lpr.setReturnKey(key);
         return lpr;
     }
+
+
 
 
 }

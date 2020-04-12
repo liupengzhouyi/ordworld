@@ -42,6 +42,17 @@ public class ChatServiceImpl implements ChatService {
         return this.chatDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<Chat> getByGroupID(int groupid) {
+        int L = 100;
+        List<Chat> list =  this.chatDao.getByGroupID(groupid);
+        int longth = list.size();
+        if (longth > L) {
+            list = list.subList(longth - L, longth);
+        }
+        return list;
+    }
+
     /**
      * 新增数据
      *
@@ -50,7 +61,20 @@ public class ChatServiceImpl implements ChatService {
      */
     @Override
     public Chat insert(Chat chat) {
-        this.chatDao.insert(chat);
+        int key = this.chatDao.insert(chat);
+        System.out.println(chat.toString());
+        if (key == 1) {
+            List<Chat> list = this.chatDao.queryAll(chat);
+            System.out.println(list.size());
+            if (list.size() <= 0) {
+                chat = null;
+            } else {
+                chat = list.get(0);
+                System.out.println(chat.toString());
+            }
+        } else {
+            chat = null;
+        }
         return chat;
     }
 

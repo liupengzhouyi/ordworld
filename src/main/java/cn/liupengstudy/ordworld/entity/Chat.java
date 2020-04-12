@@ -144,4 +144,21 @@ public class Chat implements Serializable {
         this.second = second;
     }
 
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Chat{");
+        sb.append("id=").append(id);
+        sb.append(", groupid=").append(groupid);
+        sb.append(", type=").append(type);
+        sb.append(", authorid=").append(authorid);
+        sb.append(", information='").append(information).append('\'');
+        sb.append(", year=").append(year);
+        sb.append(", month=").append(month);
+        sb.append(", day=").append(day);
+        sb.append(", hour=").append(hour);
+        sb.append(", moment=").append(moment);
+        sb.append(", second=").append(second);
+        sb.append('}');
+        return sb.toString();
+    }
 }

@@ -1,6 +1,8 @@
 package cn.liupengstudy.ordworld.service;
 
 import cn.liupengstudy.ordworld.entity.Chat;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -27,6 +29,8 @@ public interface ChatService {
      * @return 对象列表
      */
     List<Chat> queryAllByLimit(int offset, int limit);
+
+    List<Chat> getByGroupID(@Param("groupid") int groupid);
 
     /**
      * 新增数据

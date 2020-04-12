@@ -32,6 +32,13 @@
         limit #{offset}, #{limit}
     </select>
 
+    <select id="getByGroupID" resultMap="ChatMap">
+        select
+          id, groupid, type, authorid, information, year, month, day, hour, moment, second
+        from ordworld.chat
+        where groupid = #{groupid}
+    </select>
+
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="ChatMap">
         select

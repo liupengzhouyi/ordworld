@@ -76,4 +76,17 @@ create table selectTitle
 )
 comment '选题表';
 
+# 讨论组表
+create table `group`
+(
+	id int auto_increment comment '自增ID',
+	teacherID int not null comment '教师ID',
+	imageURL varchar(200) null comment '图片',
+	name varchar(50) not null comment '小组名称',
+	constraint group_pk
+		primary key (id)
+)
+comment '讨论组表';
+
+
 

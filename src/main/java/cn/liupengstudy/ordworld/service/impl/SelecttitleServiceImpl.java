@@ -30,6 +30,11 @@ public class SelecttitleServiceImpl implements SelecttitleService {
         return this.selecttitleDao.queryById(id);
     }
 
+    @Override
+    public Selecttitle queryRepeat(int studentid, int titleid, int pass) {
+        return this.selecttitleDao.queryRepeat(studentid, titleid, pass);
+    }
+
     /**
      * 查询多条数据
      *
@@ -50,7 +55,17 @@ public class SelecttitleServiceImpl implements SelecttitleService {
      */
     @Override
     public Selecttitle insert(Selecttitle selecttitle) {
-        this.selecttitleDao.insert(selecttitle);
+        int key = this.selecttitleDao.insert(selecttitle);
+        if (key != 1) {
+            selecttitle = null;
+        } else {
+            List<Selecttitle> list = this.selecttitleDao.queryAll(selecttitle);
+            if (list.size() >= 1) {
+                selecttitle = list.get(0);
+            } else {
+                selecttitle = null;
+            }
+        }
         return selecttitle;
     }
 

@@ -22,6 +22,8 @@ public interface SelecttitleDao {
      */
     Selecttitle queryById(Integer id);
 
+    Selecttitle queryRepeat(@Param("studentid") int studentid, @Param("titleid") int titleid, @Param("pass") int pass);
+
     /**
      * 查询指定行数据
      *

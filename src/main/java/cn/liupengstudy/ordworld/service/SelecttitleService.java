@@ -1,6 +1,8 @@
 package cn.liupengstudy.ordworld.service;
 
 import cn.liupengstudy.ordworld.entity.Selecttitle;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -18,6 +20,8 @@ public interface SelecttitleService {
      * @return 实例对象
      */
     Selecttitle queryById(Integer id);
+
+    Selecttitle queryRepeat(@Param("studentid") int studentid, @Param("titleid") int titleid, @Param("pass") int pass);
 
     /**
      * 查询多条数据

@@ -19,6 +19,13 @@
         where id = #{id}
     </select>
 
+    <select id="queryRepeat" resultMap="SelecttitleMap">
+        select
+          id, studentId, titleId, applicationData, passData, pass
+        from ordworld.selectTitle
+        where studentId=#{studentid} and titleId = #{titleid} and pass = #{pass}
+    </select>
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="SelecttitleMap">
         select

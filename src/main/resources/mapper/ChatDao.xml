@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.liupengstudy.ordworld.dao.ChatDao">
+
+    <resultMap type="cn.liupengstudy.ordworld.entity.Chat" id="ChatMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="groupid" column="groupid" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="authorid" column="authorid" jdbcType="INTEGER"/>
+        <result property="information" column="information" jdbcType="VARCHAR"/>
+        <result property="year" column="year" jdbcType="INTEGER"/>
+        <result property="month" column="month" jdbcType="INTEGER"/>
+        <result property="day" column="day" jdbcType="INTEGER"/>
+        <result property="hour" column="hour" jdbcType="INTEGER"/>
+        <result property="moment" column="moment" jdbcType="INTEGER"/>
+        <result property="second" column="second" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ChatMap">
+        select
+          id, groupid, type, authorid, information, year, month, day, hour, moment, second
+        from ordworld.chat
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ChatMap">
+        select
+          id, groupid, type, authorid, information, year, month, day, hour, moment, second
+        from ordworld.chat
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ChatMap">
+        select
+          id, groupid, type, authorid, information, year, month, day, hour, moment, second
+        from ordworld.chat
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="groupid != null">
+                and groupid = #{groupid}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="authorid != null">
+                and authorid = #{authorid}
+            </if>
+            <if test="information != null and information != ''">
+                and information = #{information}
+            </if>
+            <if test="year != null">
+                and year = #{year}
+            </if>
+            <if test="month != null">
+                and month = #{month}
+            </if>
+            <if test="day != null">
+                and day = #{day}
+            </if>
+            <if test="hour != null">
+                and hour = #{hour}
+            </if>
+            <if test="moment != null">
+                and moment = #{moment}
+            </if>
+            <if test="second != null">
+                and second = #{second}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into ordworld.chat(groupid, type, authorid, information, year, month, day, hour, moment, second)
+        values (#{groupid}, #{type}, #{authorid}, #{information}, #{year}, #{month}, #{day}, #{hour}, #{moment}, #{second})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ordworld.chat
+        <set>
+            <if test="groupid != null">
+                groupid = #{groupid},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="authorid != null">
+                authorid = #{authorid},
+            </if>
+            <if test="information != null and information != ''">
+                information = #{information},
+            </if>
+            <if test="year != null">
+                year = #{year},
+            </if>
+            <if test="month != null">
+                month = #{month},
+            </if>
+            <if test="day != null">
+                day = #{day},
+            </if>
+            <if test="hour != null">
+                hour = #{hour},
+            </if>
+            <if test="moment != null">
+                moment = #{moment},
+            </if>
+            <if test="second != null">
+                second = #{second},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ordworld.chat where id = #{id}
+    </delete>
+
+</mapper>

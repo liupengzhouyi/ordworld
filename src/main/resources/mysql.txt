@@ -88,5 +88,25 @@ create table `group`
 )
 comment '讨论组表';
 
+# 聊天信息表
+create table chat
+(
+	id int auto_increment comment '自增ID',
+	groupid int not null comment '小组ID',
+	type int not null comment '发言人类型',
+	authorid int not null comment '作者ID',
+	information varchar(100) not null comment '聊天信息',
+	year int not null comment '年',
+	month int not null comment '月',
+	day int not null comment '日',
+	hour int not null comment '小时',
+	moment int not null comment '分钟',
+	second int not null comment '秒',
+	constraint chat_pk
+		primary key (id)
+)
+comment '聊天信息表';
+
+
 
 

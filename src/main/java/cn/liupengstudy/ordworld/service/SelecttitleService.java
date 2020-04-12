@@ -49,6 +49,8 @@ public interface SelecttitleService {
      */
     Selecttitle update(Selecttitle selecttitle);
 
+    Selecttitle passApplication(@Param("id") int id, @Param("pass") int pass);
+
     /**
      * 通过主键删除数据
      *

@@ -86,6 +86,13 @@ public class SelecttitleServiceImpl implements SelecttitleService {
         return this.queryById(selecttitle.getId());
     }
 
+    @Override
+    public Selecttitle passApplication(int id, int pass) {
+        this.selecttitleDao.passApplication(id, pass);
+        return this.queryById(id);
+
+    }
+
     /**
      * 通过主键删除数据
      *

@@ -101,6 +101,16 @@
         where id = #{id}
     </update>
 
+    <update id="passApplication">
+        update ordworld.selectTitle
+        <set>
+            <if test="pass != null">
+                pass = #{pass},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
     <!--通过主键删除-->
     <delete id="deleteById">
         delete from ordworld.selectTitle where id = #{id}

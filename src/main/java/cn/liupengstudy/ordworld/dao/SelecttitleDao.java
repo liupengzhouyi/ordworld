@@ -60,6 +60,8 @@ public interface SelecttitleDao {
      */
     int update(Selecttitle selecttitle);
 
+    int passApplication(@Param("id") int id, @Param("pass") int pass);
+
     /**
      * 通过主键删除数据
      *

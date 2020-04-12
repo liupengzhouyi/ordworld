@@ -112,8 +112,8 @@ public class SelecttitleController {
      * @修改人和其它信息
      */
     @ApiOperation(value = "学生撤销选题申请信息")
-    @RequestMapping(path = "/reApplicationbyStudent", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public LPR reApplicationbyStudent(@RequestBody Selecttitle selecttitle) {
+    @RequestMapping(path = "/reApplicationByStudent", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR reApplicationByStudent(@RequestBody Selecttitle selecttitle) {
         LPR lpr = new LPR();
         lpr.setWhat("学生撤销选题申请信息");
         boolean key = true;
@@ -147,8 +147,8 @@ public class SelecttitleController {
     }
 
     @ApiOperation(value = "查询学生所有选题申请信息")
-    @RequestMapping(path = "/getAllbyStudent", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public LPR getAllbyStudent(@RequestBody Selecttitle selecttitle) {
+    @RequestMapping(path = "/getAllByStudent", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAllByStudent(@RequestBody Selecttitle selecttitle) {
         LPR lpr = new LPR();
         lpr.setWhat("查询学生所有选题申请信息");
         boolean key = true;
@@ -160,6 +160,50 @@ public class SelecttitleController {
             lpr.setWhy("查询成功");
         }
         lpr.setReturnObject(list);
+        lpr.setReturnKey(key);
+        return lpr;
+    }
+
+    /**
+     * @描述  在申请通过时候继续申请撤销
+     * @参数  [selecttitle]
+     * @返回值  cn.liupengstudy.ordworld.entity.tools.LPR
+     * @创建人  liupeng
+     * @作者联系方式 LIUPENG.0@outlook.com
+     * @创建时间  2020/4/12 - 3:52 下午
+     * @修改人和其它信息
+     */
+    @ApiOperation(value = "学生申请撤销选题")
+    @RequestMapping(path = "/reApplicationAfterPass", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR reApplicationAfterPass(@RequestBody Selecttitle selecttitle) {
+        LPR lpr = new LPR();
+        lpr.setWhat("学生申请撤销选题");
+        boolean key = true;
+        LPR selectOneLpr = this.selectOne(selecttitle);
+        if (selectOneLpr.isReturnKey()) {
+            Selecttitle temp = (Selecttitle) selectOneLpr.getReturnObject();
+            if(temp.getPass() == 1) {
+                if (temp.getStudentid() - selecttitle.getStudentid() == 0) {
+                    Selecttitle selecttitle1 = this.selecttitleService.passApplication(selecttitle.getId(), 99);
+                    if (selecttitle1 == null) {
+                        key = false;
+                        lpr.setWhy("申请撤销失败");
+                    } else {
+                        lpr.setWhy("申请撤销成功");
+                        lpr.setReturnObject(selecttitle1);
+                    }
+                } else {
+                    key = false;
+                    lpr.setWhy("没有权限撤销申请信息");
+                }
+            } else {
+                key = false;
+                lpr.setWhy("教师未处理，无法申请撤销");
+            }
+        } else {
+            key = false;
+            lpr.setWhy("没有该申请信息");
+        }
         lpr.setReturnKey(key);
         return lpr;
     }

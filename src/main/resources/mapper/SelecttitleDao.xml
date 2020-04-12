@@ -61,6 +61,17 @@
         </where>
     </select>
 
+    <select id="queryAllByStudentID" resultMap="SelecttitleMap">
+        select
+        id, studentId, titleId, applicationData, passData, pass
+        from ordworld.selectTitle
+        <where>
+            <if test="studentid != null">
+                and studentId = #{studentid}
+            </if>
+        </where>
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into ordworld.selectTitle(studentId, titleId, applicationData, passData, pass)

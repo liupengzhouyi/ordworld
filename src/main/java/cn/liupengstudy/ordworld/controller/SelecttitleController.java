@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 选题表(Selecttitle)表控制层
@@ -145,6 +146,23 @@ public class SelecttitleController {
         return lpr;
     }
 
+    @ApiOperation(value = "查询学生所有选题申请信息")
+    @RequestMapping(path = "/getAllbyStudent", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAllbyStudent(@RequestBody Selecttitle selecttitle) {
+        LPR lpr = new LPR();
+        lpr.setWhat("查询学生所有选题申请信息");
+        boolean key = true;
+        List<Selecttitle> list = this.selecttitleService.queryAllByStudentID(selecttitle.getStudentid());
+        if (list.size() <= 0) {
+            lpr.setWhy("查询失败");
+            key = false;
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnObject(list);
+        lpr.setReturnKey(key);
+        return lpr;
+    }
 
 
 

@@ -47,6 +47,11 @@ public class SelecttitleServiceImpl implements SelecttitleService {
         return this.selecttitleDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<Selecttitle> queryAllByStudentID(int studentid) {
+        return this.selecttitleDao.queryAllByStudentID(studentid);
+    }
+
     /**
      * 新增数据
      *

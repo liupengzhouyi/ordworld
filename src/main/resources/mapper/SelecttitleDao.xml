@@ -66,8 +66,8 @@
         id, studentId, titleId, applicationData, passData, pass
         from ordworld.selectTitle
         <where>
-            <if test="titleid != null">
-                and titleId = #{titleid}
+            <if test="studentid != null">
+                and studentId = #{studentid}
             </if>
         </where>
     </select>
@@ -77,8 +77,8 @@
         id, studentId, titleId, applicationData, passData, pass
         from ordworld.selectTitle
         <where>
-            <if test="studentid != null">
-                and studentId = #{studentid}
+            <if test="titleid != null">
+                and titleId = #{titleid}
             </if>
         </where>
     </select>

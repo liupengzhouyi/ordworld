@@ -164,7 +164,7 @@ public class SelecttitleController {
         return lpr;
     }
 
-    @ApiOperation(value = "查询题目所有选题申请信息")
+    @ApiOperation(value = "通过题目ID查询所有选题申请信息")
     @RequestMapping(path = "/getAllByTitle", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LPR getAllByTitle(@RequestBody Selecttitle selecttitle) {
         LPR lpr = new LPR();
@@ -226,7 +226,70 @@ public class SelecttitleController {
         return lpr;
     }
 
+    @ApiOperation(value = "学生申请通过")
+    @RequestMapping(path = "/pass", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR pass(@RequestBody Selecttitle selecttitle) {
+        LPR lpr = new LPR();
+        lpr.setWhat("学生申请通过");
+        boolean key = true;
+        LPR selectOneLpr = this.selectOne(selecttitle);
+        if (selectOneLpr.isReturnKey()) {
+            Selecttitle temp = (Selecttitle) selectOneLpr.getReturnObject();
+            Selecttitle selecttitle1 = this.selecttitleService.passApplication(temp.getId(), 1);
+            if (selecttitle1 == null) {
+                key = false;
+                lpr.setWhy("申请信息通过失败，请重试");
+            } else {
+                lpr.setWhy("申请信息通过");
+                lpr.setReturnObject(selecttitle1);
+                // 设置该同学其他申请不通过
+                LPR getAllByStudentLpr = this.getAllByStudent(selecttitle);
+                List<Selecttitle> list1 = (List<Selecttitle>) getAllByStudentLpr.getReturnObject();
+                for (Selecttitle s : list1) {
+                    if (s.getId() - selecttitle.getId() != 0) {
+                        this.selecttitleService.passApplication(s.getId(), -1);
+                    }
+                }
+                // 设置该题目的其他申请不通过
+                LPR getAllByTitleLpr = this.getAllByTitle(selecttitle);
+                List<Selecttitle> list2 = (List<Selecttitle>) getAllByTitleLpr.getReturnObject();
+                for (Selecttitle s : list2) {
+                    if (s.getId() - selecttitle.getId() != 0) {
+                        this.selecttitleService.passApplication(s.getId(), -1);
+                    }
+                }
+            }
+        } else {
+            key = false;
+            lpr.setWhy("没有该申请信息");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
 
-
+    @ApiOperation(value = "学生申请不通过")
+    @RequestMapping(path = "/notPass", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR notPass(@RequestBody Selecttitle selecttitle) {
+        LPR lpr = new LPR();
+        lpr.setWhat("学生申请不通过");
+        boolean key = true;
+        LPR selectOneLpr = this.selectOne(selecttitle);
+        if (selectOneLpr.isReturnKey()) {
+            Selecttitle temp = (Selecttitle) selectOneLpr.getReturnObject();
+            Selecttitle selecttitle1 = this.selecttitleService.passApplication(temp.getId(), -1);
+            if (selecttitle1 == null) {
+                key = false;
+                lpr.setWhy("申请信息通过失败，请重试");
+            } else {
+                lpr.setWhy("申请信息通过");
+                lpr.setReturnObject(selecttitle1);
+            }
+        } else {
+            key = false;
+            lpr.setWhy("没有该申请信息");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
 
 }

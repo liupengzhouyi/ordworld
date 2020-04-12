@@ -52,6 +52,11 @@ public class SelecttitleServiceImpl implements SelecttitleService {
         return this.selecttitleDao.queryAllByStudentID(studentid);
     }
 
+    @Override
+    public List<Selecttitle> queryAllByTitleID(int titleid) {
+        return this.selecttitleDao.queryAllByTitleID(titleid);
+    }
+
     /**
      * 新增数据
      *

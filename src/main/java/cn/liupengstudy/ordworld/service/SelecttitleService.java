@@ -33,6 +33,9 @@ public interface SelecttitleService {
     List<Selecttitle> queryAllByLimit(int offset, int limit);
 
     List<Selecttitle> queryAllByStudentID(@Param("studentid") int studentid);
+
+    List<Selecttitle> queryAllByTitleID(@Param("titleid") int titleid);
+
     /**
      * 新增数据
      *

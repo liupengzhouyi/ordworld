@@ -164,6 +164,24 @@ public class SelecttitleController {
         return lpr;
     }
 
+    @ApiOperation(value = "查询题目所有选题申请信息")
+    @RequestMapping(path = "/getAllByTitle", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAllByTitle(@RequestBody Selecttitle selecttitle) {
+        LPR lpr = new LPR();
+        lpr.setWhat("查询题目所有选题申请信息");
+        boolean key = true;
+        List<Selecttitle> list = this.selecttitleService.queryAllByTitleID(selecttitle.getTitleid());
+        if (list.size() <= 0) {
+            lpr.setWhy("查询失败");
+            key = false;
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnObject(list);
+        lpr.setReturnKey(key);
+        return lpr;
+    }
+
     /**
      * @描述  在申请通过时候继续申请撤销
      * @参数  [selecttitle]
@@ -207,6 +225,7 @@ public class SelecttitleController {
         lpr.setReturnKey(key);
         return lpr;
     }
+
 
 
 

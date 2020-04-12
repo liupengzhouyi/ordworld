@@ -44,6 +44,8 @@ public interface SelecttitleDao {
 
     List<Selecttitle> queryAllByStudentID(@Param("studentid") int studentid);
 
+    List<Selecttitle> queryAllByTitleID(@Param("titleid") int titleid);
+
     /**
      * 新增数据
      *

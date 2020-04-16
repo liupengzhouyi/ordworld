@@ -15,6 +15,13 @@
         where id = #{id}
     </select>
 
+    <select id="selectByName" resultMap="FilenameMap">
+        select
+          id, filename
+        from ordworld.fileName
+        where filename = #{filename,jdbcType=VARCHAR}
+    </select>
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="FilenameMap">
         select

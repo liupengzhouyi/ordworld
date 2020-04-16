@@ -22,6 +22,7 @@ public interface FilenameDao {
      */
     Filename queryById(Integer id);
 
+    Filename selectByName(String filename);
     /**
      * 查询指定行数据
      *

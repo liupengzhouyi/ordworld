@@ -51,7 +51,12 @@ public class FilenameServiceImpl implements FilenameService {
     @Override
     public Filename insert(Filename filename) {
         this.filenameDao.insert(filename);
-        return filename;
+        return this.selectByName(filename.getFilename());
+    }
+
+    @Override
+    public Filename selectByName(String filename) {
+        return this.filenameDao.selectByName(filename);
     }
 
     /**

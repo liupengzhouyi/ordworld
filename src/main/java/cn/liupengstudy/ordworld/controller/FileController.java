@@ -2,6 +2,8 @@ package cn.liupengstudy.ordworld.controller;
 
 
 
+import cn.liupengstudy.ordworld.entity.Filename;
+import cn.liupengstudy.ordworld.entity.tools.LPR;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -42,28 +44,47 @@ public class FileController {
 
     @Autowired
     private FileService fileService;
+    @Autowired
+    private FilenameController filenameController;
 
     //@PostMapping("/uploadFile")
     @ApiOperation(value = "单文件上传")
     @RequestMapping(path = "/uploadFile", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file){
-        // 获取文件名称
-        System.out.println(StringUtils.cleanPath(file.getOriginalFilename()));
+    public LPR uploadFile(@RequestParam("file") MultipartFile file){
+        LPR lpr = new LPR();
+        lpr.setWhat("单文件上传");
+        boolean key = true;
 
-        String fileName = fileService.storeFile(file);
-        System.out.println(fileName);
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/File/downloadFile/").toUriString();//path(fileName).toUriString();
-        fileDownloadUri = fileDownloadUri + fileName;
-        System.out.println(fileDownloadUri);
-        return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+        // 获取文件名称
+        String name = StringUtils.cleanPath(file.getOriginalFilename());
+
+        Filename filename = new Filename();
+        filename.setFilename(name);
+
+        System.out.println("filename.toString(): " + filename.toString());
+
+        LPR addFileNamelpr = filenameController.add(filename);
+
+        if (addFileNamelpr.isReturnKey()) {
+            String fileName = fileService.storeFile(file);
+            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/File/downloadFile/").toUriString();
+            fileDownloadUri = fileDownloadUri + fileName;
+            UploadFileResponse uploadFileResponse = new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+            lpr.setReturnObject(uploadFileResponse);
+        } else {
+            key = false;
+            lpr.setWhy(addFileNamelpr.getWhy());
+        }
+        lpr.setReturnKey(key);
+        return lpr;
     }
 
     //@PostMapping("/uploadMultipleFiles")
-    @ApiOperation(value = "多文件上传")
+    /*@ApiOperation(value = "多文件上传")
     @RequestMapping(path = "/uploadMultipleFilese", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.stream(files).map(this::uploadFile).collect(Collectors.toList());
-    }
+    }*/
 
     //@GetMapping("/downloadFile/{fileName:.+}")
     @ApiOperation(value = "文件下载")

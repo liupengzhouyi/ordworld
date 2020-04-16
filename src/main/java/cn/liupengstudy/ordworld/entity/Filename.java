@@ -36,4 +36,12 @@ public class Filename implements Serializable {
         this.filename = filename;
     }
 
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Filename{");
+        sb.append("id=").append(id);
+        sb.append(", filename='").append(filename).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

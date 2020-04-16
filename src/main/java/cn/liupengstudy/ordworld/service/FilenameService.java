@@ -19,6 +19,7 @@ public interface FilenameService {
      */
     Filename queryById(Integer id);
 
+    Filename selectByName(String filename);
     /**
      * 查询多条数据
      *

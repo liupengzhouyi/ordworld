@@ -11,6 +11,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -46,13 +47,16 @@ public class FileController {
     @ApiOperation(value = "单文件上传")
     @RequestMapping(path = "/uploadFile", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file){
+        // 获取文件名称
+        System.out.println(StringUtils.cleanPath(file.getOriginalFilename()));
+
         String fileName = fileService.storeFile(file);
-
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFile/").path(fileName).toUriString();
-
+        System.out.println(fileName);
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/File/downloadFile/").toUriString();//path(fileName).toUriString();
+        fileDownloadUri = fileDownloadUri + fileName;
+        System.out.println(fileDownloadUri);
         return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
     }
-
 
     //@PostMapping("/uploadMultipleFiles")
     @ApiOperation(value = "多文件上传")

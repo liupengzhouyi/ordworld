@@ -107,6 +107,20 @@ create table chat
 )
 comment '聊天信息表';
 
+# 文件名表
+create table fileName
+(
+	id int auto_increment comment '自增ID',
+	filename varchar(200) not null comment '文件名称',
+	constraint fileName_pk
+		primary key (id)
+)
+comment '文件名表';
+
+create unique index fileName_filename_uindex
+	on fileName (filename);
+
+
 
 
 

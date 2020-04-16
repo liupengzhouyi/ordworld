@@ -49,8 +49,9 @@ public class IndexController {
      * @修改人和其它信息
      */
     @ApiOperation(value = "获取当前时间")
-    @RequestMapping(path = "/now", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(path = "/now", method = {RequestMethod.POST, RequestMethod.GET}, produces = "application/json;charset=UTF-8")
     public Date hehe() {
+        System.out.println("fghjfghjfghj1234567586ju5r");
         Date date = new Date();
         return date;
     }

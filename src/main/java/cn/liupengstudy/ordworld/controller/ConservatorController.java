@@ -75,26 +75,27 @@ public class ConservatorController {
         } else {
             LPR selectPhoneNumber = this.selectPhoneNumber(conservator);
             if (!selectPhoneNumber.isReturnKey()) {
+                LpPassword lpPassword = new LpPassword(conservator.getPhonenumber(), reConservator.getPassword());
+                conservator.setPassword(lpPassword.getPasswordValue());
                 if (conservator.getPassword() == 0) {
-                    lpr.setWhy("没有输入，不可以注册");
+                    lpr.setWhy("没有输入密码，不可以注册");
                     lpr.setReturnKey(key);
                     lpr.setReturnObject(null);
                 } else {
                     lpr.setWhy("电话号码没有重复，可以注册");
-                    LpPassword lpPassword = new LpPassword(conservator.getPhonenumber(), reConservator.getPassword());
-                    conservator.setPassword(lpPassword.getPasswordValue());
                     int registerKey = this.conservatorService.insert(conservator);
-                    System.out.println(registerKey);
+                    List<Conservator> list = (List<Conservator>) this.selectPhoneNumber(conservator).getReturnObject();
                     if (registerKey == 1) {
                         lpr.setWhy("注册成功");
+                        if (list.size()>=1) {
+                            lpr.setReturnObject(list.get(0));
+                        }
                     } else {
                         key = false;
                         lpr.setWhy("注册失败");
                     }
                     lpr.setReturnKey(key);
-                    lpr.setReturnObject(registerKey);
                 }
-
             } else {
                 lpr.setWhy("电话号码重复，不可以注册");
                 lpr.setReturnKey(key);

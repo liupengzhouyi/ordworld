@@ -129,9 +129,13 @@ public class StudentController {
         lpr.setWhat("学生登陆");
         boolean key = true;
         LPR selectLpr = this.selectByStudentID(reStudent.getStudent());
+        // System.out.println(selectLpr.toString());
         if (selectLpr.isReturnKey()) {
+            // LpPassword lpPassword11 = new LpPassword(reStudent.getStudent().getStudentid(), reStudent.getPassword());
+            // System.out.println(reStudent.getPassword() + ":" + lpPassword11.getPasswordValue());
             LpPassword lpPassword = new LpPassword(reStudent.getStudent().getStudentid(), reStudent.getPassword());
             Student temp = (Student) selectLpr.getReturnObject();
+            // System.out.println(temp.toString());
             if (lpPassword.getPasswordValue() - temp.getPassword() == 0) {
                 lpr.setWhy("登陆成功");
                 lpr.setReturnObject(temp);

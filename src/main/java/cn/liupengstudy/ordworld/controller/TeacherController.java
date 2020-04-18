@@ -1,5 +1,6 @@
 package cn.liupengstudy.ordworld.controller;
 
+import cn.liupengstudy.ordworld.entity.ProfessionalInformation;
 import cn.liupengstudy.ordworld.entity.Teacher;
 import cn.liupengstudy.ordworld.entity.tools.LPR;
 import cn.liupengstudy.ordworld.entity.tools.LpPassword;
@@ -7,9 +8,11 @@ import cn.liupengstudy.ordworld.entity.tools.ReTeacher;
 import cn.liupengstudy.ordworld.service.TeacherService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +31,9 @@ public class TeacherController {
      */
     @Resource
     private TeacherService teacherService;
+
+    @Autowired
+    private ProfessionallninformationController professionallninformationController;
 
     /**
      * 通过主键查询单条数据
@@ -202,4 +208,70 @@ public class TeacherController {
         return lpr;
     }
 
+    @ApiOperation(value = "查询所有教师")
+    @RequestMapping(path = "/getAll", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAll() {
+        LPR lpr = new LPR();
+        lpr.setWhat("查询所有教师");
+        boolean key = true;
+        List<Teacher> list = this.teacherService.getAll();
+        if (list.size() <= 0) {
+            key = false;
+            lpr.setWhy("没有数据");
+        } else {
+            lpr.setReturnObject(list);
+            lpr.setWhy("获取到数据");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
+
+    @ApiOperation(value = "查询某专业所有教师")
+    @RequestMapping(path = "/getAllByProfessional", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAllByProfessional(@RequestBody Teacher teacher) {
+        LPR lpr = new LPR();
+        lpr.setWhat("查询某专业所有教师");
+        boolean key = true;
+        List<Teacher> list = this.teacherService.getByProfessional(teacher.getProfessionalid());
+        if (list.size() <= 0) {
+            key = false;
+            lpr.setWhy("没有数据");
+        } else {
+            lpr.setReturnObject(list);
+            lpr.setWhy("获取到数据");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
+
+    @ApiOperation(value = "查询某学院所有教师")
+    @RequestMapping(path = "/getAllByCollege", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAllByCollege(@RequestBody ProfessionalInformation professionalInformation) {
+        LPR lpr = new LPR();
+        lpr.setWhat("查询某学院所有教师");
+        boolean key = true;
+        List<Teacher> teacherList = new ArrayList<Teacher>();
+        professionalInformation.setCollege(professionalInformation.getCollege().replace(" ", ""));
+        LPR collageLpr = this.professionallninformationController.getAllNumberByCollege(professionalInformation);
+        if (collageLpr.isReturnKey()) {
+            List<Integer> list = (List<Integer>) collageLpr.getReturnObject();
+            for (Integer professionallnid : list) {
+                Teacher teacher = new Teacher();
+                teacher.setProfessionalid(professionallnid.toString());
+                LPR getAllByProfessionalLpr = this.getAllByProfessional(teacher);
+                if (getAllByProfessionalLpr.isReturnKey()) {
+                    List<Teacher> list1 = (List<Teacher>) getAllByProfessionalLpr.getReturnObject();
+                    for (Teacher temp : list1) {
+                        teacherList.add(temp);
+                    }
+                }
+                lpr.setReturnObject(teacherList);
+            }
+        } else {
+            key = false;
+            lpr.setWhy("没有该学院");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
 }

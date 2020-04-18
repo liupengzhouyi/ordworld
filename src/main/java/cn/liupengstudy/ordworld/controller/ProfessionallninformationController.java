@@ -31,7 +31,7 @@ public class ProfessionallninformationController {
 
     @ApiOperation(value = "添加专业信息")
     @RequestMapping(path = "/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public LPR getConservatorInformationById(@RequestBody ProfessionalInformation professionalInformation) {
+    public LPR add(@RequestBody ProfessionalInformation professionalInformation) {
         LPR lpr = new LPR();
         lpr.setWhat("添加专业信息");
         boolean k = true;

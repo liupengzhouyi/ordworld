@@ -35,6 +35,10 @@ public interface TeacherService {
 
     List<Teacher> findByPhoneNimber(String phoneNumber);
 
+    List<Teacher> getAll();
+
+    List<Teacher> getByProfessional(String professionalid);
+
     /**
      * 新增数据
      *

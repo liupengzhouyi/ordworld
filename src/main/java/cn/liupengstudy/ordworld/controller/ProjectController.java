@@ -32,7 +32,7 @@ public class ProjectController {
      * 通过主键查询单条数据
      */
     @ApiOperation(value = "通过ID查找毕设题目信息")
-    @RequestMapping("/selectOne")
+    @RequestMapping(path = "/selectOne", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LPR selectOne(@RequestBody Project project) {
         LPR lpr = new LPR();
         lpr.setWhat("通过ID毕设题目信息");

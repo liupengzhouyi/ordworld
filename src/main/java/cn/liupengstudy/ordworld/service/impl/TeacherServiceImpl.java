@@ -55,6 +55,16 @@ public class TeacherServiceImpl implements TeacherService {
         return this.teacherDao.findByPhoneNimber(phoneNumber);
     }
 
+    @Override
+    public List<Teacher> getAll() {
+        return this.teacherDao.getAll();
+    }
+
+    @Override
+    public List<Teacher> getByProfessional(String professionalid) {
+        return this.teacherDao.getByProfessional(professionalid);
+    }
+
     /**
      * 新增数据
      *

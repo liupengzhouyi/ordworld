@@ -37,6 +37,7 @@ public class StudentController {
     @RequestMapping(path = "/selectOne", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LPR selectOne(@RequestBody Student student) {
         LPR lpr = new LPR();
+        System.out.println(student.toString());
         lpr.setWhat("通过学ID查询学生");
         boolean key = true;
         Student student1 = this.studentService.queryById(student.getId());

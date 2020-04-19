@@ -3,9 +3,11 @@ package cn.liupengstudy.ordworld.controller;
 import cn.liupengstudy.ordworld.entity.Selecttitle;
 import cn.liupengstudy.ordworld.entity.Student;
 import cn.liupengstudy.ordworld.entity.tools.LPR;
+import cn.liupengstudy.ordworld.entity.tools.LiuPengData;
 import cn.liupengstudy.ordworld.service.SelecttitleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -26,6 +28,9 @@ public class SelecttitleController {
      */
     @Resource
     private SelecttitleService selecttitleService;
+
+    @Autowired
+    private StudentController studentController;
 
     /**
      * 通过主键查询单条数据
@@ -54,14 +59,56 @@ public class SelecttitleController {
         LPR lpr = new LPR();
         lpr.setWhat("添加选题申请信息");
         boolean key = true;
-        Selecttitle selecttitle1 = this.selecttitleService.insert(selecttitle);
-        if (selecttitle1 == null) {
-            lpr.setWhy("添加失败");
-            key = false;
+        Student student = new Student();
+        student.setStudentid(selecttitle.getStudentid() + "");
+        LPR studentNumberToIDLpr = this.studentNumberToID(student);
+        if (studentNumberToIDLpr.isReturnKey()) {
+            selecttitle.setStudentid((Integer) studentNumberToIDLpr.getReturnObject());
         } else {
-            lpr.setWhy("添加成功");
+            lpr.setWhy("添加失败, 没有该学生");
+            key = false;
+            lpr.setReturnKey(key);
+            return lpr;
         }
-        lpr.setReturnObject(selecttitle1);
+        LPR getAllByStudentLpr = this.getAllByStudent(selecttitle);
+        if (getAllByStudentLpr.isReturnKey()) {
+            List<Selecttitle> list = (List<Selecttitle>) getAllByStudentLpr.getReturnObject();
+            for (Selecttitle temp : list) {
+                if (temp.getPass() - 1 == 0) {
+                    lpr.setWhy("添加失败, 已选题");
+                    key = false;
+                    lpr.setReturnKey(key);
+                    return lpr;
+                }
+            }
+            for (Selecttitle temp : list) {
+                if (temp.getTitleid() - selecttitle.getTitleid() == 0) {
+                    lpr.setWhy("添加失败, 已申请");
+                    key = false;
+                } else {
+                    LiuPengData liuPengData = new LiuPengData();
+                    selecttitle.setApplicationdata(liuPengData.getLpData());
+                    System.out.println(selecttitle.toString());
+                    Selecttitle selecttitle1 = this.selecttitleService.insert(selecttitle);
+                    if (selecttitle1 == null) {
+                        lpr.setWhy("添加失败");
+                        key = false;
+                    } else {
+                        lpr.setWhy("添加成功");
+                        lpr.setReturnObject(selecttitle1);
+                    }
+                }
+            }
+        } else {
+            Selecttitle selecttitle1 = this.selecttitleService.insert(selecttitle);
+            if (selecttitle1 == null) {
+                lpr.setWhy("添加失败");
+                key = false;
+            } else {
+                lpr.setWhy("添加成功");
+                lpr.setReturnObject(selecttitle1);
+            }
+        }
         lpr.setReturnKey(key);
         return lpr;
     }
@@ -287,6 +334,24 @@ public class SelecttitleController {
         } else {
             key = false;
             lpr.setWhy("没有该申请信息");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
+
+    @ApiOperation(value = "学生学号转学生ID")
+    @RequestMapping(path = "/studentNumberToID", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR studentNumberToID(@RequestBody Student student) {
+        LPR lpr = new LPR();
+        lpr.setWhat("学生学号转学生ID");
+        boolean key = true;
+        LPR selectByPhoneNumberLpr = this.studentController.selectByStudentID(student);
+        if (selectByPhoneNumberLpr.isReturnKey()) {
+            Student student1 = (Student) selectByPhoneNumberLpr.getReturnObject();
+            lpr.setReturnObject(student1.getId());
+        } else {
+            key = false;
+            lpr.setWhy("没有该数据");
         }
         lpr.setReturnKey(key);
         return lpr;

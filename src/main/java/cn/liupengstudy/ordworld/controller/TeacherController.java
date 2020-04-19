@@ -251,21 +251,28 @@ public class TeacherController {
         lpr.setWhat("查询某学院所有教师");
         boolean key = true;
         List<Teacher> teacherList = new ArrayList<Teacher>();
-        professionalInformation.setCollege(professionalInformation.getCollege().replace(" ", ""));
-        LPR collageLpr = this.professionallninformationController.getAllNumberByCollege(professionalInformation);
-        if (collageLpr.isReturnKey()) {
-            List<Integer> list = (List<Integer>) collageLpr.getReturnObject();
-            for (Integer professionallnid : list) {
-                Teacher teacher = new Teacher();
-                teacher.setProfessionalid(professionallnid.toString());
-                LPR getAllByProfessionalLpr = this.getAllByProfessional(teacher);
-                if (getAllByProfessionalLpr.isReturnKey()) {
-                    List<Teacher> list1 = (List<Teacher>) getAllByProfessionalLpr.getReturnObject();
-                    for (Teacher temp : list1) {
-                        teacherList.add(temp);
+        professionalInformation.setNumber(professionalInformation.getNumber().replace(" ", ""));
+        LPR collageLpr0 = this.professionallninformationController.selectByNumber(professionalInformation);
+        if (collageLpr0.isReturnKey()) {
+            ProfessionalInformation professionalInformation1 = (ProfessionalInformation) collageLpr0.getReturnObject();
+            LPR collageLpr = this.professionallninformationController.getAllNumberByCollege(professionalInformation1);
+            if (collageLpr.isReturnKey()) {
+                List<Integer> list = (List<Integer>) collageLpr.getReturnObject();
+                for (Integer professionallnid : list) {
+                    Teacher teacher = new Teacher();
+                    teacher.setProfessionalid(professionallnid.toString());
+                    LPR getAllByProfessionalLpr = this.getAllByProfessional(teacher);
+                    if (getAllByProfessionalLpr.isReturnKey()) {
+                        List<Teacher> list1 = (List<Teacher>) getAllByProfessionalLpr.getReturnObject();
+                        for (Teacher temp : list1) {
+                            teacherList.add(temp);
+                        }
                     }
+                    lpr.setReturnObject(teacherList);
                 }
-                lpr.setReturnObject(teacherList);
+            } else {
+                key = false;
+                lpr.setWhy("没有该学院");
             }
         } else {
             key = false;

@@ -6,6 +6,7 @@ import cn.liupengstudy.ordworld.entity.Selecttitle;
 import cn.liupengstudy.ordworld.entity.Student;
 import cn.liupengstudy.ordworld.entity.tools.LPR;
 import cn.liupengstudy.ordworld.entity.tools.SelectTitleInformation;
+import cn.liupengstudy.ordworld.entity.tools.StudentGetApplicationInformation;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,11 @@ public class OtherContrller {
     @Autowired
     private StudentController studentController;
 
-    @ApiOperation(value = "学生通过选题ID查询选题申请信息")
-    @RequestMapping(path = "/studentSelectApplicationTitleInformationByTitle", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ApiOperation(value = "通过选题ID查询选题申请信息")
+    @RequestMapping(path = "/selectApplicationTitleInformationByTitle", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LPR selectByNumber(@RequestBody Selecttitle selecttitle) {
         LPR lpr = new LPR();
-        lpr.setWhat("学生通过ID查询选题申请信息");
+        lpr.setWhat("通过ID查询选题申请信息");
         boolean key = true;
         LPR selectTitleLpr = this.selecttitleController.getAllByTitle(selecttitle);
         if (selectTitleLpr.isReturnKey()) {
@@ -78,5 +79,47 @@ public class OtherContrller {
         lpr.setReturnKey(key);
         return lpr;
     }
+
+    @ApiOperation(value = "学生查看自己的申请信息")
+    @RequestMapping(path = "/selectStudentApplication", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR selectStudentApplication(@RequestBody Student student) {
+        LPR lpr = new LPR();
+        lpr.setWhat("学生查看自己的申请信息");
+        boolean key = true;
+        // student number to student id
+        LPR getStudentIdLpr = this.studentController.selectByStudentID(student);
+        if (getStudentIdLpr.isReturnKey()) {
+            Student student1 = (Student) getStudentIdLpr.getReturnObject();
+            Integer studentid = student1.getId();
+            Selecttitle selecttitle = new Selecttitle();
+            selecttitle.setStudentid(studentid);
+            // get all select title information
+            LPR getAllByStudentLpr = this.selecttitleController.getAllByStudent(selecttitle);
+            if (getAllByStudentLpr.isReturnKey()) {
+                List<StudentGetApplicationInformation> returnList = new ArrayList<>();
+                List<Selecttitle> list = (List<Selecttitle>) getAllByStudentLpr.getReturnObject();
+                for (Selecttitle temp : list) {
+                    StudentGetApplicationInformation studentGetApplicationInformation = new StudentGetApplicationInformation();
+                    studentGetApplicationInformation.setSelecttitle(temp);
+                    Project project = new Project();
+                    project.setId(temp.getTitleid());
+                    LPR getProjectLpr = this.projectController.selectOne(project);
+                    Project tempProject = (Project) getProjectLpr.getReturnObject();
+                    studentGetApplicationInformation.setProject(tempProject);
+                    returnList.add(studentGetApplicationInformation);
+                }
+                lpr.setReturnObject(returnList);
+            } else {
+                key = false;
+                lpr.setWhy("没有数据");
+            }
+        } else {
+            key = false;
+            lpr.setWhy("没有该学生");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package cn.liupengstudy.ordworld.controller;
 
+import cn.liupengstudy.ordworld.entity.Project;
 import cn.liupengstudy.ordworld.entity.Selecttitle;
 import cn.liupengstudy.ordworld.entity.Student;
 import cn.liupengstudy.ordworld.entity.tools.LPR;
@@ -31,6 +32,9 @@ public class SelecttitleController {
 
     @Autowired
     private StudentController studentController;
+
+    @Autowired
+    private ProjectController projectController;
 
     /**
      * 通过主键查询单条数据
@@ -284,6 +288,43 @@ public class SelecttitleController {
         if (selectOneLpr.isReturnKey()) {
             Selecttitle temp = (Selecttitle) selectOneLpr.getReturnObject();
             Selecttitle selecttitle1 = this.selecttitleService.passApplication(temp.getId(), 1);
+            // 设置通过时间
+            LiuPengData liuPengData = new LiuPengData();
+            selecttitle1.setPassdata(liuPengData.getLpData());
+            selecttitle1 = this.selecttitleService.update(selecttitle1);
+            // 题目表里设置学生信息
+            Project project = new Project();
+            project.setId(selecttitle1.getTitleid());
+            // student ID to student number
+            Student student = new Student();
+            student.setId(selecttitle1.getStudentid());
+            LPR getStudentNumberLpr = this.studentIDToNumber(student);
+            if (getStudentNumberLpr.isReturnKey()) {
+                project.setStudentnumber((String) getStudentNumberLpr.getReturnObject());
+            } else {
+                key = false;
+                lpr.setReturnKey(key);
+                lpr.setWhy("没有该学生");
+                return lpr;
+            }
+            Project getTeacherID = (Project) this.projectController.selectOne(project).getReturnObject();
+            if (getTeacherID == null) {
+                key = false;
+                lpr.setReturnKey(key);
+                lpr.setWhy("没有该教师");
+                return lpr;
+            } else {
+                project.setTeacherid(getTeacherID.getTeacherid());
+            }
+            LPR tasksToStudentLpr = this.projectController.tasksToStudent(project);
+            if (tasksToStudentLpr.isReturnKey()) {
+                lpr.setWhy("题目表申请通过");
+            } else {
+                key = false;
+                lpr.setReturnKey(key);
+                lpr.setWhy("申请信息通过失败");
+                return lpr;
+            }
             if (selecttitle1 == null) {
                 key = false;
                 lpr.setWhy("申请信息通过失败，请重试");
@@ -291,19 +332,29 @@ public class SelecttitleController {
                 lpr.setWhy("申请信息通过");
                 lpr.setReturnObject(selecttitle1);
                 // 设置该同学其他申请不通过
-                LPR getAllByStudentLpr = this.getAllByStudent(selecttitle);
+                // System.out.println("设置该同学其他申请不通过");
+                LPR getAllByStudentLpr = this.getAllByStudent(selecttitle1);
                 List<Selecttitle> list1 = (List<Selecttitle>) getAllByStudentLpr.getReturnObject();
                 for (Selecttitle s : list1) {
                     if (s.getId() - selecttitle.getId() != 0) {
-                        this.selecttitleService.passApplication(s.getId(), -1);
+                        Selecttitle temp1 = this.selecttitleService.passApplication(s.getId(), -1);
+                        liuPengData = new LiuPengData();
+                        temp1.setPassdata(liuPengData.getLpData());
+                        this.selecttitleService.update(temp1);
                     }
                 }
                 // 设置该题目的其他申请不通过
-                LPR getAllByTitleLpr = this.getAllByTitle(selecttitle);
+                // System.out.println("设置该题目的其他申请不通过");
+                LPR getAllByTitleLpr = this.getAllByTitle(selecttitle1);
                 List<Selecttitle> list2 = (List<Selecttitle>) getAllByTitleLpr.getReturnObject();
                 for (Selecttitle s : list2) {
                     if (s.getId() - selecttitle.getId() != 0) {
-                        this.selecttitleService.passApplication(s.getId(), -1);
+                        // System.out.println("123456789");
+                        Selecttitle temp2 = this.selecttitleService.passApplication(s.getId(), -1);
+                        // System.out.println(temp2.toString());
+                        liuPengData = new LiuPengData();
+                        temp2.setPassdata(liuPengData.getLpData());
+                        this.selecttitleService.update(temp2);
                     }
                 }
             }
@@ -350,6 +401,24 @@ public class SelecttitleController {
         if (selectByPhoneNumberLpr.isReturnKey()) {
             Student student1 = (Student) selectByPhoneNumberLpr.getReturnObject();
             lpr.setReturnObject(student1.getId());
+        } else {
+            key = false;
+            lpr.setWhy("没有该数据");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
+
+    @ApiOperation(value = "学生ID转学生学号")
+    @RequestMapping(path = "/studentIDToNumber", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR studentIDToNumber(@RequestBody Student student) {
+        LPR lpr = new LPR();
+        lpr.setWhat("学生ID转学生学号");
+        boolean key = true;
+        LPR selectByPhoneNumberLpr = this.studentController.selectOne(student);
+        if (selectByPhoneNumberLpr.isReturnKey()) {
+            Student student1 = (Student) selectByPhoneNumberLpr.getReturnObject();
+            lpr.setReturnObject(student1.getStudentid());
         } else {
             key = false;
             lpr.setWhy("没有该数据");

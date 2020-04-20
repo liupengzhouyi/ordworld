@@ -57,7 +57,6 @@ public class Teacher implements Serializable {
     @ApiModelProperty(value = "教师名称")
     private String name;
 
-
     public Integer getId() {
         return id;
     }

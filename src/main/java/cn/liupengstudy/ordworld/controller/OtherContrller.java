@@ -1,9 +1,6 @@
 package cn.liupengstudy.ordworld.controller;
 
-import cn.liupengstudy.ordworld.entity.ProfessionalInformation;
-import cn.liupengstudy.ordworld.entity.Project;
-import cn.liupengstudy.ordworld.entity.Selecttitle;
-import cn.liupengstudy.ordworld.entity.Student;
+import cn.liupengstudy.ordworld.entity.*;
 import cn.liupengstudy.ordworld.entity.tools.LPR;
 import cn.liupengstudy.ordworld.entity.tools.SelectTitleInformation;
 import cn.liupengstudy.ordworld.entity.tools.StudentGetApplicationInformation;
@@ -39,6 +36,9 @@ public class OtherContrller {
 
     @Autowired
     private StudentController studentController;
+
+    @Autowired
+    private TeacherController teacherController;
 
     @ApiOperation(value = "通过选题ID查询选题申请信息")
     @RequestMapping(path = "/selectApplicationTitleInformationByTitle", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -100,12 +100,28 @@ public class OtherContrller {
                 List<Selecttitle> list = (List<Selecttitle>) getAllByStudentLpr.getReturnObject();
                 for (Selecttitle temp : list) {
                     StudentGetApplicationInformation studentGetApplicationInformation = new StudentGetApplicationInformation();
-                    studentGetApplicationInformation.setSelecttitle(temp);
+                    // get project information
                     Project project = new Project();
                     project.setId(temp.getTitleid());
                     LPR getProjectLpr = this.projectController.selectOne(project);
-                    Project tempProject = (Project) getProjectLpr.getReturnObject();
+                    Project tempProject = null;
+                    if (getProjectLpr.isReturnKey()) {
+                        tempProject = (Project) getProjectLpr.getReturnObject();
+                    }
+                    // get teacher information
+                    Teacher teacher = new Teacher();
+                    teacher.setTeachernumber(tempProject.getTeacherid().toString());
+                    // System.out.println(teacher.toString());
+                    LPR getTeacherLpr = this.teacherController.selectByNumber(teacher);
+                    Teacher tempTeacher = null;
+                    if (getTeacherLpr.isReturnKey()) {
+                        tempTeacher = (Teacher) getTeacherLpr.getReturnObject();
+                        System.out.println(tempTeacher.toString());
+                    }
+                    // set studentGetApplicationInformation
+                    studentGetApplicationInformation.setSelecttitle(temp);
                     studentGetApplicationInformation.setProject(tempProject);
+                    studentGetApplicationInformation.setTeacher(tempTeacher);
                     returnList.add(studentGetApplicationInformation);
                 }
                 lpr.setReturnObject(returnList);

@@ -85,19 +85,20 @@ public class SelecttitleController {
                 if (temp.getTitleid() - selecttitle.getTitleid() == 0) {
                     lpr.setWhy("添加失败, 已申请");
                     key = false;
-                } else {
-                    LiuPengData liuPengData = new LiuPengData();
-                    selecttitle.setApplicationdata(liuPengData.getLpData());
-                    System.out.println(selecttitle.toString());
-                    Selecttitle selecttitle1 = this.selecttitleService.insert(selecttitle);
-                    if (selecttitle1 == null) {
-                        lpr.setWhy("添加失败");
-                        key = false;
-                    } else {
-                        lpr.setWhy("添加成功");
-                        lpr.setReturnObject(selecttitle1);
-                    }
+                    lpr.setReturnKey(key);
+                    return lpr;
                 }
+            }
+            LiuPengData liuPengData = new LiuPengData();
+            selecttitle.setApplicationdata(liuPengData.getLpData());
+            System.out.println(selecttitle.toString());
+            Selecttitle selecttitle1 = this.selecttitleService.insert(selecttitle);
+            if (selecttitle1 == null) {
+                lpr.setWhy("添加失败");
+                key = false;
+            } else {
+                lpr.setWhy("添加成功");
+                lpr.setReturnObject(selecttitle1);
             }
         } else {
             Selecttitle selecttitle1 = this.selecttitleService.insert(selecttitle);

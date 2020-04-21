@@ -1,5 +1,8 @@
 package cn.liupengstudy.ordworld.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -8,15 +11,18 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-04-16 22:25:18
  */
+@ApiModel(value = "文件名表(Filename)实体类")
 public class Filename implements Serializable {
     private static final long serialVersionUID = -33765011313090763L;
     /**
     * 自增ID
     */
+    @ApiModelProperty(value = "自增ID")
     private Integer id;
     /**
     * 文件名称
     */
+    @ApiModelProperty(value = "文件名称")
     private String filename;
 
 

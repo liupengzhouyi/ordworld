@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @ApiModel(value = "教师注册登陆修改密码类")
 public class ReTeacher {
 
+    @ApiModelProperty(value = "教师信息")
     private Teacher teacher;
 
     @ApiModelProperty(value = "登陆密码")

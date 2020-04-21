@@ -1,5 +1,8 @@
 package cn.liupengstudy.ordworld.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -8,23 +11,28 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-04-12 21:29:32
  */
+@ApiModel(value = "小组模型")
 public class Group implements Serializable {
     private static final long serialVersionUID = 315472822005789716L;
     /**
     * 自增ID
     */
+    @ApiModelProperty(value = "自增ID")
     private Integer id;
     /**
     * 教师ID
     */
+    @ApiModelProperty(value = "教师ID")
     private Integer teacherid;
     /**
     * 图片
     */
+    @ApiModelProperty(value = "图片")
     private String imageurl;
     /**
     * 小组名称
     */
+    @ApiModelProperty(value = "小组名称")
     private String name;
 
 

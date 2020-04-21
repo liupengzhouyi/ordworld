@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "管理员注册登陆修改密码类")
 public class ReConservator {
 
+    @ApiModelProperty(value = "管理员信息")
     private Conservator conservator;
 
     @ApiModelProperty(value = "登陆密码")

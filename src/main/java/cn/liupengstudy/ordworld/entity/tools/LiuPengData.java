@@ -1,5 +1,8 @@
 package cn.liupengstudy.ordworld.entity.tools;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,6 +15,7 @@ import java.util.Date;
  * @创建时间 2020/4/19 - 10:08 下午
  * @修改人和其它信息
  */
+@ApiModel(value = "时间格式")
 public class LiuPengData {
 
     private String year;
@@ -21,6 +25,7 @@ public class LiuPengData {
     private String minutes;
     private String seconds;
 
+    @ApiModelProperty(value = "字符串时间")
     private String lpData;
 
     public LiuPengData() {

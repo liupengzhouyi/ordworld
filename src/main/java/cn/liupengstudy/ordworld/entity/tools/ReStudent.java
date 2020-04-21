@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "学生注册登陆修改密码类")
 public class ReStudent {
 
+    @ApiModelProperty(value = "学生信息")
     private Student student;
 
     @ApiModelProperty(value = "登陆密码")

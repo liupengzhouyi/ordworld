@@ -1,5 +1,8 @@
 package cn.liupengstudy.ordworld.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -8,51 +11,63 @@ import java.io.Serializable;
  * @author makejava
  * @since 2020-04-12 23:37:15
  */
+@ApiModel(value = "聊天信息")
 public class Chat implements Serializable {
     private static final long serialVersionUID = -44745307239399526L;
     /**
     * 自增ID
     */
+    @ApiModelProperty(value = "自增ID")
     private Integer id;
     /**
     * 小组ID
     */
+    @ApiModelProperty(value = "小组ID")
     private Integer groupid;
     /**
     * 发言人类型
     */
+    @ApiModelProperty(value = "发言人类型")
     private Integer type;
     /**
     * 作者ID
     */
+    @ApiModelProperty(value = "作者ID")
     private Integer authorid;
     /**
     * 聊天信息
     */
+    @ApiModelProperty(value = "聊天信息")
     private String information;
     /**
     * 年
     */
+    @ApiModelProperty(value = "年")
     private Integer year;
     /**
     * 月
     */
+    @ApiModelProperty(value = "月")
     private Integer month;
     /**
     * 日
     */
+    @ApiModelProperty(value = "日")
     private Integer day;
     /**
     * 小时
     */
+    @ApiModelProperty(value = "小时")
     private Integer hour;
     /**
     * 分钟
     */
+    @ApiModelProperty(value = "分钟")
     private Integer moment;
     /**
     * 秒
     */
+    @ApiModelProperty(value = "秒")
     private Integer second;
 
 

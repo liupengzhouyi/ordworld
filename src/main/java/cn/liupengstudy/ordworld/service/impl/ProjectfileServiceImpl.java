@@ -51,7 +51,12 @@ public class ProjectfileServiceImpl implements ProjectfileService {
     @Override
     public Projectfile insert(Projectfile projectfile) {
         this.projectfileDao.insert(projectfile);
-        return projectfile;
+        List<Projectfile> list = this.projectfileDao.queryAll(projectfile);
+        if (list.size() >= 1) {
+            return list.get(0);
+        } else {
+            return null;
+        }
     }
 
     /**

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.liupengstudy.ordworld.dao.ProjectfileDao">
+
+    <resultMap type="cn.liupengstudy.ordworld.entity.Projectfile" id="ProjectfileMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="titleid" column="titleId" jdbcType="INTEGER"/>
+        <result property="teachernumber" column="teacherNumber" jdbcType="VARCHAR"/>
+        <result property="studentnumber" column="studentNumber" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="introduction" column="introduction" jdbcType="VARCHAR"/>
+        <result property="fileurl" column="fileurl" jdbcType="VARCHAR"/>
+        <result property="upladdata" column="upladData" jdbcType="VARCHAR"/>
+        <result property="key" column="key" jdbcType="INTEGER"/>
+        <result property="approvaldata" column="approvalData" jdbcType="VARCHAR"/>
+        <result property="approval" column="approval" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ProjectfileMap">
+        select
+          id, titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, key, approvalData, approval, version
+        from ordworld.projectFile
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ProjectfileMap">
+        select
+          id, titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, key, approvalData, approval, version
+        from ordworld.projectFile
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ProjectfileMap">
+        select
+          id, titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, key, approvalData, approval, version
+        from ordworld.projectFile
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="titleid != null">
+                and titleId = #{titleid}
+            </if>
+            <if test="teachernumber != null and teachernumber != ''">
+                and teacherNumber = #{teachernumber}
+            </if>
+            <if test="studentnumber != null and studentnumber != ''">
+                and studentNumber = #{studentnumber}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="introduction != null and introduction != ''">
+                and introduction = #{introduction}
+            </if>
+            <if test="fileurl != null and fileurl != ''">
+                and fileurl = #{fileurl}
+            </if>
+            <if test="upladdata != null and upladdata != ''">
+                and upladData = #{upladdata}
+            </if>
+            <if test="key != null">
+                and key = #{key}
+            </if>
+            <if test="approvaldata != null and approvaldata != ''">
+                and approvalData = #{approvaldata}
+            </if>
+            <if test="approval != null and approval != ''">
+                and approval = #{approval}
+            </if>
+            <if test="version != null and version != ''">
+                and version = #{version}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into ordworld.projectFile(titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, key, approvalData, approval, version)
+        values (#{titleid}, #{teachernumber}, #{studentnumber}, #{name}, #{introduction}, #{fileurl}, #{upladdata}, #{key}, #{approvaldata}, #{approval}, #{version})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ordworld.projectFile
+        <set>
+            <if test="titleid != null">
+                titleId = #{titleid},
+            </if>
+            <if test="teachernumber != null and teachernumber != ''">
+                teacherNumber = #{teachernumber},
+            </if>
+            <if test="studentnumber != null and studentnumber != ''">
+                studentNumber = #{studentnumber},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="introduction != null and introduction != ''">
+                introduction = #{introduction},
+            </if>
+            <if test="fileurl != null and fileurl != ''">
+                fileurl = #{fileurl},
+            </if>
+            <if test="upladdata != null and upladdata != ''">
+                upladData = #{upladdata},
+            </if>
+            <if test="key != null">
+                key = #{key},
+            </if>
+            <if test="approvaldata != null and approvaldata != ''">
+                approvalData = #{approvaldata},
+            </if>
+            <if test="approval != null and approval != ''">
+                approval = #{approval},
+            </if>
+            <if test="version != null and version != ''">
+                version = #{version},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ordworld.projectFile where id = #{id}
+    </delete>
+
+</mapper>

@@ -120,6 +120,27 @@ comment '文件名表';
 create unique index fileName_filename_uindex
 	on fileName (filename);
 
+# 论文文件表
+
+create table projectFile
+(
+	id int auto_increment comment '自增ID',
+	titleId int not null comment '题目ID',
+	teacherNumber varchar(20) not null comment '教师编号',
+	studentNumber varchar(20) not null comment '学生学号',
+	name varchar(50) null comment '文件描述名称',
+	introduction varchar(100) not null comment '文件描述',
+	fileurl varchar(200) not null comment '文件下载地址',
+	upladData varchar(30) not null comment '上传日期',
+	`key` int not null comment '是否有效',
+	approvalData varchar(30) null comment '教师批复时间',
+	approval varchar(200) null comment '教师批复内容',
+	version varchar(10) not null comment '版本',
+	constraint projectFile_pk
+		primary key (id)
+)
+comment '论文文件表';
+
 
 
 

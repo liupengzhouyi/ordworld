@@ -41,7 +41,7 @@ public class SystemInformationController {
         systemInformation.setLpyear(Integer.parseInt(liuPengData.getYear()));
         systemInformation.setLpmonth(Integer.parseInt(liuPengData.getMonth()));
         systemInformation.setLpday(Integer.parseInt(liuPengData.getDay()));
-        System.out.println(systemInformation.toString());
+        // System.out.println(systemInformation.toString());
         int key = this.systemInformationService.insert(systemInformation);
         if (key != 1) {
             addKey = false;

@@ -123,6 +123,7 @@ public class ConservatorController {
                 key = false;
                 lpr.setWhy("密码不正确");
             }
+            lpr.setReturnObject(list.get(0));
         } else {
             key = false;
             lpr.setWhy("账号不存在");

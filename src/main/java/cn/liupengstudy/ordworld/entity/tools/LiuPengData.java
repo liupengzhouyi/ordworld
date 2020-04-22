@@ -40,6 +40,12 @@ public class LiuPengData {
         System.out.println(strings.length);
         if (strings.length == 6){
             this.lpData = strings[0] + "-" + strings[1] + "-" + strings[2] + " " + strings[3] + ":" + strings[4] + ":" + strings[5];
+            this.setYear(strings[0]);
+            this.setMonth(strings[1]);
+            this.setDay(strings[2]);
+            this.setHours(strings[3]);
+            this.setMinutes(strings[4]);
+            this.setSeconds(strings[5]);
         } else {
             this.lpData = "2020-04-19 22:18:14";
         }
@@ -99,5 +105,19 @@ public class LiuPengData {
 
     public void setLpData(String lpData) {
         this.lpData = lpData;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("LiuPengData{");
+        sb.append("year='").append(year).append('\'');
+        sb.append(", month='").append(month).append('\'');
+        sb.append(", day='").append(day).append('\'');
+        sb.append(", hours='").append(hours).append('\'');
+        sb.append(", minutes='").append(minutes).append('\'');
+        sb.append(", seconds='").append(seconds).append('\'');
+        sb.append(", lpData='").append(lpData).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

@@ -2,6 +2,7 @@ package cn.liupengstudy.ordworld.controller;
 
 import cn.liupengstudy.ordworld.entity.SystemInformation;
 import cn.liupengstudy.ordworld.entity.tools.LPR;
+import cn.liupengstudy.ordworld.entity.tools.LiuPengData;
 import cn.liupengstudy.ordworld.service.impl.SystemInformationServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +37,11 @@ public class SystemInformationController {
         LPR lpr = new LPR();
         lpr.setWhat("添加系统公告信息");
         boolean addKey = true;
+        LiuPengData liuPengData = new LiuPengData();
+        systemInformation.setLpyear(Integer.parseInt(liuPengData.getYear()));
+        systemInformation.setLpmonth(Integer.parseInt(liuPengData.getMonth()));
+        systemInformation.setLpday(Integer.parseInt(liuPengData.getDay()));
+        System.out.println(systemInformation.toString());
         int key = this.systemInformationService.insert(systemInformation);
         if (key != 1) {
             addKey = false;

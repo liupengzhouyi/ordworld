@@ -3,17 +3,18 @@ package cn.liupengstudy.ordworld.entity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+
 import java.io.Serializable;
 
 /**
  * 论文文件表(Projectfile)实体类
  *
  * @author makejava
- * @since 2020-04-22 13:38:26
+ * @since 2020-04-22 21:00:29
  */
-@ApiModel(value = "论文文件")
+@ApiModel(value = "论文文件表")
 public class Projectfile implements Serializable {
-    private static final long serialVersionUID = 191886115961929497L;
+    private static final long serialVersionUID = 710267406844392638L;
     /**
     * 自增ID
     */
@@ -58,7 +59,12 @@ public class Projectfile implements Serializable {
     * 是否有效
     */
     @ApiModelProperty(value = "是否有效")
-    private Integer key;
+    private Integer versionkey;
+    /**
+    * 版本
+    */
+    @ApiModelProperty(value = "版本")
+    private String version;
     /**
     * 教师批复时间
     */
@@ -69,11 +75,6 @@ public class Projectfile implements Serializable {
     */
     @ApiModelProperty(value = "教师批复内容")
     private String approval;
-    /**
-    * 版本
-    */
-    @ApiModelProperty(value = "版本")
-    private String version;
 
 
     public Integer getId() {
@@ -140,12 +141,20 @@ public class Projectfile implements Serializable {
         this.upladdata = upladdata;
     }
 
-    public Integer getKey() {
-        return key;
+    public Integer getVersionkey() {
+        return versionkey;
     }
 
-    public void setKey(Integer key) {
-        this.key = key;
+    public void setVersionkey(Integer versionkey) {
+        this.versionkey = versionkey;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     public String getApprovaldata() {
@@ -162,14 +171,6 @@ public class Projectfile implements Serializable {
 
     public void setApproval(String approval) {
         this.approval = approval;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
     }
 
 }

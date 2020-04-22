@@ -11,16 +11,16 @@
         <result property="introduction" column="introduction" jdbcType="VARCHAR"/>
         <result property="fileurl" column="fileurl" jdbcType="VARCHAR"/>
         <result property="upladdata" column="upladData" jdbcType="VARCHAR"/>
-        <result property="key" column="key" jdbcType="INTEGER"/>
+        <result property="versionkey" column="versionKey" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="VARCHAR"/>
         <result property="approvaldata" column="approvalData" jdbcType="VARCHAR"/>
         <result property="approval" column="approval" jdbcType="VARCHAR"/>
-        <result property="version" column="version" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="ProjectfileMap">
         select
-          id, titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, key, approvalData, approval, version
+          id, titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, versionKey, version, approvalData, approval
         from ordworld.projectFile
         where id = #{id}
     </select>
@@ -28,7 +28,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="ProjectfileMap">
         select
-          id, titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, key, approvalData, approval, version
+          id, titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, versionKey, version, approvalData, approval
         from ordworld.projectFile
         limit #{offset}, #{limit}
     </select>
@@ -36,7 +36,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="ProjectfileMap">
         select
-          id, titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, key, approvalData, approval, version
+          id, titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, versionKey, version, approvalData, approval
         from ordworld.projectFile
         <where>
             <if test="id != null">
@@ -63,8 +63,11 @@
             <if test="upladdata != null and upladdata != ''">
                 and upladData = #{upladdata}
             </if>
-            <if test="key != null">
-                and key = #{key}
+            <if test="versionkey != null">
+                and versionKey = #{versionkey}
+            </if>
+            <if test="version != null and version != ''">
+                and version = #{version}
             </if>
             <if test="approvaldata != null and approvaldata != ''">
                 and approvalData = #{approvaldata}
@@ -72,16 +75,13 @@
             <if test="approval != null and approval != ''">
                 and approval = #{approval}
             </if>
-            <if test="version != null and version != ''">
-                and version = #{version}
-            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into ordworld.projectFile(titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, key, approvalData, approval, version)
-        values (#{titleid}, #{teachernumber}, #{studentnumber}, #{name}, #{introduction}, #{fileurl}, #{upladdata}, #{key}, #{approvaldata}, #{approval}, #{version})
+        insert into ordworld.projectFile(titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, versionKey, version, approvalData, approval)
+        values (#{titleid}, #{teachernumber}, #{studentnumber}, #{name}, #{introduction}, #{fileurl}, #{upladdata}, #{versionkey}, #{version}, #{approvaldata}, #{approval})
     </insert>
 
     <!--通过主键修改数据-->
@@ -109,17 +109,17 @@
             <if test="upladdata != null and upladdata != ''">
                 upladData = #{upladdata},
             </if>
-            <if test="key != null">
-                key = #{key},
+            <if test="versionkey != null">
+                versionKey = #{versionkey},
+            </if>
+            <if test="version != null and version != ''">
+                version = #{version},
             </if>
             <if test="approvaldata != null and approvaldata != ''">
                 approvalData = #{approvaldata},
             </if>
             <if test="approval != null and approval != ''">
                 approval = #{approval},
-            </if>
-            <if test="version != null and version != ''">
-                version = #{version},
             </if>
         </set>
         where id = #{id}

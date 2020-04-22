@@ -1,8 +1,6 @@
 package cn.liupengstudy.ordworld.dao;
 
 import cn.liupengstudy.ordworld.entity.Projectfile;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
@@ -11,7 +9,7 @@ import java.util.List;
  * 论文文件表(Projectfile)表数据库访问层
  *
  * @author makejava
- * @since 2020-04-22 13:38:26
+ * @since 2020-04-22 21:00:30
  */
 @Mapper
 public interface ProjectfileDao {
@@ -22,7 +20,6 @@ public interface ProjectfileDao {
      * @param id 主键
      * @return 实例对象
      */
-
     Projectfile queryById(Integer id);
 
     /**

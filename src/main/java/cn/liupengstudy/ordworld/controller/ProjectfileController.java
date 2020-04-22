@@ -29,9 +29,6 @@ public class ProjectfileController {
 
     /**
      * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
      */
     @ApiOperation(value = "通过ID毕设文件")
     @RequestMapping(path = "/selectByID", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -59,7 +56,7 @@ public class ProjectfileController {
         lpr.setWhat("上传毕设文件");
         boolean key = true;
         LiuPengData liuPengData = new LiuPengData();
-        projectfile.setApprovaldata(liuPengData.getLpData());
+        projectfile.setUpladdata(liuPengData.getLpData());
         Projectfile temp = this.projectfileService.insert(projectfile);
         if (temp == null) {
             key = false;
@@ -71,6 +68,7 @@ public class ProjectfileController {
         lpr.setReturnObject(temp);
         return lpr;
     }
+
 
 
 }

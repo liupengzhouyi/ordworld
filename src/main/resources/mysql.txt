@@ -128,14 +128,14 @@ create table projectFile
 	titleId int not null comment '题目ID',
 	teacherNumber varchar(20) not null comment '教师编号',
 	studentNumber varchar(20) not null comment '学生学号',
-	name varchar(50) null comment '文件描述名称',
-	introduction varchar(100) not null comment '文件描述',
+	name varchar(50) not null comment '文件描述名称',
+	introduction varchar(100) null comment '文件描述',
 	fileurl varchar(200) not null comment '文件下载地址',
 	upladData varchar(30) not null comment '上传日期',
-	`key` int not null comment '是否有效',
+	versionKey int not null comment '是否有效',
+	version varchar(10) not null comment '版本',
 	approvalData varchar(30) null comment '教师批复时间',
 	approval varchar(200) null comment '教师批复内容',
-	version varchar(10) not null comment '版本',
 	constraint projectFile_pk
 		primary key (id)
 )

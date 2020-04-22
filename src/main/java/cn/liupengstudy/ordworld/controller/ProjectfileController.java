@@ -113,6 +113,97 @@ public class ProjectfileController {
         return lpr;
     }
 
+    @ApiOperation(value = "通过题目ID查询所有的上传毕设文件")
+    @RequestMapping(path = "/getAllByTiitleId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAllByTitleId(@RequestBody Projectfile projectfile) {
+        LPR lpr = new LPR();
+        lpr.setWhat("通过题目ID查询所有的上传毕设文件");
+        boolean key = true;
+        List<Projectfile> list = this.projectfileService.queryAllByTitleId(projectfile.getTitleid());
+        if (list.size() == 0) {
+            key = false;
+            lpr.setWhy("没有数据");
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
+        return lpr;
+    }
 
+    @ApiOperation(value = "通过题目ID查询所有的上传毕设文件有效文件")
+    @RequestMapping(path = "/getAllByTiitleIdTrue", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAllByTitleIdTrue(@RequestBody Projectfile projectfile) {
+        LPR lpr = new LPR();
+        lpr.setWhat("通过题目ID查询所有的上传毕设文件有效文件");
+        boolean key = true;
+        List<Projectfile> list = this.projectfileService.queryAllByTitleIdTure(projectfile.getTitleid(), 1);
+        if (list.size() == 0) {
+            key = false;
+            lpr.setWhy("没有数据");
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
+        return lpr;
+    }
+
+    @ApiOperation(value = "通过题目ID查询所有的上传毕设文件内容的所有文件")
+    @RequestMapping(path = "/getAllByTitleIdAndName", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAllByTitleIdAndName(@RequestBody Projectfile projectfile) {
+        LPR lpr = new LPR();
+        lpr.setWhat("通过题目ID查询所有的上传毕设文件内容的所有文件");
+        boolean key = true;
+        projectfile.setName(projectfile.getName().replace(" ", ""));
+        List<Projectfile> list = this.projectfileService.queryAllByVersion(projectfile.getTitleid(), projectfile.getName());
+        if (list.size() == 0) {
+            key = false;
+            lpr.setWhy("没有数据");
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
+        return lpr;
+    }
+
+    @ApiOperation(value = "通过题目ID查询所有的上传毕设文件内容的历史文件")
+    @RequestMapping(path = "/getAllByTitleIdAndNameFalse", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAllByTitleIdAndNameFalse(@RequestBody Projectfile projectfile) {
+        LPR lpr = new LPR();
+        lpr.setWhat("通过题目ID查询所有的上传毕设文件内容的历史文件");
+        boolean key = true;
+        projectfile.setName(projectfile.getName().replace(" ", ""));
+        List<Projectfile> list = this.projectfileService.queryAllByVersionTrue(projectfile.getTitleid(), projectfile.getName(), 0);
+        if (list.size() == 0) {
+            key = false;
+            lpr.setWhy("没有数据");
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
+        return lpr;
+    }
+
+    @ApiOperation(value = "通过题目ID查询所有的上传毕设文件内容的有效文件")
+    @RequestMapping(path = "/getAllByTitleIdAndNameTrue", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getAllByTitleIdAndNameTrue(@RequestBody Projectfile projectfile) {
+        LPR lpr = new LPR();
+        lpr.setWhat("通过题目ID查询所有的上传毕设文件内容的有效文件");
+        boolean key = true;
+        projectfile.setName(projectfile.getName().replace(" ", ""));
+        List<Projectfile> list = this.projectfileService.queryAllByVersionTrue(projectfile.getTitleid(), projectfile.getName(), 1);
+        if (list.size() == 0) {
+            key = false;
+            lpr.setWhy("没有数据");
+        } else {
+            lpr.setWhy("查询成功");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(list);
+        return lpr;
+    }
 
 }

@@ -42,6 +42,26 @@ public class ProjectfileServiceImpl implements ProjectfileService {
         return this.projectfileDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<Projectfile> queryAllByTitleId(int titleid) {
+        return this.projectfileDao.queryAllByTitleId(titleid);
+    }
+
+    @Override
+    public List<Projectfile> queryAllByTitleIdTure(int titleid, int versionkey) {
+        return this.projectfileDao.queryAllByTitleIdTure(titleid, versionkey);
+    }
+
+    @Override
+    public List<Projectfile> queryAllByVersion(int titleid, String name) {
+        return this.projectfileDao.queryAllByVersion(titleid, name);
+    }
+
+    @Override
+    public List<Projectfile> queryAllByVersionTrue(int titleid, String name, int versionkey) {
+        return this.projectfileDao.queryAllByVersionTrue(titleid, name, versionkey);
+    }
+
     /**
      * 新增数据
      *

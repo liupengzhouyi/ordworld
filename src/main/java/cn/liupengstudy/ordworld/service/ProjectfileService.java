@@ -28,6 +28,14 @@ public interface ProjectfileService {
      */
     List<Projectfile> queryAllByLimit(int offset, int limit);
 
+    List<Projectfile> queryAllByTitleId(int titleid);
+
+    List<Projectfile> queryAllByTitleIdTure(int titleid, int versionkey);
+
+    List<Projectfile> queryAllByVersion(int titleid, String name);
+
+    List<Projectfile> queryAllByVersionTrue(int titleid, String name, int versionkey);
+
     /**
      * 新增数据
      *

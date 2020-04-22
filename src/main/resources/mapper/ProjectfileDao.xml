@@ -78,6 +78,61 @@
         </where>
     </select>
 
+    <select id="queryAllByTitleId" resultMap="ProjectfileMap">
+        select
+        id, titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, versionKey, version, approvalData, approval
+        from ordworld.projectFile
+        <where>
+            <if test="titleid != null">
+                and titleId = #{titleid}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAllByTitleIdTure" resultMap="ProjectfileMap">
+        select
+        id, titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, versionKey, version, approvalData, approval
+        from ordworld.projectFile
+        <where>
+            <if test="titleid != null">
+                and titleId = #{titleid}
+            </if>
+            <if test="versionkey != null">
+                and versionKey = #{versionkey}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAllByVersion" resultMap="ProjectfileMap">
+        select
+        id, titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, versionKey, version, approvalData, approval
+        from ordworld.projectFile
+        <where>
+            <if test="titleid != null">
+                and titleId = #{titleid}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAllByVersionTrue" resultMap="ProjectfileMap">
+        select
+        id, titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, versionKey, version, approvalData, approval
+        from ordworld.projectFile
+        <where>
+            <if test="titleid != null">
+                and titleId = #{titleid}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="versionkey != null">
+                and versionKey = #{versionkey}
+            </if>
+        </where>
+    </select>
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into ordworld.projectFile(titleId, teacherNumber, studentNumber, name, introduction, fileurl, upladData, versionKey, version, approvalData, approval)

@@ -40,6 +40,14 @@ public interface ProjectfileDao {
      */
     List<Projectfile> queryAll(Projectfile projectfile);
 
+    List<Projectfile> queryAllByTitleId(int titleid);
+
+    List<Projectfile> queryAllByTitleIdTure(int titleid, int versionkey);
+
+    List<Projectfile> queryAllByVersion(int titleid, String name);
+
+    List<Projectfile> queryAllByVersionTrue(int titleid, String name, int versionkey);
+
     /**
      * 新增数据
      *

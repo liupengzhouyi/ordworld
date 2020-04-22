@@ -4,12 +4,14 @@ import cn.liupengstudy.ordworld.entity.Project;
 import cn.liupengstudy.ordworld.entity.Projectfile;
 import cn.liupengstudy.ordworld.entity.tools.LPR;
 import cn.liupengstudy.ordworld.entity.tools.LiuPengData;
+import cn.liupengstudy.ordworld.entity.tools.LiuPengVersion;
 import cn.liupengstudy.ordworld.service.ProjectfileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 论文文件表(Projectfile)表控制层
@@ -46,7 +48,6 @@ public class ProjectfileController {
         lpr.setReturnKey(key);
         lpr.setReturnObject(temp);
         return lpr;
-
     }
 
     @ApiOperation(value = "上传毕设文件")
@@ -57,6 +58,10 @@ public class ProjectfileController {
         boolean key = true;
         LiuPengData liuPengData = new LiuPengData();
         projectfile.setUpladdata(liuPengData.getLpData());
+        LiuPengVersion liuPengVersion = new LiuPengVersion();
+        projectfile.setVersion(liuPengVersion.getStringVersion());
+        projectfile.setName(projectfile.getName().replace(" ", ""));
+        projectfile.setVersionkey(1);
         Projectfile temp = this.projectfileService.insert(projectfile);
         if (temp == null) {
             key = false;
@@ -66,6 +71,45 @@ public class ProjectfileController {
         }
         lpr.setReturnKey(key);
         lpr.setReturnObject(temp);
+        return lpr;
+    }
+
+    @ApiOperation(value = "更新毕设文件")
+    @RequestMapping(path = "/update", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR update(@RequestBody Projectfile projectfile) {
+        LPR lpr = new LPR();
+        lpr.setWhat("上传毕设文件");
+        boolean key = true;
+        // 查找上一个版本
+        projectfile.setName(projectfile.getName().replace(" ", ""));
+        List<Projectfile> list01 = this.projectfileService.queryAllByVersionTrue(projectfile.getTitleid(), projectfile.getName(), 1);
+        if (list01.size() == 0) {
+            key = false;
+            lpr.setWhy("该题目无法信息，这是第一个");
+        } else {
+            Projectfile temp = list01.get(0);
+            temp.setVersionkey(0);
+            // 设置上一个版本过期
+            this.projectfileService.update(temp);
+            // 设置上传日期
+            LiuPengData liuPengData = new LiuPengData();
+            projectfile.setUpladdata(liuPengData.getLpData());
+            // 设置新的版本
+            LiuPengVersion liuPengVersion = new LiuPengVersion(temp.getVersion());
+            liuPengVersion.add();
+            projectfile.setVersion(liuPengVersion.getStringVersion());
+            // 设置版本有效
+            projectfile.setVersionkey(1);
+            Projectfile newVersion = this.projectfileService.insert(projectfile);
+            if (newVersion == null) {
+                key = false;
+                lpr.setWhy("添加失败");
+            } else {
+                lpr.setWhy("添加成功");
+            }
+            lpr.setReturnObject(temp);
+        }
+        lpr.setReturnKey(key);
         return lpr;
     }
 

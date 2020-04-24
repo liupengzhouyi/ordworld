@@ -8,6 +8,7 @@ import cn.liupengstudy.ordworld.entity.tools.LiuPengVersion;
 import cn.liupengstudy.ordworld.service.ProjectfileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,10 +30,13 @@ public class ProjectfileController {
     @Resource
     private ProjectfileService projectfileService;
 
+    @Autowired
+    private ProjectController projectController;
+
     /**
      * 通过主键查询单条数据
      */
-    @ApiOperation(value = "通过ID毕设文件")
+    @ApiOperation(value = "通过ID查询毕设文件")
     @RequestMapping(path = "/selectByID", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LPR selectOne(@RequestBody Projectfile projectfile) {
         LPR lpr = new LPR();
@@ -62,15 +66,25 @@ public class ProjectfileController {
         projectfile.setVersion(liuPengVersion.getStringVersion());
         projectfile.setName(projectfile.getName().replace(" ", ""));
         projectfile.setVersionkey(1);
-        Projectfile temp = this.projectfileService.insert(projectfile);
-        if (temp == null) {
-            key = false;
-            lpr.setWhy("添加失败");
+        Project project = new Project();
+        project.setId(projectfile.getTitleid());
+        LPR projectLpr = this.projectController.selectOne(project);
+        if (projectLpr.isReturnKey()) {
+            Project projectTemp = (Project) projectLpr.getReturnObject();
+            projectfile.setTeachernumber(projectTemp.getTeacherid().toString());
+            Projectfile temp = this.projectfileService.insert(projectfile);
+            if (temp == null) {
+                key = false;
+                lpr.setWhy("添加失败");
+            } else {
+                lpr.setWhy("添加成功");
+            }
+            lpr.setReturnObject(temp);
         } else {
-            lpr.setWhy("添加成功");
+            key = false;
+            lpr.setWhy("没有论文数据");
         }
         lpr.setReturnKey(key);
-        lpr.setReturnObject(temp);
         return lpr;
     }
 

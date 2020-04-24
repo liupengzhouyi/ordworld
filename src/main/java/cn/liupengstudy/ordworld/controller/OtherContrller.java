@@ -2,6 +2,7 @@ package cn.liupengstudy.ordworld.controller;
 
 import cn.liupengstudy.ordworld.entity.*;
 import cn.liupengstudy.ordworld.entity.tools.LPR;
+import cn.liupengstudy.ordworld.entity.tools.MyTitleInformation;
 import cn.liupengstudy.ordworld.entity.tools.SelectTitleInformation;
 import cn.liupengstudy.ordworld.entity.tools.StudentGetApplicationInformation;
 import io.swagger.annotations.Api;
@@ -134,6 +135,72 @@ public class OtherContrller {
             lpr.setWhy("没有该学生");
         }
         lpr.setReturnKey(key);
+        return lpr;
+    }
+
+    @ApiOperation(value = "学生查看自己的毕业设计信息")
+    @RequestMapping(path = "/selectMyTitle", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR selectMyTitle(@RequestBody Student student) {
+        LPR lpr = new LPR();
+        lpr.setWhat("学生查看自己的毕业设计信息");
+        boolean key = true;
+        MyTitleInformation myTitleInformation = new MyTitleInformation();
+        Integer titleId = -1;
+        String teacherNumber = "";
+        Integer studnetId = -1;
+        // 学生信息
+        LPR studentLpr = this.studentController.selectByStudentID(student);
+        if (studentLpr.isReturnKey()) {
+            Student studentTemp = (Student) studentLpr.getReturnObject();
+            myTitleInformation.setStudent(studentTemp);
+            studnetId = studentTemp.getId();
+        } else {
+            key = false;
+            lpr.setWhy("没有学生数据");
+        }
+        // 选题信息
+        Selecttitle selecttitle = new Selecttitle();
+        selecttitle.setStudentid(studnetId);
+        LPR selectTitleLpr = this.selecttitleController.getAllByStudent(selecttitle);
+        if (selectTitleLpr.isReturnKey()) {
+            List<Selecttitle> list1 = (List<Selecttitle>) selectTitleLpr.getReturnObject();
+            for (Selecttitle temp: list1) {
+                if (temp.getPass() - 1 == 0) {
+                    myTitleInformation.setSelecttitle(temp);
+                    lpr.setWhy("有通过申请数据");
+                    titleId = temp.getTitleid();
+                    break;
+                }
+            }
+        } else {
+            key = false;
+            lpr.setWhy("没有申请数据");
+        }
+        // 题目信息
+        Project project = new Project();
+        project.setId(titleId);
+        LPR projectLpr = this.projectController.selectOne(project);
+        if (projectLpr.isReturnKey()) {
+            Project projectTemp = (Project) projectLpr.getReturnObject();
+            myTitleInformation.setProject(projectTemp);
+            teacherNumber = projectTemp.getTeacherid() + "";
+        } else {
+            key = false;
+            lpr.setWhy("没有选题数据");
+        }
+        // 教师信息
+        Teacher teacher = new Teacher();
+        teacher.setTeachernumber(teacherNumber);
+        LPR teacherLpr = this.teacherController.selectByNumber(teacher);
+        if (teacherLpr.isReturnKey()) {
+            Teacher teacherTemp = (Teacher) teacherLpr.getReturnObject();
+            myTitleInformation.setTeacher(teacherTemp);
+        } else {
+            key = false;
+            lpr.setWhy("没有教师数据");
+        }
+        lpr.setReturnKey(key);
+        lpr.setReturnObject(myTitleInformation);
         return lpr;
     }
 

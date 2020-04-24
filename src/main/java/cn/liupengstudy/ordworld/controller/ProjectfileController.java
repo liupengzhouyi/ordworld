@@ -72,14 +72,20 @@ public class ProjectfileController {
         if (projectLpr.isReturnKey()) {
             Project projectTemp = (Project) projectLpr.getReturnObject();
             projectfile.setTeachernumber(projectTemp.getTeacherid().toString());
-            Projectfile temp = this.projectfileService.insert(projectfile);
-            if (temp == null) {
-                key = false;
-                lpr.setWhy("添加失败");
+            LPR getSameLpr = this.getSameAtUpload(projectfile);
+            if (getSameLpr.isReturnKey()) {
+                Projectfile temp = this.projectfileService.insert(projectfile);
+                if (temp == null) {
+                    key = false;
+                    lpr.setWhy("添加失败");
+                } else {
+                    lpr.setWhy("添加成功");
+                }
+                lpr.setReturnObject(temp);
             } else {
-                lpr.setWhy("添加成功");
+                key = false;
+                lpr.setWhy("名称重复，无法添加");
             }
-            lpr.setReturnObject(temp);
         } else {
             key = false;
             lpr.setWhy("没有论文数据");
@@ -217,6 +223,25 @@ public class ProjectfileController {
         }
         lpr.setReturnKey(key);
         lpr.setReturnObject(list);
+        return lpr;
+    }
+
+    @ApiOperation(value = "通过题目ID查询重复文件")
+    @RequestMapping(path = "/getSameAtUpload", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR getSameAtUpload(@RequestBody Projectfile projectfile) {
+        LPR lpr = new LPR();
+        lpr.setWhat("通过题目ID查询重复文件");
+        boolean key = true;
+        projectfile.setName(projectfile.getName().replace(" ", ""));
+        List<Projectfile> list = this.projectfileService.getSomeAtUpload(projectfile.getTitleid(), projectfile.getName());
+        for (Projectfile temp: list
+             ) {
+            if (temp.getName().equals(projectfile.getName())) {
+                key = false;
+                lpr.setReturnObject(temp);
+            }
+        }
+        lpr.setReturnKey(key);
         return lpr;
     }
 

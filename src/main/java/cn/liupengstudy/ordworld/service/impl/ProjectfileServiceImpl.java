@@ -62,6 +62,11 @@ public class ProjectfileServiceImpl implements ProjectfileService {
         return this.projectfileDao.queryAllByVersionTrue(titleid, name, versionkey);
     }
 
+    @Override
+    public List<Projectfile> getSomeAtUpload(int titleid, String name) {
+        return this.projectfileDao.getSomeAtUpload(titleid, name);
+    }
+
     /**
      * 新增数据
      *

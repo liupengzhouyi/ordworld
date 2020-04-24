@@ -36,6 +36,8 @@ public interface ProjectfileService {
 
     List<Projectfile> queryAllByVersionTrue(int titleid, String name, int versionkey);
 
+    List<Projectfile> getSomeAtUpload(int titleid, String name);
+
     /**
      * 新增数据
      *

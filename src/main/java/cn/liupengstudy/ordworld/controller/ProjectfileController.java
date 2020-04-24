@@ -120,14 +120,25 @@ public class ProjectfileController {
             projectfile.setVersion(liuPengVersion.getStringVersion());
             // 设置版本有效
             projectfile.setVersionkey(1);
-            Projectfile newVersion = this.projectfileService.insert(projectfile);
-            if (newVersion == null) {
-                key = false;
-                lpr.setWhy("添加失败");
+            // 设置教师Number
+            Project project = new Project();
+            project.setId(projectfile.getTitleid());
+            LPR projectLpr = this.projectController.selectOne(project);
+            if (projectLpr.isReturnKey()) {
+                Project projectTemp = (Project) projectLpr.getReturnObject();
+                projectfile.setTeachernumber(projectTemp.getTeacherid().toString());
+                Projectfile newVersion = this.projectfileService.insert(projectfile);
+                if (newVersion == null) {
+                    key = false;
+                    lpr.setWhy("添加失败");
+                } else {
+                    lpr.setWhy("添加成功");
+                }
+                lpr.setReturnObject(temp);
             } else {
-                lpr.setWhy("添加成功");
+                key = false;
+                lpr.setWhy("没有该题目的教师信息");
             }
-            lpr.setReturnObject(temp);
         }
         lpr.setReturnKey(key);
         return lpr;

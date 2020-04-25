@@ -195,6 +195,19 @@
         where id = #{id}
     </update>
 
+    <update id="approvalPaperFile">
+        update ordworld.projectFile
+        <set>
+            <if test="approvaldata != null and approvaldata != ''">
+                approvalData = #{approvaldata},
+            </if>
+            <if test="approval != null and approval != ''">
+                approval = #{approval},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
     <!--通过主键删除-->
     <delete id="deleteById">
         delete from ordworld.projectFile where id = #{id}

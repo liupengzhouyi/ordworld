@@ -54,6 +54,8 @@ public interface ProjectfileService {
      */
     Projectfile update(Projectfile projectfile);
 
+    Projectfile approvalPaperFile(Projectfile projectfile);
+
     /**
      * 通过主键删除数据
      *

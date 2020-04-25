@@ -66,6 +66,8 @@ public interface ProjectfileDao {
      */
     int update(Projectfile projectfile);
 
+    int approvalPaperFile(Projectfile projectfile);
+
     /**
      * 通过主键删除数据
      *

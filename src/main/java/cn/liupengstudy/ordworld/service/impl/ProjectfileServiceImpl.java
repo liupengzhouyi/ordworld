@@ -96,6 +96,16 @@ public class ProjectfileServiceImpl implements ProjectfileService {
         return this.queryById(projectfile.getId());
     }
 
+    @Override
+    public Projectfile approvalPaperFile(Projectfile projectfile) {
+        int key = this.projectfileDao.approvalPaperFile(projectfile);
+        if (key - 1 == 0) {
+            return this.projectfileDao.queryById(projectfile.getId());
+        } else {
+            return null;
+        }
+    }
+
     /**
      * 通过主键删除数据
      *

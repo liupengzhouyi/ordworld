@@ -256,4 +256,23 @@ public class ProjectfileController {
         return lpr;
     }
 
+    @ApiOperation(value = "通过题目ID指导论文文件")
+    @RequestMapping(path = "/approvalPaperFile", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR approvalPaperFile(@RequestBody Projectfile projectfile) {
+        LPR lpr = new LPR();
+        lpr.setWhat("通过题目ID指导论文文件");
+        boolean key = true;
+        LiuPengData liuPengData = new LiuPengData();
+        projectfile.setApprovaldata(liuPengData.getLpData());
+        Projectfile temp = this.projectfileService.approvalPaperFile(projectfile);
+        if (temp == null) {
+            key = false;
+            lpr.setWhy("指导数据没有录入数据库");
+        } else {
+            lpr.setWhy("指导数据录入数据库");
+        }
+        lpr.setReturnObject(temp);
+        lpr.setReturnKey(key);
+        return lpr;
+    }
 }

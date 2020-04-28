@@ -3,6 +3,7 @@ package cn.liupengstudy.ordworld.controller;
 import cn.liupengstudy.ordworld.entity.Chat;
 import cn.liupengstudy.ordworld.entity.Conservator;
 import cn.liupengstudy.ordworld.entity.tools.LPR;
+import cn.liupengstudy.ordworld.entity.tools.LiuPengData;
 import cn.liupengstudy.ordworld.service.ChatService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -50,6 +51,13 @@ public class ChatController {
         LPR lpr = new LPR();
         boolean key = true;
         lpr.setWhat("添加聊天信息");
+        LiuPengData liuPengData = new LiuPengData();
+        chat.setYear(Integer.valueOf(liuPengData.getYear()));
+        chat.setMonth(Integer.valueOf(liuPengData.getMonth()));
+        chat.setDay(Integer.valueOf(liuPengData.getDay()));
+        chat.setHour(Integer.valueOf(liuPengData.getHours()));
+        chat.setMoment(Integer.valueOf(liuPengData.getMinutes()));
+        chat.setSecond(Integer.valueOf(liuPengData.getSeconds()));
         Chat chat1 = this.chatService.insert(chat);
         if (chat1 == null) {
             key = false;
@@ -71,6 +79,11 @@ public class ChatController {
         lpr.setWhat("获取聊天信息");
         List<Chat> list = this.chatService.getByGroupID(chat.getGroupid());
         if (list.size() <= 0) { key = false; }
+        if (list.size() <= 200) {
+
+        } else {
+
+        }
         lpr.setReturnKey(key);
         lpr.setReturnObject(list);
         return lpr;

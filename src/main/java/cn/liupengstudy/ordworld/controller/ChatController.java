@@ -2,14 +2,19 @@ package cn.liupengstudy.ordworld.controller;
 
 import cn.liupengstudy.ordworld.entity.Chat;
 import cn.liupengstudy.ordworld.entity.Conservator;
+import cn.liupengstudy.ordworld.entity.Student;
+import cn.liupengstudy.ordworld.entity.Teacher;
 import cn.liupengstudy.ordworld.entity.tools.LPR;
+import cn.liupengstudy.ordworld.entity.tools.LiuPengChatdata;
 import cn.liupengstudy.ordworld.entity.tools.LiuPengData;
 import cn.liupengstudy.ordworld.service.ChatService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +33,12 @@ public class ChatController {
      */
     @Resource
     private ChatService chatService;
+
+    @Autowired
+    private StudentController studentController;
+
+    @Autowired
+    private TeacherController teacherController;
 
     /**
      * 通过主键查询单条数据
@@ -78,14 +89,44 @@ public class ChatController {
         boolean key = true;
         lpr.setWhat("获取聊天信息");
         List<Chat> list = this.chatService.getByGroupID(chat.getGroupid());
+        List<LiuPengChatdata> chatList = new ArrayList<LiuPengChatdata>();
         if (list.size() <= 0) { key = false; }
-        if (list.size() <= 200) {
-
-        } else {
-
+        if (list.size() > 200) {
+            list = list.subList(0, 200);
+        }
+        for (Chat chatTemp : list) {
+            LiuPengChatdata liuPengChatdata = new LiuPengChatdata();
+            if (chatTemp.getType() - 2 == 0) {
+                liuPengChatdata.setAutorchType(2);
+                // 教师
+                Teacher teacher = new Teacher();
+                teacher.setTeachernumber(chatTemp.getAuthorid().toString());
+                //System.out.println(teacher.toString());
+                LPR getTeagcerLpr = this.teacherController.selectByNumber(teacher);
+                //System.out.println(getTeagcerLpr.toString());
+                if (getTeagcerLpr.isReturnKey()) {
+                    teacher = (Teacher) getTeagcerLpr.getReturnObject();
+                    liuPengChatdata.setTeacher(teacher);
+                }
+                liuPengChatdata.setChat(chatTemp);
+            } else if (chatTemp.getType() - 3 == 0) {
+                liuPengChatdata.setAutorchType(3);
+                // 学生
+                Student student = new Student();
+                student.setStudentid(chatTemp.getAuthorid().toString());
+                LPR getStudentLpr = this.studentController.selectByStudentID(student);
+                if (getStudentLpr.isReturnKey()) {
+                    student = (Student) getStudentLpr.getReturnObject();
+                    liuPengChatdata.setStudent(student);
+                }
+                liuPengChatdata.setChat(chatTemp);
+            } else {
+                continue;
+            }
+            chatList.add(liuPengChatdata);
         }
         lpr.setReturnKey(key);
-        lpr.setReturnObject(list);
+        lpr.setReturnObject(chatList);
         return lpr;
     }
 

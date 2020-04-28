@@ -2,10 +2,12 @@ package cn.liupengstudy.ordworld.controller;
 
 import cn.liupengstudy.ordworld.entity.Conservator;
 import cn.liupengstudy.ordworld.entity.Groupnumber;
+import cn.liupengstudy.ordworld.entity.Student;
 import cn.liupengstudy.ordworld.entity.tools.LPR;
 import cn.liupengstudy.ordworld.service.GroupnumberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -26,6 +28,9 @@ public class GroupnumberController {
      */
     @Resource
     private GroupnumberService groupnumberService;
+
+    @Autowired
+    private StudentController studentController;
 
     /**
      * 通过主键查询单条数据
@@ -54,13 +59,23 @@ public class GroupnumberController {
         LPR lpr = new LPR();
         lpr.setWhat("讨论组添加成员");
         boolean key = true;
-        Groupnumber groupnumber1 = this.groupnumberService.insert(groupnumber);
-        if (groupnumber1 == null) {
-            lpr.setWhy("查询失败");
-            key = false;
+        Student temp = new Student();
+        temp.setStudentid(groupnumber.getStudentid().toString());
+        LPR studnetNumberToIDLpr = this.studentNumberToID(temp);
+        if (studnetNumberToIDLpr.isReturnKey()) {
+            temp = (Student) studnetNumberToIDLpr.getReturnObject();
+            groupnumber.setStudentid(temp.getId());
+            Groupnumber groupnumber1 = this.groupnumberService.insert(groupnumber);
+            if (groupnumber1 == null) {
+                lpr.setWhy("添加失败");
+                key = false;
+            } else {
+                lpr.setWhy("添加成功");
+                lpr.setReturnObject(groupnumber1);
+            }
         } else {
-            lpr.setWhy("查询成功");
-            lpr.setReturnObject(groupnumber1);
+            lpr.setWhy("没有该学生");
+            key = false;
         }
         lpr.setReturnKey(key);
         return lpr;
@@ -116,4 +131,45 @@ public class GroupnumberController {
         lpr.setReturnKey(key);
         return lpr;
     }
+
+    @ApiOperation(value = "学生数据库编号转学号")
+    @RequestMapping(path = "/studentIdToNumber", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR studentIdToNumber(@RequestBody Student student) {
+        LPR lpr = new LPR();
+        lpr.setWhat("学生数据库编号转学号");
+        boolean key = true;
+        LPR studentIdToNumberLpr = this.studentController.selectOne(student);
+        if (studentIdToNumberLpr.isReturnKey()) {
+            lpr.setWhy("查询成功");
+            Student temp = (Student) studentIdToNumberLpr.getReturnObject();
+            lpr.setReturnObject(temp);
+        } else {
+            lpr.setWhy("查询失败");
+            key = false;
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
+
+    @ApiOperation(value = "学生学号转数据库编号")
+    @RequestMapping(path = "/studentNumberToID", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR studentNumberToID(@RequestBody Student student) {
+        LPR lpr = new LPR();
+        lpr.setWhat("学生学号转数据库编号");
+        boolean key = true;
+        LPR studentIdToNumberLpr = this.studentController.selectByStudentID(student);
+        if (studentIdToNumberLpr.isReturnKey()) {
+            lpr.setWhy("查询成功");
+            Student temp = (Student) studentIdToNumberLpr.getReturnObject();
+            lpr.setReturnObject(temp);
+        } else {
+            lpr.setWhy("查询失败");
+            key = false;
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
+
+
+
 }

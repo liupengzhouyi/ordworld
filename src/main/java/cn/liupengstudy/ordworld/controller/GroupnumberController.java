@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -103,12 +104,22 @@ public class GroupnumberController {
         lpr.setWhat("通过ID查询");
         boolean key = true;
         List<Groupnumber> list = this.groupnumberService.getAllNumber(groupnumber);
+        List<Student> studentList = new ArrayList<Student>();
+        for (Groupnumber temp : list) {
+            Student student = new Student();
+            student.setId(temp.getStudentid());
+            LPR studentLpr = this.studentController.selectOne(student);
+            if (studentLpr.isReturnKey()) {
+                Student newStudent = (Student) studentLpr.getReturnObject();
+                studentList.add(newStudent);
+            }
+        }
         if (list.size() <= 0) {
             lpr.setWhy("查询失败");
             key = false;
         } else {
             lpr.setWhy("查询成功");
-            lpr.setReturnObject(list);
+            lpr.setReturnObject(studentList);
         }
         lpr.setReturnKey(key);
         return lpr;

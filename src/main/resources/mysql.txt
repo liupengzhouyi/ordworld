@@ -1,145 +1,170 @@
-# 管理员信息表
-create table conservator
-(
-	id int auto_increment comment 'ID',
-	imageURL varchar(200) null comment '头像',
-	name varchar(20) null comment '姓名',
-	password int null comment '密码',
-	phoneNumber varchar(20) null comment '联系方式',
-	constraint conservator_pk
-		primary key (id)
-);
-
-# 系统公告表
-create table systemInformation
-(
-	id int auto_increment comment '自增ID',
-	authorId int not null comment '作者ID',
-	title varchar(50) not null comment '标题',
-	lpcontent varchar(1024) not null comment '内容',
-	lpyear int not null comment '年',
-	lpmonth int not null comment '月',
-	lpday int not null comment '日',
-	constraint systemInformation_pk
-		primary key (id)
-)
-comment '系统公告表';
-
-# 专业信息
-create table professionalInformation
-(
-	id int auto_increment comment '自增ID',
-	number varchar(10) not null comment '编号',
-	college varchar(20) not null comment '学院',
-	department varchar(20) not null comment '系',
-	professional varchar(20) not null comment '专业',
-	constraint professionalInformation_pk
-		primary key (id)
-)
-comment '专业信息';
-
-create unique index professionalInformation_number_uindex
-	on professionalInformation (number);
-
-# 教师
-create table teacher
-(
-	id int auto_increment comment '自增ID',
-	imageURL varchar(200) null comment '头像URL',
-	teacherNumber varchar(20) not null comment '教师编号',
-	password int not null comment '密码',
-	phoneNumber varchar(20) null comment '联系方式',
-	professionalId varchar(10) null comment '专业编号',
-	isDelete int default 0 null comment '是否注销',
-	constraint teacher_pk
-		primary key (id)
-)
-comment '教师';
-
-create unique index teacher_teacherNumber_uindex
-	on teacher (teacherNumber);
-
-alter table teacher
-	add name varchar(20) null comment '教师名称';
-
-# 选题表
-create table selectTitle
-(
-	id int auto_increment comment '自增ID',
-	studentId int not null comment '学生ID',
-	titleId int not null comment '选题ID',
-	applicationData varchar(30) not null comment '申请日期',
-	passData varchar(30) not null comment '审批日期',
-	pass int default 0 not null comment '是否通过',
-	constraint selectTitle_pk
-		primary key (id)
-)
-comment '选题表';
-
-# 讨论组表
-create table `group`
-(
-	id int auto_increment comment '自增ID',
-	teacherID int not null comment '教师ID',
-	imageURL varchar(200) null comment '图片',
-	name varchar(50) not null comment '小组名称',
-	constraint group_pk
-		primary key (id)
-)
-comment '讨论组表';
-
-# 聊天信息表
 create table chat
 (
-	id int auto_increment comment '自增ID',
-	groupid int not null comment '小组ID',
-	type int not null comment '发言人类型',
-	authorid int not null comment '作者ID',
-	information varchar(100) not null comment '聊天信息',
-	year int not null comment '年',
-	month int not null comment '月',
-	day int not null comment '日',
-	hour int not null comment '小时',
-	moment int not null comment '分钟',
-	second int not null comment '秒',
-	constraint chat_pk
-		primary key (id)
+    id          int auto_increment comment '自增ID'
+        primary key,
+    groupid     int          not null comment '小组ID',
+    type        int          not null comment '发言人类型',
+    authorid    int          not null comment '作者ID',
+    information varchar(100) not null comment '聊天信息',
+    year        int          not null comment '年',
+    month       int          not null comment '月',
+    day         int          not null comment '日',
+    hour        int          not null comment '小时',
+    moment      int          not null comment '分钟',
+    second      int          not null comment '秒'
 )
-comment '聊天信息表';
+    comment '聊天信息表';
 
-# 文件名表
+create table conservator
+(
+    id          int auto_increment comment 'ID'
+        primary key,
+    imageURL    varchar(200) null comment '头像',
+    name        varchar(20)  null comment '姓名',
+    password    int          null comment '密码',
+    phoneNumber varchar(20)  null comment '联系方式'
+);
+
 create table fileName
 (
-	id int auto_increment comment '自增ID',
-	filename varchar(200) not null comment '文件名称',
-	constraint fileName_pk
-		primary key (id)
+    id       int auto_increment comment '自增ID'
+        primary key,
+    filename varchar(200) not null comment '文件名称',
+    constraint fileName_filename_uindex
+        unique (filename)
 )
-comment '文件名表';
+    comment '文件名表';
 
-create unique index fileName_filename_uindex
-	on fileName (filename);
+create table `group`
+(
+    id        int auto_increment comment '自增ID'
+        primary key,
+    teacherID int          not null comment '教师ID',
+    imageURL  varchar(200) null comment '图片',
+    name      varchar(50)  not null comment '小组名称'
+)
+    comment '讨论组表';
 
-# 论文文件表
+create table groupNumber
+(
+    id        int auto_increment comment '自增ID'
+        primary key,
+    groupId   int not null comment '小组ID',
+    studentId int not null comment '学生ID'
+);
+
+create table professionalInformation
+(
+    id           int auto_increment comment '自增ID'
+        primary key,
+    number       varchar(10) not null comment '编号',
+    college      varchar(20) not null comment '学院',
+    department   varchar(20) not null comment '系',
+    professional varchar(20) not null comment '专业',
+    constraint professionalInformation_number_uindex
+        unique (number)
+)
+    comment '专业信息
+';
+
+create table project
+(
+    id            int auto_increment comment '自增ID'
+        primary key,
+    teacherId     int          not null comment '教师ID',
+    title         varchar(100) not null comment '题目',
+    fileUrl       varchar(200) not null comment '描述文件',
+    isSelect      int          not null comment '是否被选',
+    studentNumber varchar(20)  null comment '学生学号'
+)
+    comment '毕设题目';
 
 create table projectFile
 (
-	id int auto_increment comment '自增ID',
-	titleId int not null comment '题目ID',
-	teacherNumber varchar(20) not null comment '教师编号',
-	studentNumber varchar(20) not null comment '学生学号',
-	name varchar(50) not null comment '文件描述名称',
-	introduction varchar(100) null comment '文件描述',
-	fileurl varchar(200) not null comment '文件下载地址',
-	upladData varchar(30) not null comment '上传日期',
-	versionKey int not null comment '是否有效',
-	version varchar(10) not null comment '版本',
-	approvalData varchar(30) null comment '教师批复时间',
-	approval varchar(200) null comment '教师批复内容',
-	constraint projectFile_pk
-		primary key (id)
+    id            int auto_increment comment '自增ID'
+        primary key,
+    titleId       int          not null comment '题目ID',
+    teacherNumber varchar(20)  not null comment '教师编号',
+    studentNumber varchar(20)  not null comment '学生学号',
+    name          varchar(50)  not null comment '文件描述名称',
+    introduction  varchar(100) null comment '文件描述',
+    fileurl       varchar(200) not null comment '文件下载地址',
+    upladData     varchar(30)  not null comment '上传日期',
+    versionKey    int          not null comment '是否有效',
+    version       varchar(10)  not null comment '版本',
+    approvalData  varchar(30)  null comment '教师批复时间',
+    approval      varchar(200) null comment '教师批复内容'
 )
-comment '论文文件表';
+    comment '论文文件表';
+
+create table selectTitle
+(
+    id              int auto_increment comment '自增ID'
+        primary key,
+    studentId       int           not null comment '学生ID',
+    titleId         int           not null comment '选题ID',
+    applicationData varchar(30)   not null comment '申请日期',
+    passData        varchar(30)   not null comment '审批日期',
+    pass            int default 0 not null comment '是否通过'
+)
+    comment '选题表';
+
+create table student
+(
+    id             int auto_increment comment '自增ID'
+        primary key,
+    studentID      varchar(10)  not null comment '学生学号',
+    password       int          not null comment '密码值',
+    imageURL       varchar(200) null comment '头像图片',
+    prodessionalId int          not null comment '专业编号',
+    phoneNumber    varchar(20)  not null comment '联系方式',
+    isDelete       int          not null comment '删除标记',
+    name           varchar(20)  null comment '姓名',
+    constraint student_phoneNumber_uindex
+        unique (phoneNumber),
+    constraint student_studentID_uindex
+        unique (studentID)
+)
+    comment '学生表';
+
+create table systemInformation
+(
+    id        int auto_increment comment '自增ID'
+        primary key,
+    authorId  int           not null comment '作者ID',
+    title     varchar(50)   not null comment '标题',
+    lpcontent varchar(1024) not null comment '内容',
+    lpyear    int           not null comment '年',
+    lpmonth   int           not null comment '月',
+    lpday     int           not null comment '日'
+)
+    comment '系统公告表';
+
+create table teacher
+(
+    id             int auto_increment comment '自增ID'
+        primary key,
+    imageURL       varchar(200)  null comment '头像URL',
+    teacherNumber  varchar(20)   not null comment '教师编号',
+    password       int           not null comment '密码',
+    phoneNumber    varchar(20)   null comment '联系方式',
+    professionalId varchar(10)   null comment '专业编号',
+    isDelete       int default 0 null comment '是否注销',
+    name           varchar(20)   null comment '教师名称',
+    constraint teacher_teacherNumber_uindex
+        unique (teacherNumber)
+)
+    comment '教师';
+
+create table tempPlay
+(
+    thisid    int          not null
+        primary key,
+    palyone   varchar(100) null,
+    palytow   varchar(100) null,
+    palythree varchar(100) null
+);
+
 
 
 

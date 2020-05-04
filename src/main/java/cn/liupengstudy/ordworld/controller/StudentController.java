@@ -167,7 +167,7 @@ public class StudentController {
                 key = false;
                 lpr.setWhy("修改失败");
             } else {
-                lpr.setWhy("修改失败");
+                lpr.setWhy("修改成功");
             }
             lpr.setReturnObject(student);
         } else {

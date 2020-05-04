@@ -62,22 +62,27 @@ public class ChatController {
         LPR lpr = new LPR();
         boolean key = true;
         lpr.setWhat("添加聊天信息");
-        LiuPengData liuPengData = new LiuPengData();
-        chat.setYear(Integer.valueOf(liuPengData.getYear()));
-        chat.setMonth(Integer.valueOf(liuPengData.getMonth()));
-        chat.setDay(Integer.valueOf(liuPengData.getDay()));
-        chat.setHour(Integer.valueOf(liuPengData.getHours()));
-        chat.setMoment(Integer.valueOf(liuPengData.getMinutes()));
-        chat.setSecond(Integer.valueOf(liuPengData.getSeconds()));
-        Chat chat1 = this.chatService.insert(chat);
-        if (chat1 == null) {
+        if (chat.getGroupid()== 0) {
             key = false;
             lpr.setWhy("添加失败");
         } else {
-            lpr.setWhy("添加成功");
+            LiuPengData liuPengData = new LiuPengData();
+            chat.setYear(Integer.valueOf(liuPengData.getYear()));
+            chat.setMonth(Integer.valueOf(liuPengData.getMonth()));
+            chat.setDay(Integer.valueOf(liuPengData.getDay()));
+            chat.setHour(Integer.valueOf(liuPengData.getHours()));
+            chat.setMoment(Integer.valueOf(liuPengData.getMinutes()));
+            chat.setSecond(Integer.valueOf(liuPengData.getSeconds()));
+            Chat chat1 = this.chatService.insert(chat);
+            if (chat1 == null) {
+                key = false;
+                lpr.setWhy("添加失败");
+            } else {
+                lpr.setWhy("添加成功");
+            }
+            lpr.setReturnObject(chat1);
         }
         lpr.setReturnKey(key);
-        lpr.setReturnObject(chat1);
         return lpr;
     }
 
@@ -106,7 +111,7 @@ public class ChatController {
                 //System.out.println(getTeagcerLpr.toString());
                 if (getTeagcerLpr.isReturnKey()) {
                     teacher = (Teacher) getTeagcerLpr.getReturnObject();
-                    liuPengChatdata.setTeacher(teacher);
+                    liuPengChatdata.setObject(teacher);
                 }
                 liuPengChatdata.setChat(chatTemp);
             } else if (chatTemp.getType() - 3 == 0) {
@@ -117,7 +122,7 @@ public class ChatController {
                 LPR getStudentLpr = this.studentController.selectByStudentID(student);
                 if (getStudentLpr.isReturnKey()) {
                     student = (Student) getStudentLpr.getReturnObject();
-                    liuPengChatdata.setStudent(student);
+                    liuPengChatdata.setObject(student);
                 }
                 liuPengChatdata.setChat(chatTemp);
             } else {

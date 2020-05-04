@@ -41,6 +41,13 @@ public class OtherContrller {
     @Autowired
     private TeacherController teacherController;
 
+    @Autowired
+    private GroupnumberController groupnumberController;
+
+    @Autowired
+    private GroupController groupController;
+
+
     @ApiOperation(value = "通过选题ID查询选题申请信息")
     @RequestMapping(path = "/selectApplicationTitleInformationByTitle", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LPR selectByNumber(@RequestBody Selecttitle selecttitle) {
@@ -204,5 +211,42 @@ public class OtherContrller {
         return lpr;
     }
 
+
+    @ApiOperation(value = "学生获取讨论组")
+    @RequestMapping(path = "/studentGetMyGroup", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public LPR studentGetMyGroup(@RequestBody Student student) {
+        LPR lpr = new LPR();
+        lpr.setWhat("学生获取讨论组");
+        boolean key = true;
+        LPR getDBIndex = this.groupnumberController.studentNumberToID(student);
+        if (getDBIndex.isReturnKey()) {
+            Groupnumber groupnumber = new Groupnumber();
+            Student temp = (Student) getDBIndex.getReturnObject();
+            groupnumber.setStudentid(temp.getId());
+            LPR getGroupListLpr = this.groupnumberController.getAllGroup(groupnumber);
+            if (getGroupListLpr.isReturnKey()) {
+                List<Groupnumber> list = (List<Groupnumber>) getGroupListLpr.getReturnObject();
+                List<Group> returnList = new ArrayList<>();
+                for ( Groupnumber item :list) {
+                    Group group = new Group();
+                    group.setId(item.getGroupid());
+                    LPR getGroupLpr = this.groupController.selectOne(group);
+                    if (getGroupLpr.isReturnKey()) {
+                        Group tempGroup = (Group) getGroupLpr.getReturnObject();
+                        returnList.add(tempGroup);
+                    }
+                }
+                lpr.setReturnObject(returnList);
+            } else {
+                key = false;
+                lpr.setWhy("没有讨论组");
+            }
+        } else {
+            key = false;
+            lpr.setWhy("没有该学生");
+        }
+        lpr.setReturnKey(key);
+        return lpr;
+    }
 
 }

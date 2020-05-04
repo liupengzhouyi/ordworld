@@ -20,11 +20,9 @@ public class LiuPengChatdata {
     @ApiModelProperty(value = "发言人类型")
     private Integer autorchType;
 
-    @ApiModelProperty(value = "学生数据")
-    private Student student;
+    @ApiModelProperty(value = "发言人数据")
+    private Object object;
 
-    @ApiModelProperty(value = "教师数据")
-    private Teacher teacher;
 
     @ApiModelProperty(value = "发言数据")
     private Chat chat;
@@ -32,10 +30,9 @@ public class LiuPengChatdata {
     public LiuPengChatdata() {
     }
 
-    public LiuPengChatdata(Integer autorchType, Student student, Teacher teacher, Chat chat) {
+    public LiuPengChatdata(Integer autorchType, Object object, Chat chat) {
         this.autorchType = autorchType;
-        this.student = student;
-        this.teacher = teacher;
+        this.object = object;
         this.chat = chat;
     }
 
@@ -47,20 +44,12 @@ public class LiuPengChatdata {
         this.autorchType = autorchType;
     }
 
-    public Student getStudent() {
-        return student;
+    public Object getObject() {
+        return object;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setObject(Object object) {
+        this.object = object;
     }
 
     public Chat getChat() {
@@ -75,8 +64,7 @@ public class LiuPengChatdata {
     public String toString() {
         final StringBuffer sb = new StringBuffer("LiuPengChatdata{");
         sb.append("autorchType=").append(autorchType);
-        sb.append(", student=").append(student);
-        sb.append(", teacher=").append(teacher);
+        sb.append(", object=").append(object);
         sb.append(", chat=").append(chat);
         sb.append('}');
         return sb.toString();

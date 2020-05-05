@@ -26,6 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/SystemInformation")
 @Api(tags = "系统公告控制器")
+@SuppressWarnings("unchecked")
 public class SystemInformationController {
 
     @Autowired

@@ -27,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/chat")
 @Api(tags = "聊天控制器")
+@SuppressWarnings("unchecked")
 public class ChatController {
     /**
      * 服务对象

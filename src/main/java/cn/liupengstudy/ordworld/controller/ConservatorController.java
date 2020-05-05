@@ -27,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/Conservator")
 @Api(tags = "管理员控制器")
+@SuppressWarnings("unchecked")
 public class ConservatorController {
 
     @Autowired

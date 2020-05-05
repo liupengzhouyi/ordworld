@@ -23,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/groupnumber")
 @Api(tags = "讨论组成员控制器")
+@SuppressWarnings("unchecked")
 public class GroupnumberController {
     /**
      * 服务对象

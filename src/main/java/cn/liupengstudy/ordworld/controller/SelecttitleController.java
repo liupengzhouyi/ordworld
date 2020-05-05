@@ -58,6 +58,7 @@ public class SelecttitleController {
     }
 
     @ApiOperation(value = "添加选题申请信息")
+    @SuppressWarnings("unchecked")
     @RequestMapping(path = "/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LPR add(@RequestBody Selecttitle selecttitle) {
         LPR lpr = new LPR();
@@ -279,6 +280,7 @@ public class SelecttitleController {
     }
 
     @ApiOperation(value = "学生申请通过")
+    @SuppressWarnings("unchecked")
     @RequestMapping(path = "/pass", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LPR pass(@RequestBody Selecttitle selecttitle) {
         LPR lpr = new LPR();

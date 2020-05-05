@@ -38,6 +38,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/File")
 @Api(tags = "文件控制器")
+@SuppressWarnings("unchecked")
 public class FileController {
 
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);

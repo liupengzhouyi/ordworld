@@ -24,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/Professional")
 @Api(tags = "专业信息控制器")
+@SuppressWarnings("unchecked")
 public class ProfessionallninformationController {
 
     @Autowired

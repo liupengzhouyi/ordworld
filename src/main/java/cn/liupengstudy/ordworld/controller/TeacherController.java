@@ -24,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("teacher")
 @Api(tags = "教师控制器")
+@SuppressWarnings("unchecked")
 public class TeacherController {
 
     /**

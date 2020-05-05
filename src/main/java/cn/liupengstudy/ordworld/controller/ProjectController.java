@@ -21,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/project")
 @Api(tags = "毕设题目控制器")
+@SuppressWarnings("unchecked")
 public class ProjectController {
     /**
      * 服务对象

@@ -27,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/OtherContrller")
 @Api(tags = "其他控制器")
+@SuppressWarnings("unchecked")
 public class OtherContrller {
 
     @Autowired

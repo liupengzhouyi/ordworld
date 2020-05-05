@@ -76,7 +76,7 @@ public class ProfessionallninformationServiceImpl implements Professionallninfor
         List<ProfessionalInformation> temp = this.professionalInformationMapper.getAllByCollege(college);
         List<Integer> list = new ArrayList<Integer>();
         for (ProfessionalInformation professionalInformation : temp) {
-            list.add(new Integer(professionalInformation.getNumber()));
+            list.add(Integer.valueOf(professionalInformation.getNumber()));
         }
         return list;
     }
@@ -86,7 +86,7 @@ public class ProfessionallninformationServiceImpl implements Professionallninfor
         List<ProfessionalInformation> temp = this.professionalInformationMapper.getAllByDepartment(department);
         List<Integer> list = new ArrayList<Integer>();
         for (ProfessionalInformation professionalInformation : temp) {
-            list.add(new Integer(professionalInformation.getNumber()));
+            list.add(Integer.valueOf(professionalInformation.getNumber()));
         }
         return list;
     }
@@ -96,7 +96,7 @@ public class ProfessionallninformationServiceImpl implements Professionallninfor
         List<ProfessionalInformation> temp = this.professionalInformationMapper.getAllByProfessional(professional);
         List<Integer> list = new ArrayList<Integer>();
         for (ProfessionalInformation professionalInformation : temp) {
-            list.add(new Integer(professionalInformation.getNumber()));
+            list.add(Integer.valueOf(professionalInformation.getNumber()));
         }
         return list;
     }

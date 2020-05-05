@@ -19,9 +19,16 @@ import java.util.Date;
  * @修改人和其它信息
  */
 @RestController
-@RequestMapping("/indexCationPaper")
+@RequestMapping("/")
 @Api(tags = "开始测试控制器")
 public class IndexController {
+
+
+    @ApiOperation(value = "index")
+    @RequestMapping(path = "/")
+    public String index() {
+        return "Hello World";
+    }
 
     /**
      * @描述

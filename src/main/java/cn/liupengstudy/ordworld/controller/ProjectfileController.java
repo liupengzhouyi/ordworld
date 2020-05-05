@@ -23,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("projectfile")
 @Api(tags = "毕设文件控制器")
+@SuppressWarnings("unchecked")
 public class ProjectfileController {
     /**
      * 服务对象

@@ -20,6 +20,7 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/filename")
 @Api(tags = "文件名称控制器")
+@SuppressWarnings("unchecked")
 public class FilenameController {
     /**
      * 服务对象

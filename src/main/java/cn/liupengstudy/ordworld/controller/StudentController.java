@@ -23,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/student")
 @Api(tags = "学生控制器")
+@SuppressWarnings("unchecked")
 public class StudentController {
     /**
      * 服务对象

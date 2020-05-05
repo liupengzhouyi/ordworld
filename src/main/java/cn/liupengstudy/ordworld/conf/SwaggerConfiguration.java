@@ -42,7 +42,6 @@ public class SwaggerConfiguration {
                 .title("Ord World APIs")
                 .description("swagger-bootstrap-ui")
                 .termsOfServiceUrl("http://localhost:8080/")
-                .contact("liupeng.0@outlook.com")
                 .version("1.0")
                 .build();
     }

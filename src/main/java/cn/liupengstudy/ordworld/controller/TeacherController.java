@@ -70,16 +70,21 @@ public class TeacherController {
             key = false;
             lpr.setWhy("教师编号重复");
         } else {
-            // update password
-            LpPassword lpPassword = new LpPassword(teacher.getTeachernumber(), reTeacher.getPassword1());
-            teacher.setPassword(lpPassword.getPasswordValue());
-            // add
-            teacher1 = this.teacherService.insert(teacher);
-            if (teacher1 == null) {
-                key = false;
-                lpr.setWhy("注册失败");
+            if (reTeacher.getPassword1().equals(reTeacher.getPassword2())) {
+                // update password
+                LpPassword lpPassword = new LpPassword(teacher.getTeachernumber(), reTeacher.getPassword1());
+                teacher.setPassword(lpPassword.getPasswordValue());
+                // add
+                teacher1 = this.teacherService.insert(teacher);
+                if (teacher1 == null) {
+                    key = false;
+                    lpr.setWhy("注册失败");
+                } else {
+                    lpr.setWhy("注册成功");
+                }
             } else {
-                lpr.setWhy("注册成功");
+                key = false;
+                lpr.setWhy("注册失败,密码不一致");
             }
         }
         lpr.setReturnKey(key);

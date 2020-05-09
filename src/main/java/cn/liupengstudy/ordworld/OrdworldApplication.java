@@ -9,8 +9,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.ComponentScan;
 
 
-
-@ComponentScan("controller")
 @SpringBootApplication(scanBasePackages="cn.liupengstudy.ordworld")
 @EnableConfigurationProperties({FileProperties.class})
 public class OrdworldApplication {

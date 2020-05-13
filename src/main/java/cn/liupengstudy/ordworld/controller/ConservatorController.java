@@ -84,16 +84,21 @@ public class ConservatorController {
                     lpr.setReturnObject(null);
                 } else {
                     lpr.setWhy("电话号码没有重复，可以注册");
-                    int registerKey = this.conservatorService.insert(conservator);
-                    List<Conservator> list = (List<Conservator>) this.selectPhoneNumber(conservator).getReturnObject();
-                    if (registerKey == 1) {
-                        lpr.setWhy("注册成功");
-                        if (list.size()>=1) {
-                            lpr.setReturnObject(list.get(0));
+                    if (reConservator.getPassword1().equals(reConservator.getPassword2())) {
+                        int registerKey = this.conservatorService.insert(conservator);
+                        List<Conservator> list = (List<Conservator>) this.selectPhoneNumber(conservator).getReturnObject();
+                        if (registerKey == 1) {
+                            lpr.setWhy("注册成功");
+                            if (list.size()>=1) {
+                                lpr.setReturnObject(list.get(0));
+                            }
+                        } else {
+                            key = false;
+                            lpr.setWhy("注册失败");
                         }
                     } else {
                         key = false;
-                        lpr.setWhy("注册失败");
+                        lpr.setWhy("注册失败,密码不一致");
                     }
                     lpr.setReturnKey(key);
                 }

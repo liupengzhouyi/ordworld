@@ -108,16 +108,22 @@ public class StudentController {
                 key = false;
                 lpr.setWhy("注册失败, 联系方式重复");
             } else {
-                LpPassword lpPassword = new LpPassword(student.getStudentid(), reStudent.getPassword());
-                student.setPassword(lpPassword.getPasswordValue());
-                Student student1 = this.studentService.insert(student);
-                if (student1 == null) {
-                    key = false;
-                    lpr.setWhy("注册失败");
+                if(reStudent.getPassword1().equals(reStudent.getPassword2())) {
+                    reStudent.setPassword(reStudent.getPassword1());
+                    LpPassword lpPassword = new LpPassword(student.getStudentid(), reStudent.getPassword());
+                    student.setPassword(lpPassword.getPasswordValue());
+                    Student student1 = this.studentService.insert(student);
+                    if (student1 == null) {
+                        key = false;
+                        lpr.setWhy("注册失败");
+                    } else {
+                        lpr.setWhy("注册成功");
+                    }
+                    lpr.setReturnObject(student1);
                 } else {
-                    lpr.setWhy("注册成功");
+                    key = false;
+                    lpr.setWhy("注册失败,密码不一致");
                 }
-                lpr.setReturnObject(student1);
             }
         }
         lpr.setReturnKey(key);
